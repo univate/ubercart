@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product.module,v 1.14.2.33 2009-08-17 21:27:55 islandusurper Exp $
+// $Id: uc_product.module,v 1.14.2.34 2009-09-11 19:04:55 islandusurper Exp $
 
 /**
  * @file
@@ -485,7 +485,7 @@ function uc_product_form(&$node) {
   $form['base']['shippable'] = array(
     '#type' => 'checkbox',
     '#title' => t('Product and its derivatives are shippable.'),
-    '#default_value' => isset($node->shippable) ? $node->shippable : TRUE,
+    '#default_value' => isset($node->shippable) ? $node->shippable : variable_get('uc_product_shippable_'. $node->type, 1),
     '#weight' => 10,
   );
 
@@ -908,7 +908,29 @@ function uc_product_save_continue_submit($form, &$form_state) {
 function uc_product_form_node_type_form_alter(&$form, &$form_state) {
   $type = $form['#node_type'];
 
-  if (module_exists('content') && uc_product_is_product($type->type)) {
+  if (!uc_product_is_product($type->type)) {
+    return;
+  }
+
+  $form['uc_product'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Ubercart product settings'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  // shippable
+  $form['uc_product']['uc_product_shippable'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Product and its derivatives are shippable.'),
+    '#default_value' => variable_get('uc_product_shippable_'. $type->type, 1),
+    '#description' => t('This setting can still be overridden on the node form.'),
+    '#return_value' => 1,
+    '#weight' => -5,
+  );
+
+  // image field
+  if (module_exists('content')) {
     $fields = content_types($type->type);
     $fields = (array)$fields['fields'];
 
@@ -919,19 +941,13 @@ function uc_product_form_node_type_form_alter(&$form, &$form_state) {
       }
     }
 
-    $form['uc_product'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Ubercart product settings'),
-      '#collapsible' => TRUE,
-      '#collapsed' => TRUE,
-    );
-
     $form['uc_product']['uc_image'] = array(
       '#type' => 'select',
       '#title' => t('Product image field'),
       '#default_value' => variable_get('uc_image_'. $type->type, NULL),
       '#options' => $options,
       '#description' => t('The selected field will be used on Ubercart pages to represent the products of this content type.'),
+      '#weight' => -4,
     );
   }
 }

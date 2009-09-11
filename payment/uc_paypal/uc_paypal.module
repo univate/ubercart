@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_paypal.module,v 1.5.2.15 2009-08-17 21:27:56 islandusurper Exp $
+// $Id: uc_paypal.module,v 1.5.2.16 2009-09-11 19:04:57 islandusurper Exp $
 
 /**
  * @file
@@ -961,7 +961,7 @@ function uc_paypal_wps_form($form_state, $order) {
         $o = 0;
         foreach ($item->data['attributes'] as $name => $setting) {
           $data['on'. $o .'_'. $i] = $name;
-          $data['os'. $o .'_'. $i] = $setting;
+          $data['os'. $o .'_'. $i] = implode(', ', (array)$setting);
           $o++;
         }
       }

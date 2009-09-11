@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.module,v 1.15.2.26 2009-08-17 21:27:55 islandusurper Exp $
+// $Id: uc_cart.module,v 1.15.2.27 2009-09-11 19:04:56 islandusurper Exp $
 
 /**
  * @file
@@ -328,43 +328,25 @@ function uc_cart_user($op, &$edit, &$user, $category = NULL) {
  * Implementation of hook_form_alter().
  */
 function uc_cart_form_alter(&$form, $form_state, $form_id) {
+  global $language;
+
   // Redirect shopper back to checkout page if they go to login from there.
   if ($form_id == 'user_login' || $form_id == 'user_edit' || $form_id == 'user_register') {
-    // Parse the existing #action url.
-    $p = parse_url($form['#action']);
-    $query = array();
-    if ($p['query']) {
-      parse_str($p['query'], $query);
-    }
-    if ($p['scheme']) {
-      // Path is an absolute URL.
-      $path = $p['scheme'] .'://'
-        . ($p['user'] ? $p['user'] . ($p['pass'] ? ':'. $p['pass'] : '') .'@' : '')
-        . ($p['host'] ? $p['host'] : '')
-        . ($p['path'] ? $p['path'] : '');
-    }
-    else {
-      // Path needs to be an internal path so we can pass it to url() later.
-      // Strip off the base path.
-      $path = substr($p['path'], drupal_strlen(base_path()));
-    }
 
     // Figure out the destination.
-    if ($_SESSION['checkout-redirect'] == TRUE) {
-      $query['destination'] = 'cart/checkout';
-    }
-    else {
+    if (empty($_SESSION['checkout-redirect'])) {
       // Compare the referer to checkout page URLs.
       if (uc_referer_check('cart/checkout') && uc_referer_uri() != '') {
-        $query['destination'] = 'cart/checkout';
+        $_SESSION['checkout-redirect'] = TRUE;
       }
       elseif (uc_referer_check(array('cart/checkout/review', 'cart/checkout/complete')) && uc_referer_uri() != '') {
-        $query['destination'] = 'user';
+        unset($_SESSION['checkout-redirect']);
       }
     }
 
-    // Build the new #action url.
-    $form['#action'] = url($path, array('query' => $query, 'fragment' => $p['fragment']));
+    if (!empty($_SESSION['checkout-redirect'])) {
+      $form['#redirect'] = 'cart/checkout';
+    }
   }
 
   if ($form_id == 'user_login' || $form_id == 'user_login_block') {
@@ -786,8 +768,8 @@ function uc_cart_uc_message() {
   $messages['review_instructions'] = t("Your order is almost complete. Please review the details below and click 'Submit order' if all the information is correct.  You may use the 'Back' button to make changes to your order if necessary.");
   $messages['completion_message'] = t('Your order is complete! Your order number is [order-id].');
   $messages['completion_logged_in'] = t('Thank you for shopping at [store-name]. While logged in, you may continue shopping or <a href="[order-url]">view your current order status</a> and order history.');
-  $messages['completion_existing_user'] = t("Thank you for shopping at [store-name]. Your current order has been attached to the account we found matching your e-mail address\n\n<a href=\"[site-url]/user\">Login</a> and view your current order status and order history. Remember to login when you make your next purchase for a faster checkout experience!");
-  $messages['completion_new_user'] = t("Thank you for shopping at [store-name]. A new account has been created for you here that you may use to view your current order status.\n\n<a href=\"[site-url]/user\">Login</a> to your new account using the following information:\n\n<strong>Username:</strong> !new_username\n<strong>Password:</strong> !new_password");
+  $messages['completion_existing_user'] = t('Thank you for shopping at [store-name]. Your current order has been attached to the account we found matching your e-mail address\n\n<a href="!user_url">Login</a> and view your current order status and order history. Remember to login when you make your next purchase for a faster checkout experience!', array('!user_url' => url('user')));
+  $messages['completion_new_user'] = t('Thank you for shopping at [store-name]. A new account has been created for you here that you may use to view your current order status.\n\n<a href="!user_url">Login</a> to your new account using the following information:\n\n<strong>Username:</strong> !new_username\n<strong>Password:</strong> !new_password', array('!user_url' => url('user')));
   $messages['continue_shopping'] = t('<a href="[site-url]">Return to the front page.</a>');
 
   return $messages;
@@ -863,6 +845,7 @@ function uc_cart_checkout_pane() {
  */
 function uc_cart_user_login_form_submit($form, &$form_state) {
   global $user;
+  unset($_SESSION['checkout-redirect']);
   uc_cart_login_update($user->uid);
 }
 
@@ -1469,7 +1452,7 @@ function uc_cart_add_item($nid, $qty = 1, $data = NULL, $cid = NULL, $msg = TRUE
   if (is_null($item) || $item === FALSE) {
     db_query("INSERT INTO {uc_cart_products} (cart_id, nid, qty, changed, data) VALUES ('%s', %d, %d, %d, '%s')", $cid, $node->nid, $qty, time(), serialize($data));
     if ($msg) {
-        drupal_set_message(t('<strong>@product-title</strong> added to <a href="!url">your shopping cart</a>.', array('@product-title' => $node->title, '!url' => url('cart'))));
+      drupal_set_message(t('<strong>@product-title</strong> added to <a href="!url">your shopping cart</a>.', array('@product-title' => $node->title, '!url' => url('cart'))));
     }
   }
   else {
@@ -1654,4 +1637,3 @@ function uc_cart_filter_checkout_panes($panes, $remove = NULL) {
 
   return $panes;
 }
-

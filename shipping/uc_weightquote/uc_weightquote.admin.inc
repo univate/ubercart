@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_weightquote.admin.inc,v 1.1.2.6 2009-08-17 21:27:53 islandusurper Exp $
+// $Id: uc_weightquote.admin.inc,v 1.1.2.7 2009-09-11 19:04:56 islandusurper Exp $
 
 /**
  * @file
@@ -38,7 +38,7 @@ function uc_weightquote_admin_methods() {
     $header = array(t('Title'), t('Label'), t('Base rate'), t('Default product rate'), array('data' => t('Operations'), 'colspan' => 2));
     $output .= theme('table', $header, $rows);
   }
-  $output .= l(t('Add a new weight qtuoe shipping method.'), 'admin/store/settings/quotes/methods/weightquote/add');
+  $output .= l(t('Add a new weight quote shipping method.'), 'admin/store/settings/quotes/methods/weightquote/add');
   return $output;
 }
 

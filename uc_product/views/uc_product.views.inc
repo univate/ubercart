@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product.views.inc,v 1.1.2.5 2009-07-21 14:37:20 islandusurper Exp $
+// $Id: uc_product.views.inc,v 1.1.2.6 2009-09-11 19:04:57 islandusurper Exp $
 
 /**
  * @file
@@ -52,7 +52,7 @@ function uc_product_views_data() {
       'handler' => 'views_handler_sort',
     ),
     'filter' => array(
-      'handler' => 'views_handler_filter_numeric',
+      'handler' => 'views_handler_filter_float',
     ),
   );
 
@@ -67,7 +67,7 @@ function uc_product_views_data() {
       'handler' => 'views_handler_sort',
     ),
     'filter' => array(
-      'handler' => 'views_handler_filter_numeric',
+      'handler' => 'views_handler_filter_float',
     ),
   );
 
@@ -82,7 +82,7 @@ function uc_product_views_data() {
       'handler' => 'views_handler_sort',
     ),
     'filter' => array(
-      'handler' => 'views_handler_filter_numeric',
+      'handler' => 'views_handler_filter_float',
     ),
   );
 
@@ -100,7 +100,7 @@ function uc_product_views_data() {
       'handler' => 'views_handler_sort',
     ),
     'filter' => array(
-      'handler' => 'views_handler_filter_numeric',
+      'handler' => 'views_handler_filter_float',
     ),
   );
 

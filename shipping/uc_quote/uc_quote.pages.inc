@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_quote.pages.inc,v 1.1.2.6 2009-07-21 14:37:21 islandusurper Exp $
+// $Id: uc_quote.pages.inc,v 1.1.2.7 2009-09-11 19:04:57 islandusurper Exp $
 
 /**
  * @file
@@ -68,9 +68,7 @@ function uc_quote_request_quotes() {
       $return_quotes[$method_id .'---'. $accsrl] = $data;
     }
   }
-  drupal_set_header("Content-Type: text/javascript; charset=utf-8");
-  print drupal_to_js($return_quotes);
-  exit();
+  drupal_json($return_quotes);
 }
 
 /**

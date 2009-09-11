@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.admin.inc,v 1.1.2.14 2009-08-20 23:40:35 islandusurper Exp $
+// $Id: uc_cart.admin.inc,v 1.1.2.15 2009-09-11 19:04:56 islandusurper Exp $
 
 /**
  * @file
@@ -94,7 +94,7 @@ function uc_cart_cart_settings_form() {
     '#type' => 'fieldset',
     '#title' => t('Anonymous cart duration'),
     '#description' => t('Set the length of time products remain in the cart for customers who <strong>have not</strong> logged in.'),
-    '#summary' => format_plural(variable_get('uc_cart_anon_duration', '4'), 'Anonymous cart duration is @count @unit.', 'Anonymous cart duration is @count @units.', array('@unit' => $durations['singular'][variable_get('uc_cart_anon_unit', 'hours')], '@units' => $durations['plural'][variable_get('uc_cart_anon_unit', 'hours')])),
+    '#summary' => format_plural(variable_get('uc_cart_anon_duration', '4'), 'Anonymous cart duration is 1 @unit.', 'Anonymous cart duration is @count @units.', array('@unit' => $durations['singular'][variable_get('uc_cart_anon_unit', 'hours')], '@units' => $durations['plural'][variable_get('uc_cart_anon_unit', 'hours')])),
   );
   $form['anonymous']['uc_cart_anon_duration'] = array(
     '#type' => 'select',
@@ -123,7 +123,7 @@ function uc_cart_cart_settings_form() {
     '#type' => 'fieldset',
     '#title' => t('Authenticated cart duration'),
     '#description' => t('Set the length of time products remain in the cart for customers who <strong>have</strong> logged in.'),
-    '#summary' => format_plural(variable_get('uc_cart_auth_duration', '1'), 'Authenticated cart duration is @count @unit.', 'Authenticated cart duration is @count @units.', array('@unit' => $durations['singular'][variable_get('uc_cart_auth_unit', 'years')], '@units' => $durations['plural'][variable_get('uc_cart_anon_unit', 'years')])),
+    '#summary' => format_plural(variable_get('uc_cart_auth_duration', '1'), 'Authenticated cart duration is 1 @unit.', 'Authenticated cart duration is @count @units.', array('@unit' => $durations['singular'][variable_get('uc_cart_auth_unit', 'years')], '@units' => $durations['plural'][variable_get('uc_cart_auth_unit', 'years')])),
   );
   $form['authenticated']['uc_cart_auth_duration'] = array(
     '#type' => 'select',
@@ -546,4 +546,3 @@ function uc_cart_checkout_messages_form() {
 
   return system_settings_form($form);
 }
-

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_store.module,v 1.14.2.29 2009-08-17 21:27:54 islandusurper Exp $
+// $Id: uc_store.module,v 1.14.2.30 2009-09-11 19:04:58 islandusurper Exp $
 
 /**
  * @file
@@ -70,7 +70,7 @@ function uc_store_menu() {
     'title' => 'Store administration',
     'description' => 'Administer store settings, products, orders, and more.',
     'page callback' => 'uc_store_admin',
-    'access arguments' => array('administer store'),
+    'access arguments' => array('access administration pages'),
     'type' => MENU_NORMAL_ITEM,
     'file' => 'uc_store.admin.inc',
   );
@@ -502,6 +502,9 @@ function uc_store_footer() {
       // No footer on /node or /node/[type]/add.
       // Only add a footer on /node/[nid] if that node is a product.
       if (count($parts) < 1 || intval($parts[1]) == 0) {
+        break;
+      }
+      else {
         $node = node_load($parts[1]);
         if ($node == FALSE || !function_exists('uc_product_node_info') || !uc_product_is_product($node->type)) {
           break;

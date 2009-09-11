@@ -1,5 +1,5 @@
 <?php
-// $Id: turkey_792_1.cif,v 1.3.2.3 2008-08-06 13:41:27 islandusurper Exp $
+// $Id: turkey_792_2.cif,v 1.1.2.1 2009-09-11 19:04:56 islandusurper Exp $
 
 /**
 * First implement hook_install() using the name of the country as the base of
@@ -8,7 +8,7 @@
 function turkey_install() {
   // Make the entry in the country table.
   // VALUES = Country ID, Country Name, 2-digit Code, 3-digit Code, File Version
-  db_query("INSERT INTO {uc_countries} VALUES (792, 'Türkiye', 'TK', 'TUR', 1)");
+  db_query("INSERT INTO {uc_countries} VALUES (792, 'Türkiye', 'TR', 'TUR', 2)");
 
   // Use uc_set_address_format() with the country ID as the first argument and
   // an address format string as the second.  Documentation on address formats
@@ -25,6 +25,11 @@ function turkey_install() {
 * latest changes in the install function.
 */
 function turkey_update($version) {
+  switch ($version) {
+    case 2:
+      db_query("UPDATE {uc_countries} SET country_iso_code_2 = 'TR' WHERE country_id = 792");
+      break;
+  }
 }
 
 /**

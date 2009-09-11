@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.ca.inc,v 1.1.2.25 2009-08-17 21:27:53 islandusurper Exp $
+// $Id: uc_order.ca.inc,v 1.1.2.26 2009-09-11 19:04:56 islandusurper Exp $
 
 /**
  * @file
@@ -1248,7 +1248,7 @@ function uc_order_action_email_invoice($order, $settings) {
   }
 
   foreach ($recipients as $email) {
-    $sent = drupal_mail('uc_order', 'action-mail', $email, uc_store_mail_recipient_language($email), $settings, empty($settings['from']) ? uc_store_email_from() : $settings['form']);
+    $sent = drupal_mail('uc_order', 'action-mail', $email, uc_store_mail_recipient_language($email), $settings, empty($settings['from']) ? uc_store_email_from() : $settings['from']);
 
     if (!$sent['result']) {
       watchdog('ca', 'Attempt to e-mail invoice for order @order_id to @email failed.', array('@email' => $email, '@order_id' => $order->order_id), WATCHDOG_ERROR);

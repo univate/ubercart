@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_attribute.admin.inc,v 1.1.2.20 2009-08-20 23:40:34 islandusurper Exp $
+// $Id: uc_attribute.admin.inc,v 1.1.2.21 2009-09-11 19:04:58 islandusurper Exp $
 
 /**
  * @file
@@ -467,7 +467,9 @@ function uc_attribute_option_delete_confirm_submit($form, &$form_state) {
   if ($form_state['values']['confirm']) {
     $match = 'i:'. $form_state['values']['aid'] .';s:'. strlen($form_state['values']['oid']) .':"'. $form_state['values']['oid'] .'";';
     db_query("DELETE FROM {uc_product_adjustments} WHERE combination LIKE '%%%s%%'", $match);
-    db_query("DELETE ao, co, po FROM {uc_attribute_options} AS ao LEFT JOIN {uc_product_options} AS po ON ao.oid = po.oid LEFT JOIN {uc_class_attribute_options} AS co ON ao.oid = co.oid WHERE ao.oid = %d", $form_state['values']['oid']);
+    db_query("DELETE FROM {uc_class_attribute_options} WHERE EXISTS (SELECT * FROM {uc_attribute_options} AS ao WHERE {uc_class_attribute_options}.oid = ao.oid AND ao.oid = %d)", $form_state['values']['oid']);
+    db_query("DELETE FROM {uc_product_options} WHERE EXISTS (SELECT * FROM {uc_attribute_options} AS ao WHERE {uc_product_options}.oid = ao.oid AND ao.oid = %d)", $form_state['values']['oid']);
+    db_query("DELETE FROM {uc_attribute_options} WHERE oid = %d", $form_state['values']['oid']);
   }
   $form_state['redirect'] = 'admin/store/attributes/'. $form_state['values']['aid'] .'/options';
 }
