@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
 "Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
-"Project-Id-Version: ubercart\n"
+"Project-Id-Version: ubercart HEAD\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Andriy Podanenko <podarok@ua.fm>\n"
+"Last-Translator: podarok <podarok@ua.fm>\n"
 "Language-Team: Ukrainian <drupalua@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -123,11 +123,11 @@ msgstr "Цього предикату не існує"
 
 #: ca/ca.admin.inc:153
 msgid "Enter a title used for display on the overview tables."
-msgstr ""
+msgstr "Введення назви, що використовуватиметься в таблицях огляду"
 
 #: ca/ca.admin.inc:167
 msgid "Select the trigger for this predicate.<br />Cannot be modified if the predicate has conditions or actions."
-msgstr ""
+msgstr "Оберіть тригер для предикату. <br />Неможливо змінювати, якщо предикат має умови або дії"
 
 #: ca/ca.admin.inc:176
 #: ca/ca.ca.inc:438
@@ -143,19 +143,19 @@ msgstr "Опис"
 
 #: ca/ca.admin.inc:177
 msgid "Enter a description that summarizes the use and intent of the predicate."
-msgstr ""
+msgstr "Введення опису, що підсумовує використання і мету предикату"
 
 #: ca/ca.admin.inc:191
 msgid "Classes let you categorize your predicates based on the type of functionality they provide."
-msgstr ""
+msgstr "Класи дозволяють Вам сортувати Ваші предикати, базуючись на типах функціональності, що вони надають."
 
 #: ca/ca.admin.inc:206
 msgid "Disabled predicates will not be processed when their trigger is pulled."
-msgstr ""
+msgstr "Вимкнуні предикати не будуть виконані, якщо їхні тригери спрацювали"
 
 #: ca/ca.admin.inc:217
 msgid "Predicates will be sorted by weight and processed sequentially."
-msgstr ""
+msgstr "Предикати будуть посортовані за вагою і оброблені почергово"
 
 #: ca/ca.admin.inc:223
 msgid "Save predicate"
@@ -177,19 +177,19 @@ msgstr "Скасувати"
 
 #: ca/ca.admin.inc:267
 msgid "Predicate meta data saved."
-msgstr ""
+msgstr "Мета дані предикату збережено"
 
 #: ca/ca.admin.inc:292
 msgid "This action cannot be undone."
-msgstr "Цю дію не можна буде скасувати"
+msgstr "Цю дію не можна буде скасувати."
 
 #: ca/ca.admin.inc:294
 msgid "Are you sure you want to !op this predicate?"
-msgstr ""
+msgstr "Ви впевнені, що бажаєте !op цей предикат?"
 
 #: ca/ca.admin.inc:300
 msgid "Predicate %title !op."
-msgstr ""
+msgstr "Предикат %title !op."
 
 #: ca/ca.admin.inc:300
 msgid "deleted"
@@ -204,7 +204,7 @@ msgstr "Події"
 
 #: ca/ca.admin.inc:346
 msgid "These actions will be performed in order when this predicate passes the conditions evaluation."
-msgstr ""
+msgstr "Ці дії будуть виконані в замовленні, якщо предикат пройде виконання умови"
 
 #: ca/ca.admin.inc:360
 msgid "Action: @title"
@@ -218,7 +218,7 @@ msgstr "Аргументи"
 
 #: ca/ca.admin.inc:380
 msgid "Some triggers pass in multiple options for arguments related to a particular action, so you must specify which options to use in the fields below."
-msgstr ""
+msgstr "Деякі тригери проходять багато параметрів для аргументів, що відносяться до певних дій, тому Вам потрібно вказати , які параметри використовувати в полях нижче"
 
 #: ca/ca.admin.inc:419
 msgid "Remove this action"
@@ -256,11 +256,11 @@ msgstr "Умовні групи"
 
 #: ca/ca.admin.inc:587
 msgid "AND. If all of these condition groups are TRUE."
-msgstr ""
+msgstr "І. При умові, якщо всі групи умов є ПРАВДА"
 
 #: ca/ca.admin.inc:588
 msgid "OR. If any of these condition groups are TRUE."
-msgstr ""
+msgstr "АБО. При умові, якщо хоч одна з груп умов є ПРАВДА"
 
 #: ca/ca.admin.inc:606
 msgid "Add condition group"
@@ -278,11 +278,11 @@ msgstr "Оператор"
 
 #: ca/ca.admin.inc:642
 msgid "AND. If all of these conditions are TRUE."
-msgstr ""
+msgstr "І. При умові, якщо ці умови є ПРАВДА"
 
 #: ca/ca.admin.inc:643
 msgid "OR. If any of these conditions are TRUE."
-msgstr ""
+msgstr "АБО. При умові, якщо хоч одна з цих умов є ПРАВДА"
 
 #: ca/ca.admin.inc:661
 msgid "Available conditions"
@@ -306,15 +306,15 @@ msgstr "@description"
 
 #: ca/ca.admin.inc:725
 msgid "Some triggers pass in multiple options for arguments related to a particular condition, so you must specify which options to use in the fields below."
-msgstr ""
+msgstr "Деякі тригери проходять багато параметрів для аргументів, що відносяться до певних умов, тому Вам потрібно вказати , які параметри використовувати в полях нижче"
 
 #: ca/ca.admin.inc:756
 msgid "Negate this condition."
-msgstr ""
+msgstr "Інверсія умови"
 
 #: ca/ca.admin.inc:757
 msgid "Return FALSE if the condition is TRUE and vice versa."
-msgstr ""
+msgstr "Повернення НІ якщо умова є ПРАВДА"
 
 #: ca/ca.admin.inc:774
 msgid "Remove this condition"
@@ -322,23 +322,23 @@ msgstr "Видалити дану умову"
 
 #: ca/ca.admin.inc:792
 msgid "Condition group added."
-msgstr ""
+msgstr "Група умови додана."
 
 #: ca/ca.admin.inc:814;845
 msgid "An error occurred when trying to add the condition.  Please try again."
-msgstr ""
+msgstr "Сталася помилка при додаванні умови. Спробуйте ще"
 
 #: ca/ca.admin.inc:821
 msgid "Condition group removed."
-msgstr ""
+msgstr "Групу умови видалено"
 
 #: ca/ca.admin.inc:855
 msgid "%title condition added."
-msgstr ""
+msgstr "Додано %title умову."
 
 #: ca/ca.admin.inc:891
 msgid "An error occurred when trying to remove the condition.  Please try again."
-msgstr ""
+msgstr "Сталася помилка при видаленні умови. Спробуйте ще"
 
 #: ca/ca.admin.inc:897
 msgid "Condition removed."
@@ -350,28 +350,28 @@ msgstr "Умови збережено"
 
 #: ca/ca.admin.inc:980
 msgid "Use this form during the update process from Ubercart 1.0 to 2.0 to convert your Workflow-ng configurations to Conditional Actions predicates.  Once your configurations are converted, you should complete your uninstallation of Workflow-ng."
-msgstr ""
+msgstr "Використовуйте цю форму протягом процесу оновлення Уберкарта з версії 1 до 2 для перетворення конфігурацій Workflow-ng до предикатів Умовних Дій. Як тільки конфігурації перетворені, Вам потрібно закінчити деінсталяцію Workflow-ng"
 
 #: ca/ca.admin.inc:985
 #: ca/ca.module:61
 msgid "Convert configurations"
-msgstr ""
+msgstr "Параметри перетворень"
 
 #: ca/ca.admin.inc:999
 msgid "Converting Workflow-ng configurations"
-msgstr ""
+msgstr "Перетворення конфігурацій Workflow-ng"
 
 #: ca/ca.admin.inc:1000
 msgid "Beginning conversion..."
-msgstr ""
+msgstr "Початок перетворення..."
 
 #: ca/ca.admin.inc:1001
 msgid "@percentage% converted"
-msgstr ""
+msgstr "@percentage% конвертовано"
 
 #: ca/ca.admin.inc:1099
 msgid "Now processing %cfg"
-msgstr ""
+msgstr "Зараз обробляється %cfg"
 
 #: ca/ca.ca.inc:23
 msgid "Drupal user"
@@ -384,7 +384,7 @@ msgstr "Матеріал"
 
 #: ca/ca.ca.inc:35
 msgid "Trigger arguments"
-msgstr ""
+msgstr "Аргументи тригера"
 
 #: ca/ca.ca.inc:49
 msgid "Check the current date"
@@ -392,7 +392,7 @@ msgstr "Перевірити поточну дату"
 
 #: ca/ca.ca.inc:50
 msgid "Used to determine if the action should be performed on the current date."
-msgstr ""
+msgstr "Використано для визначення дії, що повинна виконатись в теперішню дату"
 
 #: ca/ca.ca.inc:51;99
 msgid "Drupal"
@@ -400,19 +400,19 @@ msgstr "Друпал"
 
 #: ca/ca.ca.inc:57
 msgid "Compare a node field value"
-msgstr ""
+msgstr "Порівняння значення поля матеріалу"
 
 #: ca/ca.ca.inc:58
 msgid "Returns TRUE if the node field selected below compares to the value entered as specified by the operator."
-msgstr ""
+msgstr "Повернення ТАК, якщо поле матеріалу, обране нижче, порівнюється до значення введеного оператором"
 
 #: ca/ca.ca.inc:67;105
 msgid "Execute custom PHP code"
-msgstr ""
+msgstr "Виконання власного коду PHP"
 
 #: ca/ca.ca.inc:68
 msgid "Returns whatever your custom PHP code returns."
-msgstr ""
+msgstr "Повертає будь-що, що повертає Ваш код PHP"
 
 #: ca/ca.ca.inc:69;106
 msgid "System"
@@ -420,7 +420,7 @@ msgstr "Система"
 
 #: ca/ca.ca.inc:77
 msgid "Check the user's roles"
-msgstr ""
+msgstr "Перевірка ролі користувача"
 
 #: ca/ca.ca.inc:78;82
 #: payment/uc_payment/uc_payment.module:402
@@ -436,11 +436,11 @@ msgstr "Користувач"
 #: ca/ca.ca.inc:79
 #: uc_order/uc_order.ca.inc:282
 msgid "Returns TRUE if the user roles match your settings."
-msgstr ""
+msgstr "Повернення ПРАВДА, якщо користувач відповідає Вашим параметрам"
 
 #: ca/ca.ca.inc:98
 msgid "Display a message to the user"
-msgstr "Вивести на екран повідомлення для користувача"
+msgstr "Відображення повідомлення користувачеві"
 
 #: ca/ca.ca.inc:139
 msgid "Comparison"
@@ -460,7 +460,7 @@ msgstr "Після"
 
 #: ca/ca.ca.inc:146
 msgid "Example: \"The current date is before the date below.\""
-msgstr ""
+msgstr "Приклад: \"Теперішня дата є перед датою нижче.\""
 
 #: ca/ca.ca.inc:151
 #: uc_order/uc_order.admin.inc:950
@@ -472,11 +472,11 @@ msgstr "Дата"
 
 #: ca/ca.ca.inc:153
 msgid "When the predicate is evaluated, the current date is compared to this date."
-msgstr ""
+msgstr "Коли предикат запущено, теперішня дата порівнюється до цієї дати"
 
 #: ca/ca.ca.inc:244
 msgid "Core node fields"
-msgstr ""
+msgstr "Поля матеріалу ядра"
 
 #: ca/ca.ca.inc:245
 msgid "Node ID"
@@ -484,7 +484,7 @@ msgstr "Ідентифікатор ноди"
 
 #: ca/ca.ca.inc:246
 msgid "Node revision ID"
-msgstr ""
+msgstr "Ідентифікатор версії матеріалу"
 
 #: ca/ca.ca.inc:247
 msgid "Node type"
@@ -492,23 +492,23 @@ msgstr "Тип ноди"
 
 #: ca/ca.ca.inc:249
 msgid "Author's user ID"
-msgstr ""
+msgstr "Ідентифікатор автора"
 
 #: ca/ca.ca.inc:250
 msgid "Node is published?"
-msgstr ""
+msgstr "Матеріал опубліковано?"
 
 #: ca/ca.ca.inc:251
 msgid "Node is promoted?"
-msgstr ""
+msgstr "Матеріал просунутий?"
 
 #: ca/ca.ca.inc:252
 msgid "Node is sticky?"
-msgstr ""
+msgstr "Матеріал причіплений?"
 
 #: ca/ca.ca.inc:258
 msgid "Node field"
-msgstr ""
+msgstr "Поле матеріалу"
 
 #: ca/ca.ca.inc:265
 msgid "Simple comparison"
@@ -540,19 +540,19 @@ msgstr "є меншим, ніж або дорівнює"
 
 #: ca/ca.ca.inc:273
 msgid "Text matching"
-msgstr ""
+msgstr "Співпадання тексту"
 
 #: ca/ca.ca.inc:274
 msgid "begins with"
-msgstr ""
+msgstr "починається щ"
 
 #: ca/ca.ca.inc:275
 msgid "contains"
-msgstr ""
+msgstr "містить"
 
 #: ca/ca.ca.inc:276
 msgid "ends with"
-msgstr ""
+msgstr "закінчується з"
 
 #: ca/ca.ca.inc:278
 msgid "Yes/No"
@@ -598,25 +598,25 @@ msgstr "Помилка"
 
 #: ca/ca.ca.inc:362;423
 msgid "Custom PHP"
-msgstr ""
+msgstr "Власний PHP"
 
 #: ca/ca.ca.inc:363
 msgid "Enter the custom PHP to be evaluated when this condition is executed.  Should not include &lt;?php ?> delimiters."
-msgstr ""
+msgstr "Введення власного PHP для виконання, коли умова виконується. Не потрібно вказувати &lt;?php ?> теги"
 
 #: ca/ca.ca.inc:396
 msgid "If you specify <em>AND</em> and want to check a custom role, remember to specify <em>authenticated user</em> where applicable."
-msgstr ""
+msgstr "Якщо вказано <em>І</em> і хочется перевірити спеціальну роль, пам'ятайте вказувати <em>зареєстрований користувач</em> де потрібно"
 
 #: ca/ca.ca.inc:398
 #: uc_order/uc_order.ca.inc:922
 msgid "OR: If the user has any of these roles."
-msgstr ""
+msgstr "АБО. Якщо користувач має одну з цих ролей"
 
 #: ca/ca.ca.inc:399
 #: uc_order/uc_order.ca.inc:921
 msgid "AND: If the user has all of these roles."
-msgstr ""
+msgstr "І. Якщо користувач має всі ці ролі"
 
 #: ca/ca.ca.inc:405
 #: uc_order/uc_order.ca.inc:928
@@ -627,7 +627,7 @@ msgstr "Ролі"
 
 #: ca/ca.ca.inc:424
 msgid "Enter the custom PHP to be evaluated when this action is executed.  Should not include &lt;?php ?> delimiters."
-msgstr ""
+msgstr "Введення власного PHP для старту, якщо дія виконується. Не вставляйте  &lt;?php ?> теги"
 
 #: ca/ca.ca.inc:438
 #: shipping/uc_usps/uc_usps.module:667
@@ -642,19 +642,19 @@ msgstr "Тип"
 
 #: ca/ca.ca.inc:446
 msgid "No variables available."
-msgstr ""
+msgstr "Відсутні змінні"
 
 #: ca/ca.ca.inc:451
 msgid "Available PHP variables"
-msgstr ""
+msgstr "Наявні змінні PHP"
 
 #: ca/ca.ca.inc:452
 msgid "You may use these variables in your custom PHP."
-msgstr ""
+msgstr "Ви можете використовувати ці змінні в Вашому PHP"
 
 #: ca/ca.module:140
 msgid "administer conditional actions"
-msgstr ""
+msgstr "адміністрування умовних дій"
 
 #: ca/ca.module:22
 msgid "Conditional actions"
@@ -662,7 +662,7 @@ msgstr "Умовні дії"
 
 #: ca/ca.module:23;36;42
 msgid "Administer the predicates setup to automate your store."
-msgstr ""
+msgstr "Керування параметрами предикатів для автоматизації магазину"
 
 #: ca/ca.module:30
 #: payment/uc_payment/uc_payment.module:36
@@ -679,55 +679,55 @@ msgstr "Огляд"
 
 #: ca/ca.module:35
 msgid "By trigger"
-msgstr ""
+msgstr "За тригером"
 
 #: ca/ca.module:41
 msgid "By class"
-msgstr ""
+msgstr "За класом"
 
 #: ca/ca.module:52
 msgid "Allows an administrator to create a new predicate."
-msgstr ""
+msgstr "Дозвіл адміністратору на створення нових предикатів"
 
 #: ca/ca.module:62
 msgid "Convert Workflow-ng configurations into Conditional Actions predicates."
-msgstr ""
+msgstr "Конвертування конфігурацій Workflow-ng в предикати Умовних Дій"
 
 #: ca/ca.module:71
 msgid "Edit predicate"
-msgstr ""
+msgstr "Редагування предиката"
 
 #: ca/ca.module:72
 msgid "Edit a predicate's meta data, conditions, and actions."
-msgstr ""
+msgstr "Редагування мета даних предикату, умов і дій"
 
 #: ca/ca.module:80
 msgid "Meta data"
-msgstr ""
+msgstr "Мета дані"
 
 #: ca/ca.module:81
 msgid "Edit the meta data for a predicate like title, trigger, etc."
-msgstr ""
+msgstr "Редагування мета даних для предикату - назва, тригер інше"
 
 #: ca/ca.module:90
 msgid "Conditions"
-msgstr ""
+msgstr "Умови"
 
 #: ca/ca.module:91
 msgid "Edit the conditions for a predicate."
-msgstr ""
+msgstr "Введення умов для предикату"
 
 #: ca/ca.module:101
 msgid "Edit the actions for a predicate."
-msgstr ""
+msgstr "Редагування дій для предикату"
 
 #: ca/ca.module:110
 msgid "Reset a predicate"
-msgstr ""
+msgstr "Скинути предикат"
 
 #: ca/ca.module:118
 msgid "Delete a predicate"
-msgstr ""
+msgstr "Видалення предиката"
 
 #: ca/ca.info:0
 msgid "Conditional Actions"
@@ -735,7 +735,7 @@ msgstr "Умовні дії"
 
 #: ca/ca.info:0
 msgid "REQUIRED. Create conditional action configurations for taxes, shipping, and more!"
-msgstr ""
+msgstr "ОБОВ'ЯЗКОВЕ. Створення конфігурацій умовної дії для податків, доставки і іншого! "
 
 #: ca/ca.info:0
 #: uc_cart/uc_cart.info:0
@@ -743,7 +743,7 @@ msgstr ""
 #: uc_product/uc_product.info:0
 #: uc_store/uc_store.info:0
 msgid "Ubercart - core"
-msgstr ""
+msgstr "ядро Ubercart"
 
 #: ca/ca.js:0
 msgid "Are you sure you want to remove this item?"
@@ -844,7 +844,7 @@ msgstr ""
 #: docs/hooks.php:807
 #: payment/uc_payment_pack/uc_payment_pack.module:43
 msgid "Check"
-msgstr ""
+msgstr "Перевірка"
 
 #: docs/hooks.php:808
 msgid "Check or Money Order"
@@ -1383,7 +1383,7 @@ msgstr ""
 
 #: payment/uc_authorizenet/uc_authorizenet.module:606
 msgid "ACCEPTED"
-msgstr ""
+msgstr "Прийняте"
 
 #: payment/uc_authorizenet/uc_authorizenet.module:606
 msgid "REJECTED"
@@ -1400,7 +1400,7 @@ msgstr "оновлення"
 
 #: payment/uc_authorizenet/uc_authorizenet.module:641;650
 msgid "cancel"
-msgstr ""
+msgstr "скасувати"
 
 #: payment/uc_authorizenet/uc_authorizenet.module:747
 #: uc_order/uc_order.module:302
@@ -1579,7 +1579,7 @@ msgstr ""
 #: shipping/uc_ups/uc_ups.install:18
 #: shipping/uc_usps/uc_usps.install:18
 msgid "Not found"
-msgstr "Не знайдено"
+msgstr "не знайдено"
 
 #: (duplicate) payment/uc_authorizenet/uc_authorizenet.install:23
 msgid "Authorize.net requires the PHP <a href='!curl_url'>cURL</a> library."
@@ -1699,7 +1699,7 @@ msgstr ""
 #: payment/uc_credit/uc_credit.admin.inc:243
 #: payment/uc_credit/uc_credit.module:629;960;1159
 msgid "(Last 4) "
-msgstr ""
+msgstr "(Останні 4)"
 
 #: payment/uc_credit/uc_credit.admin.inc:326
 msgid "The credit card was processed successfully. See the admin comments for more details."
@@ -1973,7 +1973,7 @@ msgstr "Статус замовлення"
 
 #: payment/uc_credit/uc_credit.module:714
 msgid "Age"
-msgstr ""
+msgstr "Вік"
 
 #: payment/uc_credit/uc_credit.module:722
 #: uc_cart/uc_cart.admin.inc:85;114
@@ -1982,25 +1982,25 @@ msgstr ""
 
 #: payment/uc_credit/uc_credit.module:724
 msgid "hour(s)"
-msgstr ""
+msgstr "Година(ни)"
 
 #: payment/uc_credit/uc_credit.module:725
 #: uc_file/uc_file.module:218;850;1003
 #: uc_roles/uc_roles.module:194;735;952;989
 msgid "day(s)"
-msgstr ""
+msgstr "День(ні)"
 
 #: payment/uc_credit/uc_credit.module:726
 #: uc_file/uc_file.module:219;851;1004
 #: uc_roles/uc_roles.module:195;736;953;990
 msgid "week(s)"
-msgstr ""
+msgstr "тиждень(ні)"
 
 #: payment/uc_credit/uc_credit.module:727
 #: uc_file/uc_file.module:221;853;1006
 #: uc_roles/uc_roles.module:197;738;955;992
 msgid "year(s)"
-msgstr ""
+msgstr "рік(роки)"
 
 #: payment/uc_credit/uc_credit.module:737
 msgid "Credit card fields"
@@ -2347,7 +2347,7 @@ msgstr "Місто"
 #: payment/uc_cybersource/uc_cybersource.module:190
 #: uc_store/uc_store.module:676;1138
 msgid "State/Province"
-msgstr "Штат/Провінція"
+msgstr "Область/Район"
 
 #: payment/uc_cybersource/uc_cybersource.module:191
 msgid "Enter the 2 letter abbreviation of your state or province."
@@ -2792,11 +2792,11 @@ msgstr ""
 
 #: payment/uc_google_checkout/uc_google_checkout.admin.inc:41
 msgid "On"
-msgstr ""
+msgstr "Ввімкнено"
 
 #: payment/uc_google_checkout/uc_google_checkout.admin.inc:41
 msgid "Off"
-msgstr ""
+msgstr "Вимкнено"
 
 #: payment/uc_google_checkout/uc_google_checkout.admin.inc:45
 msgid "Test Merchant ID"
@@ -2861,11 +2861,11 @@ msgstr ""
 
 #: payment/uc_google_checkout/uc_google_checkout.admin.inc:92
 msgid "Right"
-msgstr ""
+msgstr "Праворус"
 
 #: payment/uc_google_checkout/uc_google_checkout.admin.inc:92
 msgid "Left"
-msgstr ""
+msgstr "Ліворуч"
 
 #: payment/uc_google_checkout/uc_google_checkout.admin.inc:132
 msgid "Regular pickup"
@@ -2896,7 +2896,7 @@ msgstr "Запам'ятати налаштування"
 #: shipping/uc_quote/uc_quote.admin.inc:253
 #: uc_product/uc_product.admin.inc:271
 msgid "Enable"
-msgstr ""
+msgstr "Увімкнути"
 
 #: payment/uc_google_checkout/uc_google_checkout.admin.inc:160
 msgid "Service"
@@ -2905,7 +2905,7 @@ msgstr ""
 #: payment/uc_google_checkout/uc_google_checkout.admin.inc:160
 #: uc_attribute/uc_attribute.admin.inc:273
 msgid "Default price"
-msgstr ""
+msgstr "Базова ціна"
 
 #: payment/uc_google_checkout/uc_google_checkout.admin.inc:160
 #: shipping/uc_ups/uc_ups.admin.inc:60
@@ -2962,7 +2962,7 @@ msgstr "Стерти"
 #: payment/uc_google_checkout/uc_google_checkout.admin.inc:256
 #: uc_taxes/uc_taxes.admin.inc:15;83
 msgid "Rate"
-msgstr ""
+msgstr "Оцінити"
 
 #: payment/uc_google_checkout/uc_google_checkout.admin.inc:256
 msgid "Tax shipping?"
@@ -3056,7 +3056,7 @@ msgstr ""
 #: payment/uc_google_checkout/uc_google_checkout.pages.inc:22;26;51
 #: payment/uc_google_checkout/uc_google_checkout.module:873;876;879;898;902;905
 msgid "google"
-msgstr ""
+msgstr "Google"
 
 #: payment/uc_google_checkout/uc_google_checkout.pages.inc:22
 msgid "HTTP Authorization User does not match settings."
@@ -3479,7 +3479,7 @@ msgstr ""
 #: uc_cart/uc_cart.admin.inc:359
 #: uc_order/uc_order.module:772
 msgid "enabled"
-msgstr "Ввімкнено"
+msgstr "ввімкнено"
 
 #: payment/uc_payment/uc_payment.admin.inc:222
 #: uc_cart/uc_cart.admin.inc:359
@@ -3827,7 +3827,7 @@ msgstr ""
 #: uc_tax_report/uc_tax_report.info:0
 #: uc_taxes/uc_taxes.info:0
 msgid "Ubercart - core (optional)"
-msgstr ""
+msgstr "Уберкарт - ядро (не обов'язково)"
 
 #: payment/uc_payment_pack/uc_payment_pack.admin.inc:31
 msgid "Check has already cleared."
@@ -3887,7 +3887,7 @@ msgstr ""
 
 #: payment/uc_payment_pack/uc_payment_pack.module:124
 msgid "Description:"
-msgstr ""
+msgstr "Опис:"
 
 #: payment/uc_payment_pack/uc_payment_pack.module:136
 msgid "Full payment is expected upon delivery or prior to pick-up."
@@ -4145,7 +4145,7 @@ msgstr ""
 
 #: payment/uc_paypal/uc_paypal.module:159
 msgid "<b>Includes:</b>"
-msgstr ""
+msgstr "<b>Включає:</b>"
 
 #: payment/uc_paypal/uc_paypal.module:168
 msgid "PayPal Website Payments Standard"
@@ -4885,7 +4885,7 @@ msgstr ""
 
 #: shipping/uc_quote/uc_quote.module:238;363
 msgid "Quote"
-msgstr ""
+msgstr "Цитувати"
 
 #: shipping/uc_quote/uc_quote.module:243
 #: uc_taxes/uc_taxes.ca.inc:39
@@ -4918,7 +4918,7 @@ msgstr ""
 
 #: shipping/uc_quote/uc_quote.module:342
 msgid "(disabled)"
-msgstr ""
+msgstr "(вимкнено)"
 
 #: shipping/uc_quote/uc_quote.module:348
 msgid "Shipping quote method"
@@ -5024,7 +5024,7 @@ msgstr ""
 
 #: shipping/uc_quote/uc_quote.module:62
 msgid "General settings"
-msgstr ""
+msgstr "Загальні налаштування"
 
 #: shipping/uc_quote/uc_quote.info:0
 msgid "Shipping Quotes"
@@ -5118,7 +5118,7 @@ msgstr ""
 
 #: shipping/uc_shipping/uc_shipping.admin.inc:111
 msgid "Sep."
-msgstr ""
+msgstr "Вер"
 
 #: shipping/uc_shipping/uc_shipping.admin.inc:123
 msgid "Make packages"
@@ -5349,7 +5349,7 @@ msgstr "Міліметри"
 #: shipping/uc_ups/uc_ups.module:944
 #: uc_product/uc_product.module:523
 msgid "Length"
-msgstr "Довжина"
+msgstr "Тривалість"
 
 #: shipping/uc_shipping/uc_shipping.admin.inc:689
 #: shipping/uc_ups/uc_ups.module:948
@@ -6157,36 +6157,36 @@ msgstr "Обов'язковий"
 
 #: uc_attribute/uc_attribute.admin.inc:17
 msgid "Number of options"
-msgstr ""
+msgstr "Кількість варіантів вибору"
 
 #: uc_attribute/uc_attribute.admin.inc:18;100
 msgid "Display type"
-msgstr ""
+msgstr "Тип відображення"
 
 #: uc_attribute/uc_attribute.admin.inc:31
 msgid "options"
-msgstr ""
+msgstr "варіанти вибору"
 
 #: uc_attribute/uc_attribute.admin.inc:47
 msgid "No product attributes have been added yet."
-msgstr ""
+msgstr "Атрибути товару ще не було додано"
 
 #: uc_attribute/uc_attribute.admin.inc:52
 #: uc_attribute/uc_attribute.module:68
 msgid "Add an attribute"
-msgstr ""
+msgstr "Додати атрибут"
 
 #: uc_attribute/uc_attribute.admin.inc:69
 msgid "Edit attribute: %name"
-msgstr ""
+msgstr "Редагувати атрибут: %name"
 
 #: uc_attribute/uc_attribute.admin.inc:75
 msgid "The name of the attribute used in administrative forms"
-msgstr ""
+msgstr "Назва атрибуту що використовується у адміністративних формах"
 
 #: uc_attribute/uc_attribute.admin.inc:82
 msgid "Enter a label that customers will see instead of the attribute name. Use &lt;none&gt; if you don't want a title to appear at all."
-msgstr ""
+msgstr "Уведіть назву яку побачить кліент замість назви атрибуту. Використовуйте &lt;none&gt; якшо ви не бажаєте використовувати назву взагалі."
 
 #: uc_attribute/uc_attribute.admin.inc:87
 msgid "Help text"
@@ -6194,35 +6194,35 @@ msgstr "Довідковий текст"
 
 #: uc_attribute/uc_attribute.admin.inc:88
 msgid "<b>Optional.</b> Enter the help text that will display beneath the attribute on product add to cart forms."
-msgstr ""
+msgstr "<b>Не обов'язково.</b> Уведіть допоміжний текст що буде відображатися нижче атрибута у формі додавання до карти."
 
 #: uc_attribute/uc_attribute.admin.inc:94
 msgid "Make this attribute required, forcing the customer to choose an option."
-msgstr ""
+msgstr "Зробити цей атрибут обов'язковим, це змусить клієнта зробити вибір."
 
 #: uc_attribute/uc_attribute.admin.inc:95
 msgid "Selecting this for an attribute will disregard any default option you specify.<br />May be overridden at the product level."
-msgstr ""
+msgstr "Зробивши цей вибір для атрибута ви проігноруєте усі визначені базові параметри.<br />Може бути змінено на рівні товару."
 
 #: uc_attribute/uc_attribute.admin.inc:101
 msgid "This specifies how the options for this attribute will be presented.<br />May be overridden at the product level."
-msgstr ""
+msgstr "Параметр визначає те яким чином представлені варіанти вибору для цього атрибута.<br />Може бути змінено на рівні товару."
 
 #: uc_attribute/uc_attribute.admin.inc:108
 msgid "Multiple attributes on an add to cart form are sorted by this value and then by their name.<br />May be overridden at the product level."
-msgstr ""
+msgstr "Якщо у ващій формі додавання до кошика ви маєте декілька атрибутів, то іх буде відсортированно за цім значенням.<br />Може бути змінено на рівні товару."
 
 #: uc_attribute/uc_attribute.admin.inc:139;319
 msgid "There is no attribute with that ID."
-msgstr ""
+msgstr "Атрибута з вказанним ідентифікатором не існує."
 
 #: uc_attribute/uc_attribute.admin.inc:148
 msgid "Are you sure you want to delete the attribute %name?"
-msgstr ""
+msgstr "Ви впевнені що бажаєте видалити атрибут %name?"
 
 #: uc_attribute/uc_attribute.admin.inc:164
 msgid "Option price format"
-msgstr ""
+msgstr "Формат ціни вибору варіанта"
 
 #: uc_attribute/uc_attribute.admin.inc:166
 msgid "Do not display"
@@ -6230,23 +6230,23 @@ msgstr "Приховати"
 
 #: uc_attribute/uc_attribute.admin.inc:167
 msgid "Display price adjustment"
-msgstr ""
+msgstr "Відображати коригування ціни"
 
 #: uc_attribute/uc_attribute.admin.inc:168
 msgid "Display total price"
-msgstr ""
+msgstr "Відображати кінцеву сумму"
 
 #: uc_attribute/uc_attribute.admin.inc:170
 msgid "Formats the price in the attribute selection form when the customer adds a product to their cart. The total price will only be displayed on products with only one price affecting attribute."
-msgstr ""
+msgstr "Формат ціни у формі варіанта вибору під час додавання товару до свого кошика клієнтом. Кінцева сума буде відображатися у тих товарів що мають тільки один корегуючий ціну атрибут."
 
 #: uc_attribute/uc_attribute.admin.inc:185
 msgid "Product attribute deleted."
-msgstr ""
+msgstr "Атрибут товару було видалено."
 
 #: uc_attribute/uc_attribute.admin.inc:194;331
 msgid "Options for %name"
-msgstr ""
+msgstr "Варіанти вибору для %name"
 
 #: uc_attribute/uc_attribute.admin.inc:263;665
 msgid "The changes have been saved."
@@ -6254,40 +6254,40 @@ msgstr "Зміни запам'ятовано."
 
 #: uc_attribute/uc_attribute.admin.inc:273
 msgid "Default cost"
-msgstr ""
+msgstr "Базова вартість"
 
 #: uc_attribute/uc_attribute.admin.inc:273
 msgid "Default weight"
-msgstr ""
+msgstr "Базова вага"
 
 #: uc_attribute/uc_attribute.admin.inc:294
 msgid "No options for this attribute have been added yet."
-msgstr ""
+msgstr "До цього атрибуту ще не були додані варіанти вибору."
 
 #: uc_attribute/uc_attribute.admin.inc:304
 #: uc_attribute/uc_attribute.module:115
 msgid "Add an option"
-msgstr ""
+msgstr "Додаті варіант вибору"
 
 #: uc_attribute/uc_attribute.admin.inc:328
 msgid "Edit option: %name"
-msgstr ""
+msgstr "Редагувати варіант вибору: %name"
 
 #: uc_attribute/uc_attribute.admin.inc:337
 msgid "This name will appear to customers on product add to cart forms."
-msgstr ""
+msgstr "Назва що буде відображатися у формі додавання до кошика."
 
 #: uc_attribute/uc_attribute.admin.inc:345
 msgid "Options will be listed sorted by this value and then by their name.<br />May be overridden at the product level."
-msgstr ""
+msgstr "Варіанти вибору буде відсортовано за цим значенням, а потів за ім'ям.<br />Може бути змінено на рівні товару."
 
 #: uc_attribute/uc_attribute.admin.inc:351
 msgid "Default adjustments"
-msgstr ""
+msgstr "Базове вдосконалення"
 
 #: uc_attribute/uc_attribute.admin.inc:352
 msgid "Enter a positive or negative value for each adjustment applied when this option is selected.<br />Any of these may be overriden at the product level."
-msgstr ""
+msgstr "Уведіть додатне або від'ємне значення для кожного коригування що буде застосованно коли цей варіант вибору буде обрано.<br />Може бути змінено на рівні товару."
 
 #: uc_attribute/uc_attribute.admin.inc:358;816
 #: uc_order/uc_order.order_pane.inc:723;839
@@ -6307,40 +6307,40 @@ msgstr "Прайс"
 
 #: uc_attribute/uc_attribute.admin.inc:390
 msgid "This must be in a valid number format. No commas and only one decimal point."
-msgstr ""
+msgstr "Це повинно мати корректний формат. Коми заборонено, дозволяється тільки одна крапка."
 
 #: uc_attribute/uc_attribute.admin.inc:409;410
 msgid "Created new option %option."
-msgstr ""
+msgstr "Створено новий варіант вибору %option."
 
 #: uc_attribute/uc_attribute.admin.inc:416;417
 msgid "Updated option %option."
-msgstr ""
+msgstr "Варіант вибору %option оновленно."
 
 #: uc_attribute/uc_attribute.admin.inc:425
 msgid "There is no option with that ID."
-msgstr ""
+msgstr "Немає варіантів вибору з цим ідентифікатором."
 
 #: uc_attribute/uc_attribute.admin.inc:434
 msgid "Are you sure you want to delete the option %name?"
-msgstr ""
+msgstr "Ви впевнені що бажаєте видалити варіант вибору %name?"
 
 #: uc_attribute/uc_attribute.admin.inc:553
 #: uc_attribute/uc_attribute.module:54;142;162;172
 msgid "Attributes"
-msgstr ""
+msgstr "Атрибути"
 
 #: uc_attribute/uc_attribute.admin.inc:554
 msgid "Hold Ctrl + click to select multiple attributes."
-msgstr ""
+msgstr "Щоб обрати декілька варіантів утримуйте нажатою клавішу Ctrl."
 
 #: uc_attribute/uc_attribute.admin.inc:555
 msgid "No attributes left to add."
-msgstr ""
+msgstr "Атрибутів більше немає."
 
 #: uc_attribute/uc_attribute.admin.inc:562
 msgid "Add attributes"
-msgstr ""
+msgstr "Додати атрибути."
 
 #: uc_attribute/uc_attribute.admin.inc:591
 #: uc_cart/uc_cart.module:1020
@@ -6358,114 +6358,114 @@ msgstr "Стандартний (default)"
 #: uc_attribute/uc_attribute.admin.inc:591
 #: uc_product/views/uc_product.views.inc:202;215;228;241;254
 msgid "Display"
-msgstr ""
+msgstr "Відображення"
 
 #: uc_attribute/uc_attribute.admin.inc:613
 msgid "You must first <a href=\"!url\">add attributes to this !type</a>."
-msgstr ""
+msgstr "По перше ви маєте <a href=\"!url\">додати атрибути до !type</a>."
 
 #: uc_attribute/uc_attribute.admin.inc:783
 msgid "This attribute does not have any options."
-msgstr ""
+msgstr "Цей атрибут не має жодного варіанту вибору."
 
 #: uc_attribute/uc_attribute.admin.inc:816
 #: uc_attribute/uc_attribute.module:101;151;182
 msgid "Options"
-msgstr ""
+msgstr "Варіант вибору"
 
 #: uc_attribute/uc_attribute.admin.inc:850
 msgid "This !type does not have any attributes."
-msgstr ""
+msgstr "Тип !type немає жодних атрибутів."
 
 #: uc_attribute/uc_attribute.admin.inc:850;932
 #: uc_product/uc_product.module:183
 msgid "product"
-msgstr ""
+msgstr "товар"
 
 #: uc_attribute/uc_attribute.admin.inc:850;932
 msgid "product class"
-msgstr ""
+msgstr "класс продукту"
 
 #: uc_attribute/uc_attribute.admin.inc:863;1059
 msgid "This product does not have any attributes."
-msgstr ""
+msgstr "Цей товар не має жодних атрибутів."
 
 #: uc_attribute/uc_attribute.admin.inc:866
 msgid "This product class does not have any attributes."
-msgstr ""
+msgstr "Цей класс товарів не має жодних атрибутів."
 
 #: uc_attribute/uc_attribute.admin.inc:894
 msgid "All attributes with enabled options must specify an enabled option as default."
-msgstr ""
+msgstr "У атрибутах що мають варіанти вибору обов'язково має бути базовий варіант вибору"
 
 #: uc_attribute/uc_attribute.admin.inc:932
 msgid "The !type options have been saved."
-msgstr ""
+msgstr "Варіант вибору !type було збережено."
 
 #: uc_attribute/uc_attribute.admin.inc:986
 msgid "Default product SKU: @sku"
-msgstr ""
+msgstr "Базовий артикул товара: @sku"
 
 #: uc_attribute/uc_attribute.admin.inc:1085
 msgid "Product adjustments have been saved."
-msgstr ""
+msgstr "Коригування товару було збережено."
 
 #: uc_attribute/uc_attribute.admin.inc:410;417
 msgid "uc_attribute"
-msgstr ""
+msgstr "uc_attribute"
 
 #: uc_attribute/uc_attribute.admin.inc:149
 msgid "There is @count product with this attribute."
 msgid_plural "There are @count products with this attribute."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "@count товар має цей атрибут."
+msgstr[1] "@count товара мають цей атрибут."
+msgstr[2] "@count товарів мають цей атрибут."
 
 #: uc_attribute/uc_attribute.admin.inc:661
 msgid "@count attribute has been removed."
 msgid_plural "@count attributes have been removed."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Було видалено @count атрибут."
+msgstr[1] "Було видалено @count атрибута."
+msgstr[2] "Було видалено @count атрибутів."
 
 #: uc_attribute/uc_attribute.admin.inc:689
 msgid "@count attribute has been added."
 msgid_plural "@count attributes have been added."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "@count атрибут було додано."
+msgstr[1] "@count атрибути було додано."
+msgstr[2] "@count атрибутів було додано."
 
 #: uc_attribute/uc_attribute.ca.inc:12
 msgid "Order has a product with a particular attribute option"
-msgstr ""
+msgstr "Замовлення має товар з індивідуальними варіантами вибору"
 
 #: uc_attribute/uc_attribute.ca.inc:13
 msgid "Search the products of an order for a particular option."
-msgstr ""
+msgstr "Шукати товари у замовлені з конкретним варіантом вибору."
 
 #: uc_attribute/uc_attribute.ca.inc:75
 msgid "Attribute option"
-msgstr ""
+msgstr "Варіант вибору для атрибута"
 
 #: uc_attribute/uc_attribute.module:29
 msgid "Add attributes to this product using the <a href=\"!url\">add attributes form</a>. You may then adjust the settings for these attributes on this page and go on to configure their options in the <em>Options</em> tab."
-msgstr ""
+msgstr "Додайте атрибути до цьго товару використовуючи <a href=\"!url\">форму додавання атрибутів</a>. Потім ви зможете скорегувати налаштування для ціх атрибутів на цій сторінці та налаштувати іх варіанти вибору скориставшись закладкою <em>Варіанти вибору</em> ."
 
 #: uc_attribute/uc_attribute.module:31
 msgid "Add attributes to the product class using the <a href=\"!url\">add attributes form</a>. You may then adjust the settings for these attributes on this page and go on to configure their options in the <em>Options</em> tab."
-msgstr ""
+msgstr "Додайте атрибути до класу використовуючи <a href=\"!url\">форму додавання атрибутів</a>. Потім ви зможете скорегувати налаштування для ціх атрибутів на цій сторінці та налаштувати іх варіанти вибору скориставшись закладкою <em>Варіанти вибору</em> ."
 
 #: uc_attribute/uc_attribute.module:36
 msgid "Select the attributes you want to add and submit the form."
-msgstr ""
+msgstr "Оберіть атрибути що ви бажаете додати та натисніть замовити."
 
 #: uc_attribute/uc_attribute.module:41
 msgid "Use the checkboxes to enable options for attributes and the radio buttons to specify defaults for the enabled options. Use the other fields to override the default settings for each option. Attributes with no enabled options will be displayed as text fields."
-msgstr ""
+msgstr "Позначте варіанти вибору для атрибутів та позначте ті що є базовими. Зробіть це для кожного варіанту вибору. Атрибути що не мають варіантів вибору будуть представлені як текстове поле."
 
 #: uc_attribute/uc_attribute.module:45
 msgid "Enter an alternate SKU to be used when the specified set of options are chosen and the product is added to the cart. <b>Warning:</b> Adding or removing attributes from this product will reset all the SKUs on this page to the default product SKU."
-msgstr ""
+msgstr "Уведіть альтернативний артикул що буде використовуватися коли вказана комбінація атрибутів буде обрана та товар буде додано до кошика. <b>Увага:</b> Додавання або видаленя атрибутів з цього товару призведе до того що усі артикули будуть скинуто на базові артикули товара."
 
 #: uc_attribute/uc_attribute.module:646
 #: uc_store/uc_store.module:1223
@@ -6478,156 +6478,156 @@ msgstr "Текстове поле"
 
 #: uc_attribute/uc_attribute.module:681
 msgid "Select box"
-msgstr ""
+msgstr "Випадаюче меню"
 
 #: uc_attribute/uc_attribute.module:682
 msgid "Radio buttons"
-msgstr ""
+msgstr "Радіо кнопки"
 
 #: uc_attribute/uc_attribute.module:226
 msgid "administer attributes"
-msgstr ""
+msgstr "управління атрибутами"
 
 #: uc_attribute/uc_attribute.module:226
 msgid "administer product attributes"
-msgstr ""
+msgstr "управління атрибутами товару"
 
 #: uc_attribute/uc_attribute.module:226
 msgid "administer product options"
-msgstr ""
+msgstr "управління варіантами вибору для товару"
 
 #: uc_attribute/uc_attribute.module:55
 msgid "Create and edit attributes and options."
-msgstr ""
+msgstr "Створити та редагувати атрибути та варіанти вибору."
 
 #: uc_attribute/uc_attribute.module:77
 msgid "Attribute settings"
-msgstr ""
+msgstr "Налаштування атрибутів"
 
 #: uc_attribute/uc_attribute.module:78
 msgid "Configure the attribute settings"
-msgstr ""
+msgstr "Налаштування атрибутів"
 
 #: uc_attribute/uc_attribute.module:86
 msgid "Edit attribute"
-msgstr ""
+msgstr "Редагувати атрибут"
 
 #: uc_attribute/uc_attribute.module:124
 msgid "Edit option"
-msgstr ""
+msgstr "Редагувати елемент вибору"
 
 #: uc_attribute/uc_attribute.module:132
 msgid "Delete option"
-msgstr ""
+msgstr "Видалити елемент вибору"
 
 #: uc_attribute/uc_attribute.module:192
 msgid "Adjustments"
-msgstr ""
+msgstr "Коригування"
 
 #: uc_attribute/uc_attribute.install:13
 msgid "Attributes: the decisions that need to be made about products."
-msgstr ""
+msgstr "Атрибути: вібір що має бути зроблений для замовлення товару."
 
 #: uc_attribute/uc_attribute.install:16;136;244
 msgid "Primary identifier for attributes."
-msgstr ""
+msgstr "Первинний ідентифікатор для атрибутів."
 
 #: uc_attribute/uc_attribute.install:22
 msgid "Name of the attribute"
-msgstr ""
+msgstr "Назва атрибуту"
 
 #: uc_attribute/uc_attribute.install:29;143;251
 msgid "Label to use when attribute is displayed"
-msgstr ""
+msgstr "Назва що використовується при відображенні атрибута."
 
 #: uc_attribute/uc_attribute.install:36;150;258
 msgid "Determines the list position of attributes."
-msgstr ""
+msgstr "Визначає положення атрибутів у переліку."
 
 #: uc_attribute/uc_attribute.install:43;164;272
 msgid "Flag that, if set, requires a user response for attributes (disables default options)."
-msgstr ""
+msgstr "Позначте це, якшо позначено це примусить клієнта зробити свій вибір (базовий варіант вибору буде вимкнуто)."
 
 #: uc_attribute/uc_attribute.install:51;172;280
 msgid "Display type of the attribute options: 0 -- text fields, 1 -- select box (default), 2 -- radio buttons"
-msgstr ""
+msgstr "Тип відображення: 0 -- текстове поле, 1 -- випадаюче меню (базово), 2 -- радіо кнопки"
 
 #: uc_attribute/uc_attribute.install:59
 msgid "Description of the attribute."
-msgstr ""
+msgstr "Опис атрибуту."
 
 #: uc_attribute/uc_attribute.install:70;184;292
 msgid "The available choices for each attribute."
-msgstr ""
+msgstr "Доступні варінти вибору для кожного атрибуту."
 
 #: uc_attribute/uc_attribute.install:73
 msgid "The attribute ID."
-msgstr ""
+msgstr "Ідентифікатор атрибута."
 
 #: uc_attribute/uc_attribute.install:80;194;302
 msgid "The option ID."
-msgstr ""
+msgstr "Ідентифікатор елементу вибору"
 
 #: uc_attribute/uc_attribute.install:86
 msgid "The name of the option."
-msgstr ""
+msgstr "Назва варіанту вибору."
 
 #: uc_attribute/uc_attribute.install:93;201;309
 msgid "The adjustment to a product's cost with the chosen option."
-msgstr ""
+msgstr "Коригування до вартості товарів з цим варіантом вибору."
 
 #: uc_attribute/uc_attribute.install:101;209;317
 msgid "The adjustment to a product's price with the chosen option."
-msgstr ""
+msgstr "Коригування ціни товарів з цим варіантом вибору."
 
 #: uc_attribute/uc_attribute.install:109;217;325
 msgid "The adjustment to a product's physical weight with the chosen option."
-msgstr ""
+msgstr "Коригування до фізичної ваги товарів з цим варіантом вибору."
 
 #: uc_attribute/uc_attribute.install:115;223;331
 msgid "Affects the list position of the options."
-msgstr ""
+msgstr "Впливає на положення у переліку варіантів вибору."
 
 #: uc_attribute/uc_attribute.install:126
 msgid "Attributes copied to a product of a certain class when it is created."
-msgstr ""
+msgstr "Атрибути що було скопійованно до товару певного класу підчас створення."
 
 #: uc_attribute/uc_attribute.install:129;187
 msgid "The product node type."
-msgstr ""
+msgstr "Тип ноди товару."
 
 #: uc_attribute/uc_attribute.install:157;265
 msgid "The default value of the attribute field on the add to cart form."
-msgstr ""
+msgstr "Значення цього атрибуту базово у формі додавання до кошика."
 
 #: uc_attribute/uc_attribute.install:234
 msgid "Attributes copied to a product."
-msgstr ""
+msgstr "Атрибути скопійовано до товару."
 
 #: uc_attribute/uc_attribute.install:237;295;345
 #: uc_order/uc_order.install:441
 msgid "The product node ID."
-msgstr ""
+msgstr "Ідентіфікатор ноди товару."
 
 #: uc_attribute/uc_attribute.install:342
 msgid "Changes to a product's SKU based on the possible combination of chosen options."
-msgstr ""
+msgstr "Зміна артикулу товара з огляду на можливі комбінації обраних варіантів вибору."
 
 #: uc_attribute/uc_attribute.install:352
 msgid "A serialized array whose keys are attribute IDs and values are option IDs."
-msgstr ""
+msgstr "Послідовний масив де ключ це ідентифікатор атрибута, а значення ідентифікатор варіанту вибора."
 
 #: uc_attribute/uc_attribute.install:359
 msgid "The SKU representing the product with the combination of options."
-msgstr ""
+msgstr "Артикул що відображає товар з певною комбінацією варіантів вибору."
 
 #: uc_attribute/uc_attribute.info:0
 msgid "Attribute"
-msgstr ""
+msgstr "Атрибут"
 
 #: uc_attribute/uc_attribute.info:0
 msgid "Allow the customer to choose attributes for a product at checkout."
-msgstr ""
+msgstr "Дозволіти кліентам обирати атрибути товарів при отриманні."
 
 #: uc_cart/uc_cart.admin.inc:17
 msgid "Help text is shown in block:"
@@ -6653,7 +6653,7 @@ msgstr ""
 
 #: uc_cart/uc_cart.admin.inc:28
 msgid "hidden"
-msgstr ""
+msgstr "сховано"
 
 #: uc_cart/uc_cart.admin.inc:28
 msgid "shown"
@@ -6665,7 +6665,7 @@ msgstr ""
 
 #: uc_cart/uc_cart.admin.inc:29
 msgid "expanded"
-msgstr ""
+msgstr "розширене"
 
 #: uc_cart/uc_cart.admin.inc:29
 msgid "collapsed"
@@ -6717,23 +6717,23 @@ msgstr ""
 
 #: uc_cart/uc_cart.admin.inc:87
 msgid "Minute(s)"
-msgstr ""
+msgstr "Хвилина(ин)"
 
 #: uc_cart/uc_cart.admin.inc:88;116
 msgid "Hour(s)"
-msgstr ""
+msgstr "Година(ин)"
 
 #: uc_cart/uc_cart.admin.inc:89;117
 msgid "Day(s)"
-msgstr ""
+msgstr "День(нів)"
 
 #: uc_cart/uc_cart.admin.inc:90;118
 msgid "Week(s)"
-msgstr ""
+msgstr "Тиждень(нів)"
 
 #: uc_cart/uc_cart.admin.inc:91;119
 msgid "Year(s)"
-msgstr ""
+msgstr "Рік(років)"
 
 #: uc_cart/uc_cart.admin.inc:100
 msgid "Authenticated cart duration"
@@ -6761,7 +6761,7 @@ msgstr ""
 
 #: uc_cart/uc_cart.admin.inc:130
 msgid "link"
-msgstr ""
+msgstr "посилання"
 
 #: uc_cart/uc_cart.admin.inc:130
 msgid "button"
@@ -7176,12 +7176,12 @@ msgstr ""
 
 #: uc_cart/uc_cart.pages.inc:187
 msgid "Next"
-msgstr ""
+msgstr "Наступне"
 
 #: uc_cart/uc_cart.pages.inc:414;420
 #: uc_order/uc_order.admin.inc:915
 msgid "Back"
-msgstr "Назад"
+msgstr ""
 
 #: uc_cart/uc_cart.pages.inc:480
 msgid "We're sorry.  An error occurred while processing your order that prevents us from completing it at this time. Please contact us and we will resolve the issue as soon as possible."
@@ -7235,7 +7235,7 @@ msgstr ""
 
 #: uc_cart/uc_cart_checkout_pane.inc:143
 msgid "You must enter a valid e-mail address."
-msgstr ""
+msgstr "Вам необхідно ввести дійсну e-mail адресу."
 
 #: uc_cart/uc_cart_checkout_pane.inc:151
 msgid "The e-mail address did not match."
@@ -7477,7 +7477,7 @@ msgstr ""
 #: uc_store/uc_store.admin.inc:901
 #: uc_tax_report/uc_tax_report.module:158
 msgid "Total"
-msgstr "Всього"
+msgstr ""
 
 #: uc_cart/uc_cart.module:1301
 msgid "@title is not a product. Unable to add to cart."
@@ -7639,7 +7639,7 @@ msgstr "Ідентифікатор"
 
 #: uc_cart_links/uc_cart_links.admin.inc:69
 msgid "Clicks"
-msgstr ""
+msgstr "Кліки"
 
 #: uc_cart_links/uc_cart_links.admin.inc:70
 msgid "Last click"
@@ -7675,7 +7675,7 @@ msgstr ""
 
 #: uc_cart_links/uc_cart_links.admin.inc:107
 msgid "Argument"
-msgstr ""
+msgstr "Аргумент"
 
 #: uc_cart_links/uc_cart_links.admin.inc:109
 msgid "Sets the ID of the cart link."
@@ -8014,7 +8014,7 @@ msgstr ""
 
 #: uc_catalog/uc_catalog.pages.inc:69
 msgid "More..."
-msgstr ""
+msgstr "Докладніше..."
 
 #: (duplicate) uc_catalog/uc_catalog.module:65;214;385;414;615;784
 #: uc_catalog/uc_catalog.install:66
@@ -8034,7 +8034,7 @@ msgstr ""
 #: uc_product/uc_product.admin.inc:174
 #: uc_product/uc_product.module:1192;1809
 msgid "Image"
-msgstr ""
+msgstr "Зображення"
 
 #: uc_catalog/uc_catalog.module:345
 msgid "Term image"
@@ -8106,7 +8106,7 @@ msgstr ""
 
 #: uc_catalog/uc_catalog.module:758
 msgid "Block settings:"
-msgstr ""
+msgstr "Параметри Блоку:"
 
 #: uc_catalog/uc_catalog.module:489
 msgid "Bulk generation of terms completed, @count alias generated."
@@ -8160,7 +8160,7 @@ msgstr ""
 
 #: uc_file/uc_file.admin.inc:48;304
 msgid "File"
-msgstr ""
+msgstr "Файл"
 
 #: uc_file/uc_file.admin.inc:49
 #: uc_order/uc_order.order_pane.inc:707;823
@@ -8186,7 +8186,7 @@ msgstr ""
 
 #: uc_file/uc_file.admin.inc:91;310;313
 msgid "Upload file"
-msgstr ""
+msgstr "Завантажити файл"
 
 #: uc_file/uc_file.admin.inc:92;250
 msgid "Delete file(s)"
@@ -8206,7 +8206,7 @@ msgstr ""
 
 #: uc_file/uc_file.admin.inc:234
 msgid "directory"
-msgstr ""
+msgstr "папка"
 
 #: uc_file/uc_file.admin.inc:252
 msgid "Deleting a file will remove all its associated file downloads and product features. Removing a directory will remove any files it contains and their associated file downloads and product features."
@@ -8222,7 +8222,7 @@ msgstr ""
 
 #: uc_file/uc_file.admin.inc:298
 msgid "Directory"
-msgstr ""
+msgstr "Папка"
 
 #: uc_file/uc_file.admin.inc:299
 msgid "The directory to upload the file to. The default directory is the root of the file downloads directory."
@@ -8319,7 +8319,7 @@ msgstr ""
 #: uc_file/uc_file.ca.inc:121;156
 #: uc_roles/uc_roles.ca.inc:196;213;250;259;268;277
 msgid "Notification"
-msgstr ""
+msgstr "Повідомлення"
 
 #: uc_file/uc_file.ca.inc:130;150
 msgid "File expiration"
@@ -8333,7 +8333,7 @@ msgstr ""
 #: uc_order/uc_order.ca.inc:1031;1120
 #: uc_roles/uc_roles.ca.inc:371
 msgid "Sender"
-msgstr ""
+msgstr "Відправник"
 
 #: uc_file/uc_file.ca.inc:213
 #: uc_order/uc_order.ca.inc:1033;1122
@@ -8345,7 +8345,7 @@ msgstr ""
 #: uc_order/uc_order.ca.inc:1038;1127
 #: uc_roles/uc_roles.ca.inc:378
 msgid "Recipients"
-msgstr ""
+msgstr "Отримувачі"
 
 #: uc_file/uc_file.ca.inc:220
 #: uc_order/uc_order.ca.inc:1040;1129
@@ -8371,7 +8371,7 @@ msgstr "Повідомлення"
 #: uc_order/uc_order.ca.inc:1060;1141
 #: uc_roles/uc_roles.ca.inc:400
 msgid "Replacement patterns"
-msgstr ""
+msgstr "Шаблони заміни"
 
 #: uc_file/uc_file.ca.inc:241
 #: uc_roles/uc_roles.ca.inc:401
@@ -8416,7 +8416,7 @@ msgstr ""
 #: uc_file/uc_file.pages.inc:36
 #: uc_file/uc_file.module:444
 msgid "Filename"
-msgstr ""
+msgstr "Ім'я файлу"
 
 #: uc_file/uc_file.pages.inc:38
 #: uc_file/uc_file.module:446;808;975
@@ -8490,7 +8490,7 @@ msgstr ""
 
 #: uc_file/uc_file.pages.inc:166
 msgid "The IP address %ip "
-msgstr ""
+msgstr "IP Адреса %ip "
 
 #: uc_file/uc_file.pages.inc:176;186;193;200;215
 #: uc_file/uc_file.module:1700;1703
@@ -8539,7 +8539,7 @@ msgstr ""
 
 #: uc_file/uc_file.module:199
 msgid "Never"
-msgstr ""
+msgstr "Ніколи"
 
 #: uc_file/uc_file.module:217;571;849;1002
 #: uc_roles/uc_roles.module:734;951;988
@@ -8549,7 +8549,7 @@ msgstr "ніколи"
 #: uc_file/uc_file.module:220;852;1005
 #: uc_roles/uc_roles.module:196;737;954;991
 msgid "month(s)"
-msgstr ""
+msgstr "Місяць(і)"
 
 #: uc_file/uc_file.module:270
 msgid "Add file"
@@ -8597,7 +8597,7 @@ msgstr ""
 
 #: uc_file/uc_file.module:569;570
 msgid "unlimited"
-msgstr ""
+msgstr "безмежно"
 
 #: uc_file/uc_file.module:614;772
 msgid "File download"
@@ -8812,7 +8812,7 @@ msgstr ""
 
 #: uc_file/uc_file.module:101
 msgid "download file"
-msgstr ""
+msgstr "завантаження файлу"
 
 #: uc_file/uc_file.module:101
 msgid "view all downloads"
@@ -8828,7 +8828,7 @@ msgstr ""
 
 #: uc_file/uc_file.module:68
 msgid "Files"
-msgstr ""
+msgstr "Файли"
 
 #: uc_file/uc_file.module:69
 msgid "View your purchased files."
@@ -9106,7 +9106,7 @@ msgstr "Вибір адреси"
 
 #: uc_order/uc_order.admin.inc:743;933;1430
 msgid "Close"
-msgstr "Закрити"
+msgstr ""
 
 #: uc_order/uc_order.admin.inc:789
 msgid "Search returned no results."
@@ -9172,7 +9172,7 @@ msgstr "Пошук"
 
 #: uc_order/uc_order.admin.inc:909;1420
 msgid "Select"
-msgstr "Вибір"
+msgstr ""
 
 #: uc_order/uc_order.admin.inc:922
 msgid "E-mail customer account details."
@@ -10466,7 +10466,7 @@ msgstr ""
 
 #: uc_order/uc_order.install:239;279
 msgid "The comment ID."
-msgstr ""
+msgstr "ID коментаря"
 
 #: uc_order/uc_order.install:252;292
 msgid "The user ID who made the comment."
@@ -10600,7 +10600,7 @@ msgstr ""
 #: (duplicate) uc_order/uc_order.install:564
 #: ;670
 msgid "Pending"
-msgstr ""
+msgstr "Очікування"
 
 #: (duplicate) uc_order/uc_order.install:565
 #: ;671
@@ -10674,7 +10674,7 @@ msgstr ""
 
 #: uc_order/templates/customer.itpl.php:61
 msgid "E-mail Address:"
-msgstr ""
+msgstr "Адреса електронної пошти:"
 
 #: uc_order/templates/customer.itpl.php:73
 msgid "Billing Address:"
@@ -10710,7 +10710,7 @@ msgstr ""
 
 #: uc_order/templates/customer.itpl.php:130
 msgid "Order #:"
-msgstr ""
+msgstr "Замовлення #:"
 
 #: uc_order/templates/customer.itpl.php:140
 msgid "Shipping Method:"
@@ -10910,7 +10910,7 @@ msgstr ""
 
 #: uc_product/uc_product.admin.inc:538
 msgid "The machine-readable name of this content type. This text will be used for constructing the URL of the <em>create content</em> page for this content type. This name may consist only of lowercase letters, numbers, and underscores. Dashes are not allowed. Underscores will be converted into dashes when constructing the URL of the <em>create content</em> page. This name must be unique to this content type."
-msgstr ""
+msgstr "Машинна назва цього типу матеріалів. Цей текст буде використано для створення адрес на сторінці <em>створити вміст</em>  для цього типу матеріалів. Це ім'я може містити тільки рідкові літери, числа і знаки підкреслення. Знаки підкреслення (_) будуть перетвореня в дефіси (-) при створенні адрес сторінок на сторінціе <em>створити вміст</em>. Воно повинне бути унікальним для даного типу матеріалів."
 
 #: uc_product/uc_product.admin.inc:543
 msgid "Class name"
@@ -11050,7 +11050,7 @@ msgstr "Лише для типу(-ів)"
 
 #: uc_product/uc_product.module:860
 msgid "Save and continue"
-msgstr ""
+msgstr "Збережіть і продовжуйте"
 
 #: uc_product/uc_product.module:887
 msgid "Ubercart product settings"
@@ -11159,7 +11159,7 @@ msgstr ""
 #: uc_product/uc_product.module:1085
 #: uc_product_kit/uc_product_kit.module:816
 msgid "Images"
-msgstr ""
+msgstr "Фото"
 
 #: uc_product/uc_product.module:1282
 msgid "No products available."
@@ -11177,7 +11177,7 @@ msgstr ""
 #: uc_product/uc_product.module:1374
 #: uc_product_kit/uc_product_kit.module:476;701
 msgid "Quantity"
-msgstr ""
+msgstr "Кількість "
 
 #: uc_product/uc_product.module:1399
 msgid "You have entered an invalid quantity."
@@ -11185,7 +11185,7 @@ msgstr ""
 
 #: uc_product/uc_product.module:1434
 msgid "Weight: !weight"
-msgstr ""
+msgstr "Вага: !weight"
 
 #: uc_product/uc_product.module:1446
 msgid "Dimensions: !length × !width × !height"
@@ -11544,7 +11544,7 @@ msgstr ""
 
 #: uc_reports/uc_reports.admin.inc:55;57
 msgid "Average"
-msgstr ""
+msgstr "Загальна"
 
 #: uc_reports/uc_reports.admin.inc:102
 msgid "No customers found"
@@ -11579,7 +11579,7 @@ msgstr ""
 
 #: uc_reports/uc_reports.admin.inc:155;156
 msgid "Views"
-msgstr ""
+msgstr "Views"
 
 #: uc_reports/uc_reports.admin.inc:264
 msgid "No products found"
@@ -11834,7 +11834,7 @@ msgstr ""
 #: uc_roles/uc_roles.admin.inc:15
 #: uc_roles/uc_roles.module:304;692
 msgid "Role"
-msgstr ""
+msgstr "Роль"
 
 #: uc_roles/uc_roles.admin.inc:16
 msgid "Expiration date"
@@ -12079,7 +12079,7 @@ msgstr ""
 
 #: uc_roles/uc_roles.module:622
 msgid "!role_name"
-msgstr ""
+msgstr "!role_name"
 
 #: uc_roles/uc_roles.module:623
 msgid "This role will expire on !date"
@@ -12111,7 +12111,7 @@ msgstr ""
 
 #: uc_roles/uc_roles.module:716;932
 msgid "End"
-msgstr ""
+msgstr "кінець"
 
 #: uc_roles/uc_roles.module:718;934
 msgid "Relative from activation time"
@@ -12215,7 +12215,7 @@ msgstr ""
 
 #: uc_roles/uc_roles.module:912
 msgid "Default role"
-msgstr ""
+msgstr "Базова роль"
 
 #: uc_roles/uc_roles.module:914
 msgid "The default role Ubercart grants on specified products."
@@ -12223,7 +12223,7 @@ msgstr ""
 
 #: uc_roles/uc_roles.module:919
 msgid "Product roles"
-msgstr ""
+msgstr "Ролі продукта"
 
 #: uc_roles/uc_roles.module:922
 msgid "These are roles that Ubercart can grant to customers who purchase specified products. If you leave all roles unchecked, they will all be eligible for adding to a product."
@@ -12311,7 +12311,7 @@ msgstr ""
 
 #: uc_roles/uc_roles.install:38
 msgid "The product model."
-msgstr ""
+msgstr "Модель продукта"
 
 #: uc_roles/uc_roles.install:44
 msgid "The role ID."
@@ -12347,7 +12347,7 @@ msgstr ""
 
 #: uc_roles/uc_roles.install:122
 msgid "The user id."
-msgstr ""
+msgstr "ID користувача"
 
 #: uc_roles/uc_roles.install:129
 msgid "The role id."
@@ -12608,15 +12608,15 @@ msgstr "Версія"
 
 #: uc_store/uc_store.admin.inc:372
 msgid "enable"
-msgstr "Ввімкнення"
+msgstr "увімкнути"
 
 #: uc_store/uc_store.admin.inc:375
 msgid "disable"
-msgstr "Вимкнення"
+msgstr "вимкнути"
 
 #: uc_store/uc_store.admin.inc:380
 msgid "remove"
-msgstr "Видалення"
+msgstr "видалити"
 
 #: uc_store/uc_store.admin.inc:399
 msgid "-None available-"
@@ -12902,7 +12902,7 @@ msgstr "Формат довжини"
 
 #: uc_store/uc_store.admin.inc:798
 msgid "Date format"
-msgstr "Формат дати"
+msgstr "Формат Дати"
 
 #: uc_store/uc_store.admin.inc:804
 msgid "Supply a format string using !link syntax."
@@ -12914,7 +12914,7 @@ msgstr "Дата PHP"
 
 #: uc_store/uc_store.admin.inc:809
 msgid "Default format string"
-msgstr "Базова строка формату"
+msgstr ""
 
 #: uc_store/uc_store.admin.inc:811
 msgid "Date format: @date"
@@ -13330,7 +13330,7 @@ msgstr "Перегляд звітів магазину"
 
 #: uc_store/uc_store.module:114
 msgid "Configuration"
-msgstr "Конфігурація"
+msgstr ""
 
 #: uc_store/uc_store.module:115
 msgid "Adjust configuration settings for Ubercart."
@@ -13618,7 +13618,7 @@ msgstr ""
 
 #: uc_taxes/uc_taxes.admin.inc:23
 msgid "clone"
-msgstr ""
+msgstr "клонування"
 
 #: uc_taxes/uc_taxes.admin.inc:31
 msgid "Shippable products"
