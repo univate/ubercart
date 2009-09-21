@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.module,v 1.2.2.20 2009-09-11 19:04:57 islandusurper Exp $
+// $Id: uc_file.module,v 1.2.2.21 2009-09-21 14:34:48 islandusurper Exp $
 
 /**
  * @file
@@ -1646,6 +1646,7 @@ function &uc_file_get_by_key($key) {
     $cache[$key] = db_fetch_object(db_query("SELECT * FROM {uc_file_users} ufu ".
       "LEFT JOIN {uc_files} uf ON uf.fid = ufu.fid ".
       "WHERE ufu.file_key = '%s'", $key));
+    $cache[$key]->addresses = unserialize($cache[$key]->addresses);
   }
 
   return $cache[$key];

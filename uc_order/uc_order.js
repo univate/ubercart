@@ -1,4 +1,4 @@
-// $Id: uc_order.js,v 1.9.2.8 2009-08-17 21:27:53 islandusurper Exp $
+// $Id: uc_order.js,v 1.9.2.9 2009-09-21 14:34:46 islandusurper Exp $
 
 /**
  * @file
@@ -17,7 +17,7 @@ Drupal.behaviors.ucOrderClick = function(context) {
     function() {
       $(this).dblclick(
         function() {
-          var url = Drupal.settings.basePath + 'admin/store/orders/' + this.id.substring(6);
+          var url = Drupal.settings.ucURL.adminOrders + this.id.substring(6);
           window.location = url;
         }
       );
@@ -49,7 +49,7 @@ $(document).ready(
       function() {
         $(this).dblclick(
           function() {
-            var url = Drupal.settings.basePath + '?q=admin/store/orders/' + this.id.substring(6);
+            var url = Drupal.settings.ucURL.adminOrders + this.id.substring(6);
             window.location = url;
           }
         );
@@ -95,7 +95,7 @@ function load_address_select(uid, div, address_type) {
     'func' : "apply_address('" + address_type + "', this.value);"
   };
 
-  $.post(Drupal.settings.basePath + '?q=admin/store/orders/address_book', options,
+  $.post(Drupal.settings.ucURL.adminOrders + 'address_book', options,
          function (contents) {
            $(div).empty().addClass('address-select-box').append(contents);
          }
@@ -143,7 +143,7 @@ function load_customer_search() {
     return close_customer_select();
   }
 
-  $.post(Drupal.settings.basePath + '?q=admin/store/orders/customer', {},
+  $.post(Drupal.settings.ucURL.adminOrders + 'customer', {},
          function (contents) {
            $('#customer-select').empty().addClass('customer-select-box').append(contents);
            $('#customer-select #edit-first-name').val($('#edit-billing-first-name').val());
@@ -173,7 +173,7 @@ function load_customer_search_results() {
     email = '0';
   }
 
-  $.post(Drupal.settings.basePath + '?q=admin/store/orders/customer/search/' + encodeURIComponent(first_name) + '/' + encodeURIComponent(last_name) + '/' + encodeURIComponent(email),
+  $.post(Drupal.settings.ucURL.adminOrders + 'customer/search/' + encodeURIComponent(first_name) + '/' + encodeURIComponent(last_name) + '/' + encodeURIComponent(email),
          { },
          function (contents) {
            $('#customer-select').empty().append(contents);
@@ -207,7 +207,7 @@ function load_new_customer_form() {
     return close_customer_select();
   }
 
-  $.post(Drupal.settings.basePath + '?q=admin/store/orders/customer/new', {},
+  $.post(Drupal.settings.ucURL.adminOrders + 'customer/new', {},
          function (contents) {
            $('#customer-select').empty().addClass('customer-select-box').append(contents);
            customer_select = 'new';
@@ -224,7 +224,7 @@ function check_new_customer_address() {
     'email' : $('#customer-select #edit-email').val(),
     'sendmail' : $('#customer-select #edit-sendmail').attr('checked')
   };
-  $.post(Drupal.settings.basePath + '?q=admin/store/orders/customer/new/check/' + encodeURIComponent(options['email']), options,
+  $.post(Drupal.settings.ucURL.adminOrders + 'customer/new/check/' + encodeURIComponent(options['email']), options,
          function (contents) {
            $('#customer-select').empty().append(contents);
          }
@@ -267,7 +267,7 @@ function uc_order_load_product_edit_div(order_id) {
 
       show_product_throbber();
 
-      $.post(Drupal.settings.basePath + '?q=admin/store/orders/' + order_id + '/products',
+      $.post(Drupal.settings.ucURL.adminOrders + order_id + '/products',
              { action: 'view' },
              function(contents) {
                if (contents != '') {
@@ -293,7 +293,7 @@ function load_product_select(order_id, search) {
 
   show_product_throbber();
 
-  $.post(Drupal.settings.basePath + '?q=admin/store/orders/' + order_id + '/product_select', options,
+  $.post(Drupal.settings.ucURL.adminOrders + order_id + '/product_select', options,
          function (contents) {
            $('#products-selector').empty().addClass('product-select-box2').append(contents);
            hide_product_throbber();
@@ -328,7 +328,7 @@ function add_product_form() {
   show_product_throbber();
 
   if (parseInt($('#edit-unid').val()) > 0) {
-    $.post(Drupal.settings.basePath + '?q=admin/store/orders/' + $('#edit-order-id').val() + '/add_product/' + $('#edit-unid').val(), { },
+    $.post(Drupal.settings.ucURL.adminOrders + $('#edit-order-id').val() + '/add_product/' + $('#edit-unid').val(), { },
            function(contents) {
              $('#products-selector').empty().append(contents);
              hide_product_throbber();
@@ -354,7 +354,7 @@ function add_product_to_order(order_id, node_id) {
 
   show_product_throbber();
 
-  $.post(Drupal.settings.basePath + '?q=admin/store/orders/' + order_id + '/products', post_vars,
+  $.post(Drupal.settings.ucURL.adminOrders + order_id + '/products', post_vars,
          function(contents) {
            if (contents != '') {
              $('#products-container').empty().append(contents);
@@ -397,7 +397,7 @@ function add_blank_line_button(order_id) {
 
   show_product_throbber();
 
-  $.post(Drupal.settings.basePath + '?q=admin/store/orders/' + order_id + '/products',
+  $.post(Drupal.settings.ucURL.adminOrders + order_id + '/products',
          post_vars,
          function(contents) {
            if (contents != '') {
@@ -419,7 +419,7 @@ function remove_product_button(message, opid) {
 
     show_product_throbber();
 
-    $.post(Drupal.settings.basePath + '?q=admin/store/orders/' + $('#edit-order-id').val() + '/products',
+    $.post(Drupal.settings.ucURL.adminOrders + $('#edit-order-id').val() + '/products',
            post_vars,
            function(contents) {
              if (contents != '') {

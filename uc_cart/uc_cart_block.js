@@ -1,4 +1,4 @@
-// $Id: uc_cart_block.js,v 1.8.2.4 2009-07-21 14:37:20 islandusurper Exp $
+// $Id: uc_cart_block.js,v 1.8.2.5 2009-09-21 14:34:47 islandusurper Exp $
 
 /**
  * @file
@@ -22,14 +22,15 @@ Drupal.behaviors.ucCollapseBlock = function(context) {
 $(document).ready(
   function() {
     if (Drupal.settings.ucCollapsedBlock == true) {
-      // Hide the contents.
-      $('#cart-block-contents').hide();
-
       // Add the appropriate title bar class.
       $('.cart-block-title-bar').addClass('cart-block-toggle');
 
       // Add the appropriate arrow class.
       $('.cart-block-arrow').removeClass('arrow-down').addClass('arrow-up');
+    }
+    else {
+      // Add the appropriate arrow class.
+      $('.cart-block-arrow').removeClass('arrow-up').addClass('arrow-down');
     }
   }
 );

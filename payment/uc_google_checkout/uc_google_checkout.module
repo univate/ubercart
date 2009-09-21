@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_google_checkout.module,v 1.1.2.14 2009-08-17 21:49:35 islandusurper Exp $
+// $Id: uc_google_checkout.module,v 1.1.2.15 2009-09-21 14:34:48 islandusurper Exp $
 
 /**
  * @file
@@ -98,6 +98,9 @@ function uc_google_checkout_init() {
     unset($_SESSION['cart_order'], $_SESSION['do_complete'], $_SESSION['new_user'], $users[$user->uid]);
     variable_set('uc_google_checkout_order_users', $users);
   }
+
+  global $conf;
+  $conf['i18n_variables'][] = 'uc_google_checkout_order_cancel_reason';
 }
 
 function uc_google_checkout_theme() {

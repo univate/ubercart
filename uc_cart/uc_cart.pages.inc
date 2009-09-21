@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.pages.inc,v 1.1.2.17 2009-08-17 21:27:55 islandusurper Exp $
+// $Id: uc_cart.pages.inc,v 1.1.2.18 2009-09-21 14:34:47 islandusurper Exp $
 
 /**
  * @file
@@ -215,27 +215,7 @@ function uc_cart_checkout_form() {
   }
   unset($_SESSION['expanded_panes']);
 
-  $context = array(
-    'revision' => 'altered',
-    'type' => 'cart_item',
-  );
   $contents = uc_cart_get_contents();
-  foreach ($contents as $key => $item) {
-    $price_info = array(
-      'price' => $item->price,
-      'qty' => $item->qty,
-    );
-    $context['subject'] = array(
-      'cart' => $contents,
-      'cart_item' => $item,
-      'node' => node_load($item->nid),
-    );
-
-    // Get the altered price per unit, as ordered products have a locked-in
-    // price. Price altering rules may change over time, but the amount paid
-    // by the customer does not after the fact.
-    $contents[$key]->price = uc_price($price_info, $context) / $item->qty;
-  }
 
   $form['cart_contents'] = array(
     '#type' => 'hidden',
@@ -305,6 +285,30 @@ function uc_cart_checkout_form_validate($form, &$form_state) {
   }
 
   $order->products = unserialize($form_state['values']['cart_contents']);
+
+  $context = array(
+    'revision' => 'original',
+    'type' => 'order_product',
+  );
+  foreach ($order->products as $key => $item) {
+    $price_info = array(
+      'price' => $item->price,
+      'qty' => $item->qty,
+    );
+    $context['subject'] = array(
+      'order' => $order,
+      'product' => $item,
+      'node' => node_load($item->nid),
+    );
+
+    // Get the altered price per unit, as ordered products have a locked-in
+    // price. Price altering rules may change over time, but the amount paid
+    // by the customer does not after the fact.
+    $price = uc_price($price_info, $context) / $item->qty;
+    if ($order->products[$key]->price != $price) {
+      $order->products[$key]->data['altered_price'] = $price;
+    }
+  }
 
   $order->order_total = uc_order_get_total($order, TRUE);
 

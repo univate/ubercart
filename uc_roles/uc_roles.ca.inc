@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_roles.ca.inc,v 1.1.2.11 2009-09-11 19:04:55 islandusurper Exp $
+// $Id: uc_roles.ca.inc,v 1.1.2.12 2009-09-21 14:34:49 islandusurper Exp $
 
 /**
  * @file
@@ -452,7 +452,7 @@ function ca_build_email_form($form_state, $settings, $token_filters) {
  *   An Ubercart order object.
  * @see uc_roles_action_order_renew_form()
  */
-function uc_roles_action_order_renew($order) {
+function uc_roles_action_order_renew($order, $settings) {
   // Load the order's user and exit if not available.
   if (!($account = user_load($order->uid))) {
     return;
@@ -472,10 +472,7 @@ function uc_roles_action_order_renew($order) {
       $existing_role = db_fetch_object(db_query("SELECT * FROM {uc_roles_expirations} WHERE uid = %d AND rid = %d", $account->uid, $role->rid));
 
       // Determine the expiration timestamp for the role.
-      $expiration = _uc_roles_product_get_expiration($role, $product->qty, $existing_role->expiration);
-
-      // Grant the role to the user.
-      uc_roles_grant($account, $role->rid, $expiration, TRUE, !$settings['message']);
+      $expiration = _uc_roles_product_get_expiration($role, $product->qty, !is_null($existing_role->expiration) ? $existing_role->expiration : NULL);
 
       // Get the new expiration (if applicable)
       $new_expiration = db_fetch_object(db_query("SELECT * FROM {uc_roles_expirations} WHERE uid = %d AND rid = %d", $account->uid, $role->rid));
@@ -484,10 +481,16 @@ function uc_roles_action_order_renew($order) {
       if (!is_null($existing_role->expiration)) {
         $op = 'renew';
         $comment = t('Customer user role %role renewed.', array('%role' => _uc_roles_get_name($role->rid)));
+
+        // Renew the user's role.
+        uc_roles_renew($account, $role->rid, $expiration, !$settings['message']);
       }
       else {
         $op = 'grant';
         $comment = t('Customer granted user role %role.', array('%role' => _uc_roles_get_name($role->rid)));
+
+        // Grant the role to the user.
+        uc_roles_grant($account, $role->rid, $expiration, TRUE, !$settings['message']);
       }
 
       uc_order_comment_save($order->order_id, $user->uid, $comment);
@@ -498,7 +501,9 @@ function uc_roles_action_order_renew($order) {
   }
 }
 
-// Borrow the order form for role renewal order state configuration.
+/**
+ * @see uc_roles_action_order_renew()
+ */
 function uc_roles_action_order_renew_form($form_state, $settings = array()) {
   $form = array();
 

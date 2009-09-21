@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_credit.module,v 1.5.2.17 2009-08-17 21:27:56 islandusurper Exp $
+// $Id: uc_credit.module,v 1.5.2.18 2009-09-21 14:34:49 islandusurper Exp $
 
 /**
  * @file
@@ -78,6 +78,15 @@ function uc_credit_theme() {
       'arguments' => array('form' => NULL),
     ),
   );
+}
+
+/**
+ * Implementation of hook_init().
+ */
+function uc_credit_init() {
+  global $conf;
+  $conf['i18n_variables'][] = 'uc_credit_fail_message';
+  $conf['i18n_variables'][] = 'uc_credit_policy';
 }
 
 /**

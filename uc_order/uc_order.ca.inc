@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.ca.inc,v 1.1.2.26 2009-09-11 19:04:56 islandusurper Exp $
+// $Id: uc_order.ca.inc,v 1.1.2.27 2009-09-21 14:34:46 islandusurper Exp $
 
 /**
  * @file
@@ -587,7 +587,7 @@ function uc_order_condition_billing_country_form($form_state, $settings = array(
 function uc_order_condition_has_products($order, $settings) {
   $products = array();
   foreach ($order->products as $product) {
-    $products[] = $product->nid;
+    $products[] = $product->model;
   }
   $required = array_intersect($settings['products'], $products);
   if ($settings['required']) {
@@ -609,14 +609,14 @@ function uc_order_condition_has_products($order, $settings) {
 /**
  * @see uc_order_condition_has_products()
  */
-function uc_order_condition_has_products_form($form_state, $settings = array('required' => 0, 'forbidden' => 0)) {
+function uc_order_condition_has_products_form($form_state, $settings) {
   $form['required'] = array('#type' => 'radios',
     '#title' => t('Require selected products'),
     '#options' => array(
       0 => t('Order has any of these products.'),
       1 => t('Order has all of these products.'),
     ),
-    '#default_value' => $settings['required'],
+    '#default_value' => isset($settings['required']) ? $settings['required'] : 0,
   );
   $form['forbidden'] = array('#type' => 'radios',
     '#title' => t('Forbid other products'),
@@ -624,15 +624,17 @@ function uc_order_condition_has_products_form($form_state, $settings = array('re
       0 => t('Order may have other products.'),
       1 => t('Order has only these products.'),
     ),
-    '#default_value' => $settings['forbidden'],
+    '#default_value' => isset($settings['forbidden']) ? $settings['forbidden'] : 0,
   );
+
   $options = array();
-  $result = db_query("SELECT nid, model FROM {uc_products}");
+  $result = db_query("SELECT nid FROM {uc_products}");
   while ($product = db_fetch_object($result)) {
-    $options[$product->nid] = $product->model;
+    $options += uc_product_get_models(node_load($product->nid), FALSE);
   }
+
   $form['products'] = array('#type' => 'select',
-    '#title' => t('Products'),
+    '#title' => t('Product models'),
     '#options' => $options,
     '#default_value' => $settings['products'],
     '#multiple' => TRUE,

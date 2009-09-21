@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_2checkout.module,v 1.6.2.9 2009-08-17 21:27:58 islandusurper Exp $
+// $Id: uc_2checkout.module,v 1.6.2.10 2009-09-21 14:34:50 islandusurper Exp $
 
 /**
  * @file
@@ -29,6 +29,15 @@ function uc_2checkout_menu() {
   );
 
   return $items;
+}
+
+/**
+ * Implementation of hook_init().
+ */
+function uc_2checkout_init() {
+  global $conf;
+  $conf['i18n_variables'][] = 'uc_2checkout_method_title';
+  $conf['i18n_variables'][] = 'uc_2checkout_checkout_button';
 }
 
 /**

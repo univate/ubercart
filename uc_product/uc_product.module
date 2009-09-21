@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product.module,v 1.14.2.34 2009-09-11 19:04:55 islandusurper Exp $
+// $Id: uc_product.module,v 1.14.2.35 2009-09-21 14:34:50 islandusurper Exp $
 
 /**
  * @file
@@ -236,6 +236,10 @@ function uc_product_feature_access($node) {
  */
 function uc_product_init() {
   drupal_add_css(drupal_get_path('module', 'uc_product') .'/uc_product.css');
+
+  global $conf;
+  $conf['i18n_variables'][] = 'uc_product_add_to_cart_text';
+  $conf['i18n_variables'][] = 'uc_teaser_add_to_cart_text';
 }
 
 /**
@@ -273,9 +277,6 @@ function uc_product_enable() {
     uc_product_add_default_image_field();
   }
 
-  if (module_exists('imagecache')) {
-    uc_product_add_imagecache_presets();
-  }
 }
 
 /**
@@ -449,7 +450,7 @@ function uc_product_form(&$node) {
     '#type' => 'textfield',
     '#title' => t('List price'),
     '#required' => FALSE,
-    '#default_value' => isset($node->list_price) ? $node->list_price : 0,
+    '#default_value' => isset($node->list_price) ? uc_product_format_price_field_value($node->list_price) : 0,
     '#description' => t('The listed MSRP.'),
     '#weight' => 0,
     '#size' => 20,
@@ -461,7 +462,7 @@ function uc_product_form(&$node) {
     '#type' => 'textfield',
     '#title' => t('Cost'),
     '#required' => FALSE,
-    '#default_value' => isset($node->cost) ? $node->cost : 0,
+    '#default_value' => isset($node->cost) ? uc_product_format_price_field_value($node->cost) : 0,
     '#description' => t("Your store's cost."),
     '#weight' => 1,
     '#size' => 20,
@@ -473,7 +474,7 @@ function uc_product_form(&$node) {
     '#type' => 'textfield',
     '#title' => t('Sell price'),
     '#required' => TRUE,
-    '#default_value' => isset($node->sell_price) ? $node->sell_price : 0,
+    '#default_value' => isset($node->sell_price) ? uc_product_format_price_field_value($node->sell_price) : 0,
     '#description' => t('Customer purchase price.'),
     '#weight' => 2,
     '#size' => 20,
@@ -1120,8 +1121,7 @@ function uc_product_store_status() {
         break;
       }
       else {
-        $actions = imagecache_preset_actions($preset);
-        if (empty($actions) && $preset_name != 'product_full') {
+        if (empty($preset['actions']) && $preset_name != 'product_full') {
           $action_check = 0;
           break;
         }
@@ -1683,13 +1683,19 @@ function uc_product_is_product_form($form) {
 /**
  * Get all models of a product (node).
  *
+ * Gather any modules' models on this node, then add the node's SKU and the
+ * optional 'Any' option.
+ *
  * @param $nid
  *   The node ID of the product.
- *
- * Add the generic 'Any' option and the node SKU, then gather any modules'
- * models on this node.
+ * @param $add_blank
+ *   String to use for the initial blank entry. If not desired, set to NULL
+ *   or FALSE. Make sure to localize the string first. Defaults to '- Any -'.
+ * @return
+ *   An associative array of model numbers. The key for '- Any -' is the empty
+ *   string.
  */
-function uc_product_get_models($node) {
+function uc_product_get_models($node, $add_blank = TRUE) {
   // Get any modules' SKUs on this node.
   $models = module_invoke_all('uc_product_models', $node);
   // Add the base SKU of the node.
@@ -1701,7 +1707,14 @@ function uc_product_get_models($node) {
   asort($models);
 
   // And finally, we prepend 'Any' so it's the first option.
-  return array(NULL => 'Any') + $models;
+  if (!empty($add_blank) || $add_blank === '') {
+    if ($add_blank === TRUE) {
+      $add_blank = t('- Any -');
+    }
+    return array('' => $add_blank) + $models;
+  }
+
+  return $models;
 }
 
 /**
@@ -2030,62 +2043,65 @@ function uc_product_add_default_image_field($type = NULL) {
 }
 
 /**
- * Create imagecache presets for use on Ubercart pages.
+ * Implementation of hook_imagecache_default_presets().
  */
-function uc_product_add_imagecache_presets() {
-  $presets = array('product', 'product_full', 'product_list', 'uc_thumbnail');
-  if (module_exists('uc_catalog')) {
-    $presets[] = 'uc_category';
-  }
-  if (module_exists('uc_cart')) {
-    $presets[] = 'cart';
-  }
+function uc_product_imagecache_default_presets() {
+  $presets = array();
 
-  foreach ($presets as $preset_name) {
-    $preset = imagecache_preset_by_name($preset_name);
-    if (empty($preset)) {
-      // No preset of that name, so make a new one.
-      $preset = imagecache_preset_save(array('presetname' => $preset_name));
-    }
-
-    $actions = imagecache_preset_actions($preset);
-    if (empty($actions)) {
-      // The preset has no actions, so scale the image.
-      $action = array(
+  $presets['product'] = array(
+    'presetname' => 'product',
+    'actions' => array(
+      array(
+        'weight' => '0',
+        'module' => 'uc_product',
         'action' => 'imagecache_scale',
-        'presetid' => $preset['presetid'],
-        'weight' => 0,
         'data' => array(
+          'width' => '100',
+          'height' => '100',
           'upscale' => 0,
         ),
-      );
-      switch ($preset_name) {
-        case 'product':
-        case 'product_list':
-          $action['data']['width'] = '100';
-          $action['data']['height'] = '100';
-        break;
-        case 'cart':
-          $action['data']['width'] = '50';
-          $action['data']['height'] = '50';
-        break;
-        case 'uc_category':
-          $action['data']['width'] = '96';
-          $action['data']['height'] = '96';
-        break;
-        case 'uc_thumbnail':
-          $action['data']['width'] = '35';
-          $action['data']['height'] = '35';
-        break;
-        default:
-          // Do not save the action and get the next preset.
-          // Continue thinks swtich() is a loop, so continue it and the
-          // foreach().
-        continue 2;
-      }
-      imagecache_action_save($action);
-    }
-  }
+      ),
+    ),
+  );
+
+  $presets['product_full'] = array(
+    'presetname' => 'product_full',
+    'actions' => array(),
+  );
+
+  $presets['product_list'] = array(
+    'presetname' => 'product_list',
+    'actions' => array(
+      array(
+        'weight' => '0',
+        'module' => 'uc_product',
+        'action' => 'imagecache_scale',
+        'data' => array(
+          'width' => '100',
+          'height' => '100',
+          'upscale' => 0,
+        ),
+      ),
+    ),
+  );
+
+  $presets['uc_thumbnail'] = array(
+    'presetname' => 'uc_thumbnail',
+    'actions' => array(
+      array(
+        'weight' => '0',
+        'module' => 'uc_product',
+        'action' => 'imagecache_scale',
+        'data' => array(
+          'width' => '35',
+          'height' => '35',
+          'upscale' => 0,
+        ),
+      ),
+    ),
+  );
+
+  return $presets;
 }
 
 /**
@@ -2096,4 +2112,22 @@ function uc_product_views_api() {
     'api' => '2.0',
     'path' => drupal_get_path('module', 'uc_product') .'/views',
   );
+}
+
+/**
+ * Display prices in forms with a minimum number of decimal places.
+ *
+ * @param $price
+ *   The price to display as the #default_value in a form field.
+ */
+function uc_product_format_price_field_value($price) {
+  $exact = rtrim(number_format($price, 6, '.', ''), '0');
+  $round = number_format($price, variable_get('uc_currency_prec', 2), '.', '');
+
+  if ($exact == rtrim($round, '0')) {
+    return $round;
+  }
+  else {
+    return $exact;
+  }
 }

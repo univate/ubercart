@@ -1,4 +1,4 @@
-// $Id: uc_quote.js,v 1.5.2.7 2009-08-17 21:27:58 islandusurper Exp $
+// $Id: uc_quote.js,v 1.5.2.8 2009-09-21 14:34:47 islandusurper Exp $
 
 /**
  * @file
@@ -117,7 +117,7 @@ function quoteCallback(products) {
   // progress.startMonitoring(Drupal.settings.basePath + "?q=shipping/quote", 0);
   $.ajax({
     type: "POST",
-    url: Drupal.settings.basePath + "?q=cart/checkout/shipping/quote",
+    url: Drupal.settings.ucURL.shippingQuotes,
     data: details,
     dataType: "json",
     success: displayQuote

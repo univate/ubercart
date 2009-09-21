@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product_kit.module,v 1.11.2.23 2009-08-17 21:27:59 islandusurper Exp $
+// $Id: uc_product_kit.module,v 1.11.2.24 2009-09-21 14:34:48 islandusurper Exp $
 
 /**
  * @file
@@ -95,6 +95,32 @@ function uc_product_kit_enable() {
   // Add field_image_cache to product kits.
   if (module_exists('imagefield')) {
     uc_product_add_default_image_field('product_kit');
+  }
+}
+
+/**
+ * Implementation of hook_uc_form_alter().
+ *
+ * Put a product list on the form, so product kit attributes will work on the
+ * order admin edit form. See uc_attribute_form_alter().
+ */
+function uc_product_kit_uc_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'uc_order_add_product_form') {
+    if (!isset($form['sub_products'])) {
+      // We only want product kits.
+      $kit = $form['node']['#value'];
+      if ($kit->type !== 'product_kit') {
+        return;
+      }
+
+      $products = array('#tree' => TRUE);
+      foreach ($kit->products as $kit_product) {
+        $products[$kit_product->nid] = array();
+      }
+
+      // Add the products to the beginning of the form for visual aesthetics.
+      $form = array_merge(array('sub_products' => $products), $form);
+    }
   }
 }
 
@@ -893,6 +919,58 @@ function uc_product_kit_cart_item($op, &$item) {
   }
 }
 
+/**
+ * Implementation of hook_order_product_alter().
+ *
+ * The hookups for making product kits work on the order edit admin screen.
+ *
+ * @param $product
+ *   The order product being saved.
+ * @param $order
+ *   The order being edited.
+ */
+function uc_product_kit_order_product_alter(&$product, $order) {
+  if ($product->type !== 'product_kit') {
+    return;
+  }
+
+  // Have to save each individual product if this is a kit.
+  foreach ($product->products as $kit_product) {
+    $kit_product->price = $kit_product->sell_price;
+    $kit_product->qty *= $product->qty;
+
+    // Load all the attributes/discounts/etc as if we were adding it to the
+    // cart.
+    $kit_product->data = module_invoke_all('add_to_cart_data', $_POST['sub_products'][$kit_product->nid]);
+    $kit_product->data['kit_id'] = $product->nid;
+
+    // Run the product through the alter mill.
+    module_invoke_all('cart_item', 'load', $kit_product);
+
+    $price_info = array(
+      'price' => $kit_product->price,
+      'qty' => 1,
+    );
+    $context = array(
+      'revision' => 'altered',
+      'type' => 'order_product',
+      'subject' => array(
+        'order' => $order,
+        'product' => $kit_product,
+        'node' => node_load($kit_product->nid),
+      ),
+    );
+    $kit_product->price = uc_price($price_info, $context);
+
+    drupal_alter('order_product', $kit_product, $order);
+
+    // Save the individual item to the order.
+    uc_order_product_save($order->order_id, $kit_product);
+  }
+
+  // Don't save the base kit node, though.
+  $product->skip_save = TRUE;
+}
 /**
  * Implementation of hook_cart_display().
  *

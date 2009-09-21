@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_payment.module,v 1.5.2.11 2009-08-17 21:27:55 islandusurper Exp $
+// $Id: uc_payment.module,v 1.5.2.12 2009-09-21 14:34:46 islandusurper Exp $
 
 /**
  * @file
@@ -206,6 +206,14 @@ function uc_payment_theme() {
 }
 
 /**
+ * Implementation of hook_init().
+ */
+function uc_payment_init() {
+  global $conf;
+  $conf['i18n_variables'][] = 'uc_default_payment_msg';
+}
+
+/**
  * Implementation of hook_form_alter().
  */
 function uc_payment_form_alter(&$form, &$form_state, $form_id) {
@@ -318,43 +326,44 @@ function uc_payment_order_state() {
  ******************************************************************************/
 
 function uc_payment_get_totals() {
+  $output = '';
   if (is_array($_POST)) {
-    foreach ($_POST as $key => $value) {
-      $totals[$key] = explode(';', $value);
-    }
+    $order = unserialize($_POST['order']);
   }
 
-  if (is_array($totals) && count($totals) > 0) {
-    usort($totals, '_total_sort');
+  if ($order) {
+    usort($order->line_items, 'uc_weight_sort');
 
     $output = t('Order total preview:')
              .' <span id="order-total-throbber"></span><table>';
     $grand_total = 0;
 
     $context = array(
-      'revision' => 'themed',
       'type' => 'line_item',
+      'subject' => array(
+        'order' => $order,
+      ),
     );
 
-    foreach ($totals as $line) {
-      if (!empty($line[2])) {
-        $context['subject'] = array(
-          'line_item' => $line,
-        );
-        $output .= '<tr><td align="right"><b>'. $line[2] .':</b></td>'
-                  .'<td align="right">'. uc_price($line[1], $context) .'</td></tr>';
-        if ($line[3]) {
-          $grand_total += round($line[1], 2);
+    foreach ($order->line_items as $line) {
+      if (!empty($line['title'])) {
+        $context['revision'] = 'themed';
+        $context['subject']['line_item'] = $line;
+
+        $output .= '<tr><td align="right"><b>'. $line['title'] .':</b></td>'
+                  .'<td align="right">'. uc_price($line['amount'], $context) .'</td></tr>';
+
+        if ($line['summed']) {
+          $context['revision'] = 'altered';
         }
       }
     }
 
+    $context['revision'] = 'themed';
     $context['type'] = 'amount';
-    $context['subject'] = array(
-      'grand_total' => $grand_total,
-    );
+    unset($context['subject']);
     $output .= '<tr><td align="right"><b>'. t('Order total:') .'</b></td>'
-              .'<td align="right">'. uc_price($grand_total, $context)
+              .'<td align="right">'. uc_price(uc_order_get_total($order), $context)
               .'</td></tr></table>';
   }
 

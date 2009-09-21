@@ -1,5 +1,5 @@
 <?php
-// $Id: customer.itpl.php,v 1.5.2.8 2009-08-17 21:27:53 islandusurper Exp $
+// $Id: customer.itpl.php,v 1.5.2.9 2009-09-21 14:34:49 islandusurper Exp $
 
 /**
  * @file
@@ -158,6 +158,7 @@
                     <?php
                     $context = array(
                       'revision' => 'themed',
+                      'type' => 'line_item',
                       'subject' => array(
                         'order' => $order,
                       ),
@@ -204,6 +205,7 @@
                           <?php if (is_array($order->products)) {
                             $context = array(
                               'revision' => 'formatted',
+                              'type' => 'order_product',
                               'subject' => array(
                                 'order' => $order,
                               ),
@@ -214,6 +216,7 @@
                                 'qty' => $product->qty,
                               );
                               $context['subject']['order_product'] = $product;
+                              $context['subject']['node'] = node_load($product->nid);
                               ?>
                           <tr>
                             <td valign="top" nowrap="nowrap">

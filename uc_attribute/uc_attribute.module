@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_attribute.module,v 1.12.2.34 2009-08-20 23:40:35 islandusurper Exp $
+// $Id: uc_attribute.module,v 1.12.2.35 2009-09-21 14:34:50 islandusurper Exp $
 
 /**
  * @file
@@ -274,8 +274,39 @@ function uc_attribute_theme() {
 
 /**
  * Implementation of hook_form_alter().
+ */
+function uc_attribute_form_alter(&$form, &$form_state, $form_id) {
+  if (strpos($form_id, 'add_product_form')) {
+    $node =& $form['node']['#value'];
+    // If the node has a product list, add attributes to them
+    if (isset($form['sub_products']) && count(element_children($form['sub_products']))) {
+      foreach (element_children($form['sub_products']) as $key) {
+        $form['sub_products'][$key]['attributes'] = _uc_attribute_alter_form(node_load($key));
+        if (is_array($form['sub_products'][$key]['attributes'])) {
+          $form['sub_products'][$key]['attributes']['#tree'] = TRUE;
+          $form['sub_products'][$key]['#type'] = 'fieldset';
+        }
+      }
+    }
+    // If not, add attributes to the node.
+    else {
+      $form['attributes'] = _uc_attribute_alter_form($node);
+
+      if (is_array($form['attributes'])) {
+        $form['attributes']['#tree'] = TRUE;
+        $form['attributes']['#weight'] = -1;
+      }
+    }
+  }
+}
+
+/**
+ * Implementation of hook_uc_form_alter().
  *
  * Attach option selectors to the form with the "Add to Cart" button.
+ *
+ * This function also handles selecting attributes for products added to orders
+ * manually.
  */
 function uc_attribute_uc_form_alter(&$form, &$form_state, $form_id) {
   if (strpos($form_id, 'add_to_cart_form') || strpos($form_id, 'add_product_form')) {
@@ -378,26 +409,12 @@ function uc_attribute_uc_product_models($node) {
  * Store the customer's choices in the cart.
  */
 function uc_attribute_add_to_cart_data($form_values) {
-  if (!isset($form_values['attributes'])) {
-    return array('attributes' => array(), 'model' => NULL);
+  if (isset($form_values['attributes'])) {
+    return array('attributes' => $form_values['attributes']);
   }
-
-  $combination = array();
-  foreach ($form_values['attributes'] as $aid => $value) {
-    if (is_numeric($value)) {
-      $attribute = uc_attribute_load($aid, $form_values['nid'], 'product');
-      if ($attribute && ($attribute->display == 1 || $attribute->display == 2)) {
-        $combination[$aid] = $value;
-      }
-    }
+  else {
+    return array('attributes' => array());
   }
-  ksort($combination);
-
-  $result = db_query("SELECT model FROM {uc_product_adjustments} WHERE nid = %d AND combination LIKE '%s'", $form_values['nid'], serialize($combination));
-  $model = db_result($result);
-
-  // Preserve the 'attributes' key to allow other modules to add to the data field.
-  return array('attributes' => $form_values['attributes'], 'model' => $model);
 }
 
 /**
@@ -450,8 +467,22 @@ function uc_attribute_cart_item($op, &$item) {
       $item->price += $op_prices;
       $item->weight += $op_weight;
 
-      if (!empty($item->data['model'])) {
-        $item->model = $item->data['model'];
+      $combination = array();
+      foreach ($item->data['attributes'] as $aid => $value) {
+        if (is_numeric($value)) {
+          $attribute = uc_attribute_load($aid, $item->nid, 'product');
+          if ($attribute && ($attribute->display == 1 || $attribute->display == 2)) {
+            $combination[$aid] = $value;
+          }
+        }
+      }
+      ksort($combination);
+
+      $result = db_query("SELECT model FROM {uc_product_adjustments} WHERE nid = %d AND combination LIKE '%s'", $item->nid, serialize($combination));
+      $model = db_result($result);
+
+      if (!empty($model)) {
+        $item->model = $model;
       }
       break;
   }
@@ -616,13 +647,14 @@ function _uc_cart_product_get_options($item) {
     foreach ($data['attributes'] as $aid => $selected) {
       if (isset($node->attributes[$aid])) {
         $attribute = $node->attributes[$aid];
+        $name = _uc_attribute_get_name($attribute);
         // Only discrete options can affect the price of an item.
         if ($attribute->display && count($attribute->options)) {
           // There may be many selected options, or just one.
           foreach ((array)$selected as $oid) {
             if ($oid > 0) {
               $options[$index] = (array)$attribute->options[$oid];
-              $options[$index]['attribute'] = _uc_attribute_get_name($attribute);
+              $options[$index]['attribute'] = $name;
               $index++;
             }
           }
@@ -630,7 +662,7 @@ function _uc_cart_product_get_options($item) {
         else {
           // Handle textfield attributes.
           $options[$index] = array(
-            'attribute' => _uc_attribute_get_name($attribute),
+            'attribute' => $name,
             'aid' => $aid,
             'oid' => 0,
             'name' => $selected,

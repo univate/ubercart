@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_attribute.admin.inc,v 1.1.2.21 2009-09-11 19:04:58 islandusurper Exp $
+// $Id: uc_attribute.admin.inc,v 1.1.2.22 2009-09-21 14:34:50 islandusurper Exp $
 
 /**
  * @file
@@ -372,13 +372,13 @@ function uc_attribute_option_form($form_state, $attribute, $option = NULL) {
   $form['adjustments']['cost'] = array(
     '#type' => 'textfield',
     '#title' => t('Cost'),
-    '#default_value' => $option->cost,
+    '#default_value' => uc_product_format_price_field_value($option->cost),
     '#weight' => 1,
   );
   $form['adjustments']['price'] = array(
     '#type' => 'textfield',
     '#title' => t('Price'),
-    '#default_value' => $option->price,
+    '#default_value' => uc_product_format_price_field_value($option->price),
     '#weight' => 2,
   );
   $form['adjustments']['weight'] = array(
@@ -618,6 +618,8 @@ function uc_object_attributes_form($form_state, $object, $type, $view = 'overvie
  * @see uc_object_attributes_form()
  */
 function theme_uc_object_attributes_form($form) {
+  $output = '';
+
   if ($form['view']['#value'] == 'overview') {
     $header = array(t('Remove'), t('Name'), t('Label'), t('Default'), t('Required'), t('List position'), t('Display'));
 
@@ -647,6 +649,11 @@ function theme_uc_object_attributes_form($form) {
 
     drupal_add_tabledrag('uc-attribute-table', 'order', 'sibling', 'uc-attribute-table-weight');
     $output = theme('table', $header, $rows, array('id' => 'uc-attribute-table'));
+  }
+  else {
+    $output = '<div class="uc-attributes-add-link">';
+    $output .= t('You may add more attributes <a href="!url">here</a>.', array('!url' => url('admin/store/attributes/add')));
+    $output .= '</div>';
   }
 
   $output .= drupal_render($form);
@@ -793,12 +800,12 @@ function uc_object_options_form($form_state, $object, $type) {
         );
         $form['attributes'][$aid]['options'][$oid]['cost'] = array(
           '#type' => 'textfield',
-          '#default_value' => is_null($option->cost) ? $option->default_cost : $option->cost,
+          '#default_value' => uc_product_format_price_field_value(is_null($option->cost) ? $option->default_cost : $option->cost),
           '#size' => 6,
         );
         $form['attributes'][$aid]['options'][$oid]['price'] = array(
           '#type' => 'textfield',
-          '#default_value' => is_null($option->price) ? $option->default_price : $option->price,
+          '#default_value' => uc_product_format_price_field_value(is_null($option->price) ? $option->default_price : $option->price),
           '#size' => 6,
         );
         $form['attributes'][$aid]['options'][$oid]['weight'] = array(

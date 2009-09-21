@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_payment_order_pane.inc,v 1.5.2.6 2009-08-17 21:27:55 islandusurper Exp $
+// $Id: uc_payment_order_pane.inc,v 1.5.2.7 2009-09-21 14:34:46 islandusurper Exp $
 
 /**
  * @file
@@ -73,7 +73,7 @@ function uc_order_pane_payment($op, $arg1) {
         '#title' => t('Payment method'),
         '#default_value' => $arg1->payment_method,
         '#options' => (is_array($options)) ? $options : array(t('None available')),
-        '#attributes' => array('onchange' => "add_order_save_hold(); get_payment_details('admin/store/orders/". $arg1->order_id ."/payment_details/' + this.value);"),
+        '#attributes' => array('onchange' => "add_order_save_hold(); get_payment_details(Drupal.settings.ucURL.adminOrders + '". $arg1->order_id ."/payment_details/' + this.value);"),
         '#disabled' => (is_array($options)) ? FALSE : TRUE,
       );
       return $form;

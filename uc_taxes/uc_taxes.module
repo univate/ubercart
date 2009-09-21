@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_taxes.module,v 1.12.2.18 2009-09-11 19:04:57 islandusurper Exp $
+// $Id: uc_taxes.module,v 1.12.2.19 2009-09-21 14:34:50 islandusurper Exp $
 
 /**
  * @file
@@ -101,12 +101,22 @@ function uc_taxes_menu() {
 function uc_taxes_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'uc_cart_checkout_form') {
     if (isset($form['panes']['payment'])) {
-      drupal_add_js(array('ucTaxWeight' => variable_get('uc_li_tax_weight', 9)), 'setting');
+      drupal_add_js(array(
+        'ucTaxWeight' => variable_get('uc_li_tax_weight', 9),
+        'ucURL' => array(
+          'calculateTax' => url('taxes/calculate'),
+        ),
+      ), 'setting');
       drupal_add_js(drupal_get_path('module', 'uc_taxes') .'/uc_taxes.js');
     }
   }
   elseif ($form_id == 'uc_order_edit_form') {
     if (isset($form['quotes'])) {
+      drupal_add_js(array(
+        'ucURL' => array(
+          'calculateTax' => url('taxes/calculate'),
+        ),
+      ), 'setting');
       drupal_add_js(drupal_get_path('module', 'uc_taxes') .'/uc_taxes.js');
     }
   }
@@ -216,7 +226,7 @@ function uc_line_item_tax($op, $order) {
       $taxes = uc_taxes_calculate($order);
       foreach ($taxes as $tax) {
         $lines[] = array(
-          'id' => 'tax',
+          'id' => ($tax->summed ? 'tax' : 'tax_included'),
           'title' => $tax->name,
           'amount' => $tax->amount,
           'weight' => variable_get('uc_li_tax_weight', 9) + $tax->weight / 10,
@@ -239,6 +249,9 @@ function uc_line_item_tax_subtotal($op, $order) {
   }
   if (is_array($order->line_items)) {
     foreach ($order->line_items as $key => $line_item) {
+      if ($line_item['type'] == 'subtotal') {
+        continue;
+      }
       if (substr($line_item['type'], 0, 3) != 'tax') {
         $amount += $line_item['amount'];
         $different = TRUE;
@@ -451,9 +464,18 @@ function uc_taxes_javascript() {
   $order = $_POST['order'];
   if ($order = unserialize(rawurldecode($order))) {
     $taxes = module_invoke_all('calculate_tax', $order);
-    $subtotal = uc_line_item_tax_subtotal('load', $order);
-    if (is_array($subtotal) && !empty($taxes)) {
-      $taxes['subtotal'] = array('id' => 'subtotal', 'name' => $subtotal[0]['title'], 'amount' => $subtotal[0]['amount'], 'weight' => -10);
+    $callback = _line_item_data('tax_subtotal', 'callback');
+    if (function_exists($callback)) {
+      $subtotal = $callback('load', $order);
+      if (is_array($subtotal) && !empty($taxes)) {
+        $taxes['subtotal'] = (object)array(
+          'id' => 'subtotal',
+          'name' => $subtotal[0]['title'],
+          'amount' => $subtotal[0]['amount'],
+          'weight' => -10,
+          'summed' => 0,
+        );
+      }
     }
   }
   drupal_json((array) $taxes);
@@ -517,7 +539,13 @@ function uc_taxes_apply_tax($order, $tax) {
   }
   $amount = $taxable_amount * $tax->rate;
   if ($amount) {
-    $line_item = (object)array('id' => $tax->id, 'name' => $tax->name, 'amount' => $amount, 'weight' => $tax->weight);
+    $line_item = (object)array(
+      'id' => $tax->id,
+      'name' => $tax->name,
+      'amount' => $amount,
+      'weight' => $tax->weight,
+      'summed' => 1,
+    );
     $line_item->data = array(
       'tax_id' => $tax->id,
       'tax_rate' => $tax->rate,

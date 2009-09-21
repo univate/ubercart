@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.install,v 1.9.2.16 2009-08-18 16:35:10 islandusurper Exp $
+// $Id: uc_order.install,v 1.9.2.17 2009-09-21 14:34:46 islandusurper Exp $
 
 /**
  * @file
@@ -1063,5 +1063,65 @@ function uc_order_update_6012(&$sandbox) {
   }
 
   return $ret;
+}
+
+/**
+ * Convert the settings for the uc_order_condition_has_products to models.
+ */
+function uc_order_update_6013() {
+  $ret = array();
+
+  $models = array();
+  $count = 0;
+
+  $result = db_query("SELECT pid, conditions FROM {ca_predicates} WHERE conditions LIKE '%%uc_order_condition_has_products%%'");
+  while ($predicate = db_fetch_object($result)) {
+    $conditions = unserialize($predicate->conditions);
+
+    $save = uc_order_6013_condition_helper($conditions['#conditions'], $predicate->pid);
+
+    if ($save) {
+      db_query("UPDATE {ca_predicates} SET conditions = '%s' WHERE pid = '%s'", serialize($conditions), $predicate->pid);
+      $count++;
+    }
+  }
+
+  $t = get_t();
+  $ret[] = array('success' => TRUE, 'query' => $t('Fixed %count predicates with the condition "uc_order_condition_has_products".', array('%count' => $count)));
+
+  return $ret;
+}
+
+function uc_order_6013_condition_helper(&$conditions, $pid, $save = FALSE) {
+  foreach ($conditions as $key => &$condition) {
+    if (isset($condition['#conditions'])) {
+      $save = uc_order_6013_condition_helper($condition['#conditions'], $pid, $save);
+    }
+    else {
+      if ($condition['#name'] == 'uc_order_condition_has_products' && isset($condition['#settings']['products'])) {
+        $save = TRUE;
+        $products = array();
+
+        foreach ($condition['#settings']['products'] as $x => $nid) {
+          // The "Any" setting will be an empty string.
+          if (is_numeric($nid)) {
+            if (!isset($models[$nid])) {
+              // Get the latest revision's model.
+              $models[$nid] = db_result(db_query("SELECT p.model FROM {uc_products} AS p LEFT JOIN {node} AS n ON n.vid = p.vid WHERE n.nid = %d", $nid));
+            }
+
+            $model = $models[$nid];
+          }
+          else {
+            $model = $nid;
+          }
+
+          $condition['#settings']['products'][$x] = $model;
+        }
+      }
+    }
+  }
+
+  return $save;
 }
 

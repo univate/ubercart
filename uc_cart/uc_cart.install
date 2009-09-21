@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.install,v 1.7.2.8 2009-08-17 21:27:55 islandusurper Exp $
+// $Id: uc_cart.install,v 1.7.2.9 2009-09-21 14:34:47 islandusurper Exp $
 
 /**
  * @file
@@ -130,10 +130,10 @@ function uc_cart_update_6002() {
 
 /**
  * Add an autoincrement primary key to the uc_cart_products table
- * @return unknown_type
  */
 function uc_cart_update_6200() {
   $ret = array();
+
   db_add_field($ret, 'uc_cart_products', 'cart_item_id', array(
         'description' => 'Unique identifier for cart item.',
         'type' => 'serial',
@@ -141,5 +141,33 @@ function uc_cart_update_6200() {
         'not null' => TRUE),
     array('primary key' => array('cart_item_id'),)
   );
+
+  return $ret;
+}
+
+/**
+ * Add index to uc_cart_products.cart_id.
+ */
+function uc_cart_update_6201() {
+  $ret = array();
+
+  db_add_index($ret, 'uc_cart_products', 'cart_id', array('cart_id'));
+
+  // Remove unnecessary error message that would occur for new installs.
+  $mysql_error = check_plain("Duplicate key name 'cart_id'");
+  $pg_error = check_plain('relation "uc_cart_products_cart_id_idx" already exists');
+  $pg_error2 = check_plain('query: CREATE INDEX uc_cart_products_cart_id_idx ON uc_cart_products (cart_id)');
+  $errors = $_SESSION['messages']['error'];
+  $total = count($errors);
+  for ($i = 0; $i < $total; $i++) {
+    if (strpos($errors[$i], $mysql_error) || strpos($errors[$i], $pg_error) || strpos($errors[$i], $pg_error2)) {
+      unset($_SESSION['messages']['error'][$i]);
+      $ret[0]['success'] = TRUE;
+    }
+  }
+  if (empty($_SESSION['messages']['error'])) {
+    unset($_SESSION['messages']['error']);
+  }
+
   return $ret;
 }

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.module,v 1.15.2.27 2009-09-11 19:04:56 islandusurper Exp $
+// $Id: uc_cart.module,v 1.15.2.28 2009-09-21 14:34:47 islandusurper Exp $
 
 /**
  * @file
@@ -175,34 +175,28 @@ function uc_cart_menu() {
 }
 
 /**
- * Implementation of hook_enable().
+ * Implementation of hook_imagecache_default_presets().
  */
-function uc_cart_enable() {
-  // Create an Imagecache preset for the cart view form.
-  if (module_exists('imagecache')) {
-    $preset_name = 'cart';
-    $preset = imagecache_preset_by_name($preset_name);
-    if (empty($preset)) {
-      // No preset of that name, so make a new one.
-      $preset = imagecache_preset_save(array('presetname' => $preset_name));
-    }
+function uc_cart_imagecache_default_presets() {
+  $presets = array();
 
-    $actions = imagecache_preset_actions($preset);
-    if (empty($actions)) {
-      // The preset has no actions, so scale the image.
-      $action = array(
+  $presets['cart'] = array(
+    'presetname' => 'cart',
+    'actions' => array(
+      array(
+        'weight' => '0',
+        'module' => 'uc_cart',
         'action' => 'imagecache_scale',
-        'presetid' => $preset['presetid'],
-        'weight' => 0,
         'data' => array(
           'width' => '50',
           'height' => '50',
           'upscale' => 0,
         ),
-      );
-      imagecache_action_save($action);
-    }
-  }
+      ),
+    ),
+  );
+
+  return $presets;
 }
 
 /**
@@ -255,6 +249,25 @@ function uc_cart_theme() {
       'arguments' => array('message' => ''),
     ),
   );
+}
+
+/**
+ * Implementation of hook_init().
+ */
+function uc_cart_init() {
+  global $conf;
+  $conf['i18n_variables'][] = 'uc_cart_breadcrumb_text';
+  $conf['i18n_variables'][] = 'uc_cart_help_text';
+  $conf['i18n_variables'][] = 'uc_cart_new_account_details';
+  $conf['i18n_variables'][] = 'uc_checkout_instructions';
+  $conf['i18n_variables'][] = 'uc_checkout_review_instructions';
+  $conf['i18n_variables'][] = 'uc_continue_shopping_text';
+  $conf['i18n_variables'][] = 'uc_minimum_subtotal_text';
+  $conf['i18n_variables'][] = 'uc_msg_continue_shopping';
+  $conf['i18n_variables'][] = 'uc_msg_order_existing_user';
+  $conf['i18n_variables'][] = 'uc_msg_order_logged_in';
+  $conf['i18n_variables'][] = 'uc_msg_order_new_user';
+  $conf['i18n_variables'][] = 'uc_msg_order_submit';
 }
 
 /**
@@ -411,6 +424,11 @@ function uc_cart_block($op = 'list', $delta = 0, $edit = array()) {
         }
         else {
           $collapsible = FALSE;
+        }
+
+        // Hack in some CSS to hide the block if necessary. drupal_add_css() is in Drupal 7 for this...
+        if (variable_get('uc_cart_block_collapsed', TRUE)) {
+          drupal_set_html_head("<style type='text/css'>#cart-block-contents { display: none; }</style>");
         }
 
         // Build the cart image if enabled.
@@ -684,7 +702,7 @@ function theme_uc_cart_block_items($items) {
 
     $context = array(
       'revision' => 'themed',
-      'field' => 'price',
+      'type' => 'price',
     );
 
     // Loop through each item.
@@ -768,7 +786,7 @@ function uc_cart_uc_message() {
   $messages['review_instructions'] = t("Your order is almost complete. Please review the details below and click 'Submit order' if all the information is correct.  You may use the 'Back' button to make changes to your order if necessary.");
   $messages['completion_message'] = t('Your order is complete! Your order number is [order-id].');
   $messages['completion_logged_in'] = t('Thank you for shopping at [store-name]. While logged in, you may continue shopping or <a href="[order-url]">view your current order status</a> and order history.');
-  $messages['completion_existing_user'] = t('Thank you for shopping at [store-name]. Your current order has been attached to the account we found matching your e-mail address\n\n<a href="!user_url">Login</a> and view your current order status and order history. Remember to login when you make your next purchase for a faster checkout experience!', array('!user_url' => url('user')));
+  $messages['completion_existing_user'] = t('Thank you for shopping at [store-name]. Your current order has been attached to the account we found matching your e-mail address.\n\n<a href="!user_url">Login</a> and view your current order status and order history. Remember to login when you make your next purchase for a faster checkout experience!', array('!user_url' => url('user')));
   $messages['completion_new_user'] = t('Thank you for shopping at [store-name]. A new account has been created for you here that you may use to view your current order status.\n\n<a href="!user_url">Login</a> to your new account using the following information:\n\n<strong>Username:</strong> !new_username\n<strong>Password:</strong> !new_password', array('!user_url' => url('user')));
   $messages['continue_shopping'] = t('<a href="[site-url]">Return to the front page.</a>');
 
@@ -1177,6 +1195,7 @@ function uc_cart_complete_sale($order, $login = FALSE) {
     // If it was found, update the order.
     if ($account = db_fetch_object($result)) {
       $order->uid = $account->uid;
+      $account = user_load($account->uid);
       db_query("UPDATE {uc_orders} SET uid = %d WHERE order_id = %d", $order->uid, $order->order_id);
       $message_type = 'existing_user';
     }
@@ -1229,9 +1248,11 @@ function uc_cart_complete_sale($order, $login = FALSE) {
   else {
     if ($order->uid == $user->uid) {
       $message_type = 'logged_in';
+      $account = clone $user;
     }
     else {
       $message_type = 'existing_user';
+      $account = user_load($order->uid);
     }
   }
 
@@ -1262,10 +1283,6 @@ function uc_cart_complete_sale($order, $login = FALSE) {
 
   // Clear our the session variables used to force the cart workflow.
   unset($_SESSION['cart_order'], $_SESSION['do_complete'], $_SESSION['new_user']);
-
-  if ($user->uid != 0) {
-    $account = clone $user;
-  }
 
   module_invoke_all('uc_checkout_complete', $order, $account);
   ca_pull_trigger('uc_checkout_complete', $order, $account);
@@ -1350,7 +1367,36 @@ function uc_cart_get_contents($cid = NULL, $action = NULL) {
 }
 
 /**
+ * Return the total number of items in the shopping cart.
+ *
+ * The total number of items in the cart isn't simply queried directly from the
+ * database, because when the shopping cart is loaded items may in fact be
+ * altered or removed. Hence we actually load the cart and tally up the total
+ * number of items from the fully loaded cart instead.
+ *
+ * @param $cid
+ *   The cart ID of the shopping cart whose items we're totalling; defaults to
+ *     the current user's cart.
+ * @return
+ *   An integer representing the total number of items in the cart.
+ */
+function uc_cart_get_total_qty($cid = NULL) {
+  if (empty($cid)) {
+    $cid = uc_cart_get_id();
+  }
+
+  $qty = 0;
+
+  foreach (uc_cart_get_contents($cid) as $item) {
+    $qty += $item->qty;
+  }
+
+  return $qty;
+}
+
+/**
  * Allow us to get one single line item in a cart
+ *
  * @param $cart_item_id
  *   cart_item_id to fetch
  * @return
@@ -1380,13 +1426,13 @@ function uc_cart_get_item($cart_item_id) {
 
 /**
  * Update a cart item.
+ *
  * @param $item
- *   The loaded cart item
+ *   The loaded cart item.
  * @return unknown_type
  */
 function uc_cart_update_item($item) {
-  db_query('update {uc_cart_products}
-    set qty=%d, changed=UNIX_TIMESTAMP(), data="%s" WHERE cart_item_id=%d',
+  db_query("UPDATE {uc_cart_products} SET qty = %d, changed = UNIX_TIMESTAMP(), data = '%s' WHERE cart_item_id = %d",
     $item->qty, serialize($item->data), $item->cart_item_id);
 }
 

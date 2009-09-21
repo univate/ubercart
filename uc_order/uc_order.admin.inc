@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.admin.inc,v 1.1.2.23 2009-08-20 23:40:35 islandusurper Exp $
+// $Id: uc_order.admin.inc,v 1.1.2.24 2009-09-21 14:34:46 islandusurper Exp $
 
 /**
  * @file
@@ -516,6 +516,11 @@ function uc_order_admin($sql = NULL, $args = NULL, $search = FALSE) {
     );
   }
 
+  drupal_add_js(array(
+    'ucURL' => array(
+      'adminOrders' => url('admin/store/orders/'),
+    ),
+  ), 'setting');
   drupal_add_js(drupal_get_path('module', 'uc_order') .'/uc_order.js');
 
   if ($search === FALSE) {
@@ -625,6 +630,11 @@ function uc_order_create($customer = NULL) {
     drupal_goto('admin/store/orders/'. $order->order_id .'/edit');
   }
 
+  drupal_add_js(array(
+    'ucURL' => array(
+      'adminOrders' => url('admin/store/orders/'),
+    ),
+  ), 'setting');
   drupal_add_js(drupal_get_path('module', 'uc_order') .'/uc_order.js');
 
   $output = '<div id="customer-search-link" style="position: relative; top: 2px; cursor: pointer;" '
@@ -1020,18 +1030,25 @@ function uc_order_history($user) {
     array('data' => t('Total'), 'field' => 'o.order_total')
   );
 
-  $result = pager_query("SELECT o.order_id, o.created, os.title, SUM(op.qty) AS products, o.order_total AS total FROM {uc_orders} AS o LEFT JOIN {uc_order_statuses} AS os ON o.order_status = os.order_status_id LEFT JOIN {uc_order_products} AS op ON o.order_id = op.order_id WHERE o.uid = %d AND o.order_status IN ". uc_order_status_list('general', TRUE) ." GROUP BY o.order_id, o.created, os.title, o.order_total". tablesort_sql($header), 20, 0, "SELECT COUNT(*) FROM {uc_orders} WHERE uid = %d AND order_status NOT IN ". uc_order_status_list('specific', TRUE), $user->uid);
+  $rows = array();
+
   $context = array(
     'revision' => 'themed-original',
     'type' => 'amount',
   );
+
+  $result = pager_query("SELECT o.order_id, o.created, os.title, SUM(op.qty) AS products, o.order_total AS total FROM {uc_orders} AS o LEFT JOIN {uc_order_statuses} AS os ON o.order_status = os.order_status_id LEFT JOIN {uc_order_products} AS op ON o.order_id = op.order_id WHERE o.uid = %d AND o.order_status IN ". uc_order_status_list('general', TRUE) ." GROUP BY o.order_id, o.created, os.title, o.order_total". tablesort_sql($header), 20, 0, "SELECT COUNT(*) FROM {uc_orders} WHERE uid = %d AND order_status NOT IN ". uc_order_status_list('specific', TRUE), $user->uid);
+
   // Build a table based on the customer's orders.
   while ($order = db_fetch_object($result)) {
     $context['subject'] = array('order' => $order);
+
     $link = l($order->order_id, 'user/'. $user->uid .'/order/'. $order->order_id);
+
     if (user_access('view all orders')) {
       $link .= '<span class="order-admin-icons">'. uc_order_actions($order, TRUE) .'</span>';
     }
+
     $rows[] = array(
       array('data' => format_date($order->created, 'custom', variable_get('uc_date_format_default', 'm/d/Y'))),
       array('data' => $link, 'nowrap' => 'nowrap'),
@@ -1041,9 +1058,12 @@ function uc_order_history($user) {
     );
   }
 
-  $output = theme('table', $header, $rows, array('class' => 'uc-order-history')) . theme('pager', NULL, 20, 0);
+  if (empty($rows)) {
+    $rows[] = array(array('data' => t('No orders available.'), 'colspan' => 5));
+  }
 
-  return $output;
+  return theme('table', $header, $rows, array('class' => 'uc-order-history'))
+       . theme('pager', NULL, 20, 0);
 }
 
 /**
@@ -1285,7 +1305,7 @@ function uc_order_edit_products($order) {
         'qty' => 1,
       );
       $context = array(
-        'revision' => 'altered',
+        'revision' => 'original',
         'type' => 'order_product',
         'subject' => array(
           'order' => $order,
@@ -1760,4 +1780,3 @@ function uc_order_delete_confirm_form_submit($form, &$form_state) {
 
   $form_state['redirect'] = 'admin/store/orders';
 }
-

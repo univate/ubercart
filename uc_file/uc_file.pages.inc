@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.pages.inc,v 1.1.2.10 2009-07-21 14:37:18 islandusurper Exp $
+// $Id: uc_file.pages.inc,v 1.1.2.11 2009-09-21 14:34:48 islandusurper Exp $
 
 /**
  * @file
@@ -184,7 +184,7 @@ function _uc_file_download_validate($file_download, &$user, $ip) {
     return UC_FILE_ERROR_INVALID_DOWNLOAD;
   }
 
-  $addresses = unserialize($file_download->addresses);
+  $addresses = $file_download->addresses;
 
   // Check the number of locations.
   if (!empty($file_download->address_limit) && !in_array($ip, $addresses) && count($addresses) >= $file_download->address_limit) {
@@ -330,11 +330,11 @@ function _uc_file_download_transfer($file_user, $ip) {
 function _uc_file_log_download($file_user, $ip) {
 
   // Add the address if it doesn't exist.
-  $addresses = unserialize($file_user->addresses);
+  $addresses = $file_user->addresses;
   if (!in_array($ip, $addresses)) {
     $addresses[] = $ip;
   }
-  $file_user->addresses = serialize($addresses);
+  $file_user->addresses = $addresses;
 
   // Accessed again.
   $file_user->accessed++;

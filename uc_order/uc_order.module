@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.module,v 1.12.2.29 2009-08-17 21:27:53 islandusurper Exp $
+// $Id: uc_order.module,v 1.12.2.30 2009-09-21 14:34:46 islandusurper Exp $
 
 /**
  * @file
@@ -312,6 +312,11 @@ function uc_order_init() {
   drupal_add_css(drupal_get_path('module', 'uc_order') .'/uc_order.css');
 
   if (arg(0) == 'admin' && arg(1) == 'store' && arg(2) == 'orders' && is_numeric(arg(3)) && arg(4) == 'edit') {
+    drupal_add_js(array(
+      'ucURL' => array(
+        'adminOrders' => url('admin/store/orders/'),
+      ),
+    ), 'setting');
     drupal_add_js(drupal_get_path('module', 'uc_order') .'/uc_order.js');
   }
 }
@@ -1085,25 +1090,20 @@ function uc_order_user_load($order) {
 }
 
 /**
- * Function to save a product to an order.
+ * Save a product to an order.
  */
 function uc_order_product_save($order_id, $product) {
-  if (!isset($product->order_product_id)) {
-    db_query("INSERT INTO {uc_order_products} (order_id, nid, qty, cost, price, title, manufacturer, model, weight, data) "
-      ."VALUES (%d, %d, %d, %f, %f, '%s', '%s', '%s', %f, '%s')", $order_id, $product->nid, $product->qty,
-       $product->cost, $product->price, $product->title, $product->manufacturer, $product->model, $product->weight, serialize($product->data));
-    $product->order_product_id = db_last_insert_id('uc_order_products', 'order_product_id');
+  // Product kits, particularly, shouldn't actually be added to an order,
+  // but instead they cause other products to be added.
+  if (isset($product->skip_save) && $product->skip_save == TRUE) {
+    return;
   }
-  else {
-    db_query("UPDATE {uc_order_products} SET order_id = %d, nid = %d, qty = %d, cost = %f, price = %f, title = '%s', manufacturer = '%s', model = '%s', weight = %f, data = '%s' WHERE order_product_id = %d",
-      $order_id, $product->nid, $product->qty, $product->cost, $product->price, $product->title, $product->manufacturer, $product->model, $product->weight, serialize($product->data), $product->order_product_id);
-    if (!db_affected_rows()) {
-      db_query("INSERT INTO {uc_order_products} (order_id, nid, qty, cost, price, title, manufacturer, model, weight, data) "
-        ."VALUES (%d, %d, %d, %f, %f, '%s', '%s', '%s', %f, '%s')", $order_id, $product->nid, $product->qty,
-         $product->cost, $product->price, $product->title, $product->manufacturer, $product->model, $product->weight, serialize($product->data));
-      $product->order_product_id = db_last_insert_id('uc_order_products', 'order_product_id');
-    }
-  }
+
+  // Update if there is an order_product_id, insert if there isn't.
+  $key = empty($product->order_product_id) ? NULL : 'order_product_id';
+  // @TODO order_id should be in the object by this point.
+  $product->order_id = $order_id;
+  return drupal_write_record('uc_order_products', $product, $key);
 }
 
 /**
@@ -1263,13 +1263,20 @@ function uc_order_load_line_items($order, $stored) {
         $result = $type['callback']('load', $order);
         if ($result !== FALSE && is_array($result)) {
           foreach ($result as $line) {
+            $line = (object)$line;
+            $line->type = $type['id'];
+            if (!isset($line->weight)) {
+              $line->weight = $type['weight'];
+            }
+            drupal_alter('line_item', $line, $order);
+
             $items[] = array(
-              'line_item_id' => $line['id'],
-              'type' => $type['id'],
-              'title' => $line['title'],
-              'amount' => $line['amount'],
-              'weight' => isset($line['weight']) ? $line['weight'] : $type['weight'],
-              'data' => isset($line['data']) ? $line['data'] : NULL,
+              'line_item_id' => $line->id,
+              'type' => $line->type,
+              'title' => $line->title,
+              'amount' => $line->amount,
+              'weight' => $line->weight,
+              'data' => $line->data,
             );
           }
         }
@@ -1414,8 +1421,22 @@ function uc_order_get_total($order, $products_only = FALSE) {
   $total = 0;
 
   if (is_array($order->products)) {
+    $context = array(
+      'revision' => 'altered',
+      'type' => 'order_product',
+    );
+
     foreach ($order->products as $product) {
-      $total += $product->price * $product->qty;
+      $price_info = array(
+        'price' => $product->price,
+        'qty' => ($product->qty) ? $product->qty : 1,
+      );
+      $context['subject'] = array(
+        'order' => $order,
+        'product' => $product,
+        'node' => node_load($product->nid),
+      );
+      $total += uc_price($price_info, $context);
     }
   }
 

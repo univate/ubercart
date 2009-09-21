@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_catalog.module,v 1.15.2.21 2009-08-17 21:27:58 islandusurper Exp $
+// $Id: uc_catalog.module,v 1.15.2.22 2009-09-21 14:34:49 islandusurper Exp $
 
 /**
  * @file
@@ -134,41 +134,48 @@ function uc_catalog_perm() {
 }
 
 /**
+ * Implementation of hook_init().
+ */
+function uc_catalog_init() {
+  global $conf;
+  $conf['i18n_variables'][] = 'uc_catalog_description';
+  $conf['i18n_variables'][] = 'uc_catalog_name';
+}
+
+/**
  * Implementation of hook_enable().
  *
  * Add imagecache preset "uc_category".
  */
 function uc_catalog_enable() {
-  if (module_exists('imagecache')) {
-    $preset_name = 'uc_category';
-    $preset = imagecache_preset_by_name($preset_name);
+  foreach (uc_product_types() as $type) {
+    uc_catalog_add_node_type($type);
+  }
+}
 
-    if (empty($preset)) {
-      // No preset of that name, so make a new one.
-      $preset = imagecache_preset_save(array('presetname' => $preset_name));
-    }
+/**
+ * Implementation of hook_imagecache_default_presets().
+ */
+function uc_catalog_imagecache_default_presets() {
+  $presets = array();
 
-    $actions = imagecache_preset_actions($preset);
-
-    if (empty($actions)) {
-      // The preset has no actions, so scale the image.
-      $action = array(
+  $presets['uc_category'] = array(
+    'presetname' => 'uc_category',
+    'actions' => array(
+      array(
+        'weight' => '0',
+        'module' => 'uc_category',
         'action' => 'imagecache_scale',
-        'presetid' => $preset['presetid'],
-        'weight' => 0,
         'data' => array(
           'width' => '100',
           'height' => '100',
           'upscale' => 0,
         ),
-      );
-      imagecache_action_save($action);
-    }
-  }
+      ),
+    ),
+  );
 
-  foreach (uc_product_types() as $type) {
-    uc_catalog_add_node_type($type);
-  }
+  return $presets;
 }
 
 /**

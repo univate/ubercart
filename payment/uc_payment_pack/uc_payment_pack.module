@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_payment_pack.module,v 1.6.2.9 2009-08-17 21:27:57 islandusurper Exp $
+// $Id: uc_payment_pack.module,v 1.6.2.10 2009-09-21 14:34:49 islandusurper Exp $
 
 /**
  * @file Provides the check/money order, COD, and "other" payment methods.
@@ -32,6 +32,15 @@ function uc_payment_pack_theme() {
       'file' => 'uc_payment_pack.admin.inc',
     ),
   );
+}
+
+/**
+ * Implementation of hook_init().
+ */
+function uc_payment_pack_init() {
+  global $conf;
+  $conf['i18n_variables'][] = 'uc_cod_policy';
+  $conf['i18n_variables'][] = 'uc_check_policy';
 }
 
 /**

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.line_item.inc,v 1.1.2.8 2009-08-17 21:27:53 islandusurper Exp $
+// $Id: uc_order.line_item.inc,v 1.1.2.9 2009-09-21 14:34:46 islandusurper Exp $
 
 /**
  * @file
@@ -24,25 +24,45 @@ function uc_line_item_subtotal($op, $arg1) {
       );
       return $lines;
     case 'cart-preview':
-      $context = array(
-        'revision' => 'altered',
-        'type' => 'cart_item',
-      );
-      $subtotal = 0;
-      foreach ($arg1 as $item) {
-        $price_info = array(
-          'price' => $item->price,
-          'qty' => ($item->qty) ? $item->qty : 1,
-        );
-        $context['subject'] = array(
-          'cart_item' => $item,
-          'node' => node_load($item->nid),
-        );
-        $total = uc_price($price_info, $context);
-        $subtotal += $total;
-      }
       if (module_exists('uc_payment') && variable_get('uc_pane_payment_enabled', TRUE)) {
-        drupal_add_js("if (Drupal.jsEnabled) { \$(document).ready( function() { set_line_item('subtotal', '". t('Subtotal') ."', ". $subtotal .", -10); } )};", 'inline');
+        $context = array(
+          'revision' => 'altered',
+          'type' => 'cart_item',
+        );
+        $subtotal = 0;
+        foreach ($arg1 as $item) {
+          $price_info = array(
+            'price' => $item->price,
+            'qty' => ($item->qty) ? $item->qty : 1,
+          );
+          $context['subject'] = array(
+            'cart_item' => $item,
+            'node' => node_load($item->nid),
+          );
+          $total = uc_price($price_info, $context);
+          $subtotal += $total;
+        }
+
+        $line_item = array(
+          'type' => 'subtotal',
+          'name' => t('Subtotal'),
+          'amount' => $subtotal,
+          'weight' => -10,
+        );
+
+        $order = new stdClass();
+        $order->products = $arg1;
+
+        $context = array(
+          'revision' => 'altered',
+          'type' => 'line_item',
+          'subject' => array(
+            'order' => $order,
+            'line_item' => $line_item,
+          ),
+        );
+
+        drupal_add_js("if (Drupal.jsEnabled) { \$(document).ready( function() { set_line_item('subtotal', '". $line_item['name'] ."', ". uc_price($line_item['amount'], $context) .", ". $line_item['weight'] ."); } )};", 'inline');
       }
       break;
   }
@@ -69,10 +89,19 @@ function uc_line_item_total($op, $arg1) {
 function uc_line_items_calculate($order) {
   $total = 0;
 
+  $context = array(
+    'revision' => 'altered',
+    'type' => 'line_item',
+    'subject' => array(
+      'order' => $order,
+    ),
+  );
+
   if (is_array($order->line_items)) {
     foreach ($order->line_items as $item) {
+      $context['subject']['line_item'] = $item;
       if (_line_item_data($item['type'], 'calculated') == TRUE) {
-        $total += $item['amount'];
+        $total += uc_price($item['amount'], $context);
       }
     }
   }
@@ -136,6 +165,9 @@ function _line_item_list($action = NULL) {
     $items[$i]['enabled'] = variable_get('uc_li_'. $items[$i]['id'] .'_enabled', (!isset($items[$i]['enabled']) ? TRUE : $items[$i]['enabled']));
     $items[$i]['weight'] = variable_get('uc_li_'. $items[$i]['id'] .'_weight', (!isset($items[$i]['weight']) ? 1 : $items[$i]['weight']));
   }
+
+  drupal_alter('line_item_data', $items);
+
   usort($items, 'uc_weight_sort');
 
   return $items;

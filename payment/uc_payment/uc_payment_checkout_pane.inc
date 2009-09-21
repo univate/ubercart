@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_payment_checkout_pane.inc,v 1.5.2.7 2009-08-17 21:27:55 islandusurper Exp $
+// $Id: uc_payment_checkout_pane.inc,v 1.5.2.8 2009-09-21 14:34:46 islandusurper Exp $
 
 /**
  * @file
@@ -13,7 +13,16 @@ function uc_checkout_pane_payment($op, &$arg1, $arg2) {
   switch ($op) {
     case 'view':
       // Add the default payment message as a JS variable.
-      drupal_add_js(array('defPaymentMsg' => addslashes(variable_get('uc_default_payment_msg', t('Continue with checkout to complete payment.')))), 'setting');
+      // Add URL paths as JS variables (be nice to i18n, allow URL rewrite).
+      drupal_add_js(array(
+        'defPaymentMsg' => addslashes(variable_get('uc_default_payment_msg', t('Continue with checkout to complete payment.'))),
+        'ucURL' => array(
+          'adminOrders' => url('admin/store/orders/'),
+          'checkoutPaymentDetails' => url('cart/checkout/payment_details/'),
+          'checkoutLineItems' => url('cart/checkout/line_items'),
+          'creditCardCVVInfo' => url('cart/checkout/credit/cvv_info'),
+        ),
+      ), 'setting');
 
       if (variable_get('uc_payment_show_order_total_preview', TRUE)) {
         drupal_add_js('misc/progress.js');
@@ -62,7 +71,7 @@ function uc_checkout_pane_payment($op, &$arg1, $arg2) {
         '#default_value' => $default,
         '#disabled' => count($options) == 1 ? TRUE : FALSE,
         '#required' => TRUE,
-        '#attributes' => array('onclick' => "get_payment_details('cart/checkout/payment_details/' + this.value);"),
+        '#attributes' => array('onclick' => "get_payment_details(Drupal.settings.ucURL.checkoutPaymentDetails + this.value);"),
         '#theme' => 'uc_payment_method_select',
       );
       $contents['details'] = array(
@@ -104,9 +113,12 @@ function uc_checkout_pane_payment($op, &$arg1, $arg2) {
       $context = array(
         'revision' => 'themed',
         'type' => 'line_item',
+        'subject' => array(
+          'order' => $arg1,
+        ),
       );
       foreach ($line_items as $line_item) {
-        $context['subject'] = array('line_item' => $line_item);
+        $context['subject']['line_item'] = $line_item;
         $review[] = array('title' => $line_item['title'], 'data' => uc_price($line_item['amount'], $context));
       }
       $review_data = _payment_method_data($arg1->payment_method, 'review');

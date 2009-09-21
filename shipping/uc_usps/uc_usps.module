@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_usps.module,v 1.6.2.17 2009-08-17 21:27:58 islandusurper Exp $
+// $Id: uc_usps.module,v 1.6.2.18 2009-09-21 14:34:47 islandusurper Exp $
 
 /**
  * @file
@@ -472,11 +472,12 @@ function uc_usps_rate_request($packages, $origin, $destination) {
  *   IntlRateRequest XML document to send to USPS
  */
 function uc_usps_intl_rate_request($packages, $origin, $destination) {
+  module_load_include('inc', 'uc_usps', 'uc_usps.countries');
   $request  = '<IntlRateRequest USERID="'. variable_get('uc_usps_user_id', '') .'">';
   $services_count = 0;
 
   // This needs to be international name per USPS website. See http://pe.usps.com/text/Imm/immctry.htm
-  $shipto_country = uc_get_country_data(array('country_id' => $destination->country));
+  $shipto_country = uc_usps_country_map($destination->country);
 
   foreach ($packages as $package) {
     $qty = $package->qty;
@@ -485,7 +486,7 @@ function uc_usps_intl_rate_request($packages, $origin, $destination) {
         '<Pounds>'. intval($package->pounds) .'</Pounds>'.
         '<Ounces>'. ceil($package->ounces) .'</Ounces>'.
         '<MailType>Package</MailType>'.
-        '<Country>'. $shipto_country[0]['country_name'] .'</Country>'.
+        '<Country>'. $shipto_country .'</Country>'.
         '</Package>';
 
       $services_count++;

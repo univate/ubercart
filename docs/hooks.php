@@ -1,5 +1,5 @@
 <?php
-// $Id: hooks.php,v 1.1.2.17 2009-08-17 21:27:59 islandusurper Exp $
+// $Id: hooks.php,v 1.1.2.18 2009-09-21 14:34:50 islandusurper Exp $
 
 /**
  * @file
@@ -626,6 +626,41 @@ function hook_line_item() {
 }
 
 /**
+ * Alter a line item on an order when the order is loaded.
+ *
+ * @param &$item
+ *   The line item object.
+ * @param $order
+ *   The order object containing the line item.
+ */
+function hook_line_item_alter(&$item, $order) {
+  $account = user_load($order->uid);
+  ca_pull_trigger('calculate_line_item_discounts', $item, $account);
+}
+
+/**
+ * Alter the line item definitions declared in hook_line_item().
+ *
+ * @param &$items
+ *   The combined return value of hook_line_item().
+ */
+function hook_line_item_data_alter(&$items) {
+  foreach ($items as &$item) {
+    // Tax amounts are added in to other line items, so the actual tax line
+    // items should not be added to the order total.
+    if ($item['id'] == 'tax') {
+      $item['calculated'] = FALSE;
+    }
+    // Taxes are included already, so the subtotal without taxes doesn't
+    // make sense.
+    elseif ($item['id'] == 'tax_subtotal') {
+      $item['callback'] = NULL;
+    }
+  }
+}
+
+
+/**
  * Perform actions on orders.
  *
  * An order in Übercart represents a single transaction. Orders are created
@@ -778,6 +813,50 @@ function hook_order_product_alter(&$product, $order) {
   drupal_set_message('hook_order_product_alter(&$product, $order):');
   drupal_set_message('&$product: <pre>'. print_r($product, TRUE) .'</pre>');
   drupal_set_message('$order: <pre>'. print_r($order, TRUE) .'</pre>');
+}
+
+/**
+ * Register static order states.
+ *
+ * Order states are module-defined categories for order statuses. Each state
+ * will have a default status that is used when modules need to move orders to
+ * new state, but don't know which status to use.
+ *
+ * @return
+ *   An array of order state definitions. Each definition is an array with the
+ *   following keys:
+ *   - id: The machine-readable name of the order state.
+ *   - title: The human-readable, translated name.
+ *   - weight: The list position of the state.
+ *   - scope: Either "specific" or "general".
+ */
+function hook_order_state() {
+  $states[] = array(
+    'id' => 'canceled',
+    'title' => t('Canceled'),
+    'weight' => -20,
+    'scope' => 'specific',
+  );
+  $states[] = array(
+    'id' => 'in_checkout',
+    'title' => t('In checkout'),
+    'weight' => -10,
+    'scope' => 'specific',
+  );
+  $states[] = array(
+    'id' => 'post_checkout',
+    'title' => t('Post checkout'),
+    'weight' => 0,
+    'scope' => 'general',
+  );
+  $states[] = array(
+    'id' => 'completed',
+    'title' => t('Completed'),
+    'weight' => 20,
+    'scope' => 'general',
+  );
+
+  return $states;
 }
 
 /**

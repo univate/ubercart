@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_roles.module,v 1.2.2.19 2009-07-29 19:54:17 islandusurper Exp $
+// $Id: uc_roles.module,v 1.2.2.20 2009-09-21 14:34:49 islandusurper Exp $
 
 /**
  * @file
@@ -110,6 +110,19 @@ function uc_roles_menu() {
 function uc_roles_init() {
   drupal_add_js(drupal_get_path('module', 'uc_roles') .'/uc_roles.js');
   drupal_add_css(drupal_get_path('module', 'uc_roles') .'/uc_roles.css');
+
+  global $conf;
+  $conf['i18n_variables'][] = 'uc_roles_default_expiration_header';
+  $conf['i18n_variables'][] = 'uc_roles_default_expiration_message';
+  $conf['i18n_variables'][] = 'uc_roles_default_expiration_title';
+  $conf['i18n_variables'][] = 'uc_roles_grant_notification_message';
+  $conf['i18n_variables'][] = 'uc_roles_grant_notification_subject';
+  $conf['i18n_variables'][] = 'uc_roles_reminder_message';
+  $conf['i18n_variables'][] = 'uc_roles_reminder_subject';
+  $conf['i18n_variables'][] = 'uc_roles_renewal_notification_message';
+  $conf['i18n_variables'][] = 'uc_roles_renewal_notification_subject';
+  $conf['i18n_variables'][] = 'uc_roles_revocation_notification_message';
+  $conf['i18n_variables'][] = 'uc_roles_revocation_notification_subject';
 }
 
 /**
@@ -623,7 +636,24 @@ function uc_roles_feature_form($form_state, $node, $feature) {
     $default_granularity = $product_role->granularity;
     $default_shippable = $product_role->shippable;
     $default_by_quantity = $product_role->by_quantity;
-    $end_time = $product_role->end_time;
+    if ($product_role->end_time) {
+      $end_time = array(
+        'day' => date('d', $product_role->end_time),
+        'month' => date('m', $product_role->end_time),
+        'year' => date('Y', $product_role->end_time),
+      );
+      $default_end_type = 'abs';
+    }
+    else {
+      $temp = _uc_roles_get_expiration($default_qty, $default_granularity);
+      $end_time = array(
+        'day' => date('d', $temp),
+        'month' => date('m', $temp),
+        'year' => date('Y', $temp),
+      );
+      $default_end_type = 'rel';
+    }
+
     $form['pfid'] = array(
       '#type' => 'value',
       '#value' => $feature['pfid'],
@@ -632,6 +662,7 @@ function uc_roles_feature_form($form_state, $node, $feature) {
       '#type' => 'value',
       '#value' => $product_role->rpid,
     );
+
     $default_end_override = $product_role->end_override;
   }
   else {
@@ -641,6 +672,13 @@ function uc_roles_feature_form($form_state, $node, $feature) {
     $default_granularity = variable_get('uc_roles_default_granularity', 'never');
     $default_shippable = $node->shippable;
     $default_by_quantity = variable_get('uc_roles_default_by_quantity', FALSE);
+    $end_time = variable_get('uc_roles_default_end_time', array(
+      'day' => date('d'),
+      'month' => date('m'),
+      'year' => date('Y'),
+    ));
+    $default_end_type = variable_get('uc_roles_default_end_expiration', 'rel');
+    $default_end_override = FALSE;
   }
 
   $roles = _uc_roles_get_choices();
@@ -696,7 +734,7 @@ function uc_roles_feature_form($form_state, $node, $feature) {
       'rel' => t('Relative from activation time'),
       'abs' => t('Absolute role ending'),
     ),
-    '#default_value' => $end_time ? 'abs' : 'rel',
+    '#default_value' => $default_end_type,
   );
   $form['role_lifetime']['uc_roles_expire_relative_duration'] = array(
     '#type' => 'textfield',
@@ -725,11 +763,7 @@ function uc_roles_feature_form($form_state, $node, $feature) {
     '#description' => t('When this expiration period will end.'),
   );
   if ($end_time) {
-    $form['role_lifetime']['uc_roles_expire_absolute']['#default_value'] = array(
-      'month' => date('m', $end_time),
-      'day' => date('d', $end_time),
-      'year' => date('Y', $end_time),
-    );
+    $form['role_lifetime']['uc_roles_expire_absolute']['#default_value'] = $end_time;
   }
   $form['role_lifetime']['uc_roles_by_quantity'] = array(
     '#type' => 'checkbox',
@@ -915,7 +949,7 @@ function uc_roles_feature_settings() {
       'rel' => t('Relative from activation time'),
       'abs' => t('Absolute role ending'),
     ),
-    '#default_value' => $end_time ? 'abs' : 'rel',
+    '#default_value' => variable_get('uc_roles_default_end_expiration', 'rel'),
   );
   $form['role_lifetime']['uc_roles_default_length'] = array(
     '#type' => 'textfield',
@@ -1188,8 +1222,8 @@ function uc_roles_grant(&$account, $rid, $timestamp, $save_user = TRUE, $silent 
 
   if ($save_user) {
     // Punch the role into the user object.
-    $roles_list = $account->roles + array($rid => _uc_roles_get_name($rid));
-    user_save($account, array('roles' => $roles_list));
+    $account->roles += array($rid => _uc_roles_get_name($rid));
+    user_save($account, array('roles' => $account->roles));
   }
 
   // If the role expires, keep a record.
@@ -1228,6 +1262,8 @@ function uc_roles_grant(&$account, $rid, $timestamp, $save_user = TRUE, $silent 
  *   A Drupal role ID.
  * @param $timestamp
  *   When this role will expire.
+ * @param $silent
+ *   When set to TRUE will suppress any Drupal messages from this function.
  *
  * This function updates expiration time on a role already granted to a
  * user. First the function checks the new expiration. If it never expires,
@@ -1235,7 +1271,9 @@ function uc_roles_grant(&$account, $rid, $timestamp, $save_user = TRUE, $silent 
  * management up to Drupal. Otherwise, the record is updated with the new
  * expiration time, and the user is notified of the change.
  */
-function uc_roles_renew($account, $rid, $timestamp) {
+function uc_roles_renew($account, $rid, $timestamp, $silent = FALSE) {
+  global $user;
+
   // If it doesn't expire, we'll remove our data associated with it.
   // After that, Drupal will take care of it.
   if (is_null($timestamp)) {
@@ -1247,8 +1285,17 @@ function uc_roles_renew($account, $rid, $timestamp) {
   // Update the expiration date.
   db_query("UPDATE {uc_roles_expirations} SET expiration = %d WHERE uid = %d AND rid = %d", $timestamp, $account->uid, $rid);
 
-  $role_name = db_result(db_query('SELECT name FROM {role} WHERE rid = %d', $rid));
-  drupal_set_message(t('%user has had the %role role renewed. It will expire on %date.', array('%user' => $account->name, '%role' => $role_name, '%date' => format_date($timestamp, 'small'))));
+  if (!$silent) {
+    $role_name = db_result(db_query('SELECT name FROM {role} WHERE rid = %d', $rid));
+    if ($user->uid == $account->uid) {
+      $message = t('Your %role role has been renewed. It will expire on %date.', array('%role' => $role_name, '%date' => format_date($timestamp, 'small')));
+    }
+    else {
+      $message = t("%user's %role role has been renewed. It will expire on %date.", array('%user' => $account->name, '%role' => $role_name, '%date' => format_date($timestamp, 'small')));
+    }
+
+    drupal_set_message($message);
+  }
 }
 
 /**
@@ -1300,7 +1347,12 @@ function _uc_roles_product_get_expiration($role_product, $quantity, $time) {
     }
 
     // Absolute...
-    return variable_get('uc_roles_default_end_time', NULL);
+    $end_time = variable_get('uc_roles_default_end_time', NULL);
+    if ($end_time) {
+      $end_time = mktime(0, 0, 0, $end_time['month'], $end_time['day'], $end_time['year']);
+    }
+
+    return $end_time;
   }
 }
 
