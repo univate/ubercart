@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.admin.inc,v 1.1.2.25 2009-09-23 15:45:56 islandusurper Exp $
+// $Id: uc_order.admin.inc,v 1.1.2.26 2009-09-23 19:50:45 islandusurper Exp $
 
 /**
  * @file
@@ -955,6 +955,7 @@ function uc_order_select_customer_form($form_state, $options = NULL) {
       '#title' => t('Select a customer'),
       '#size' => 7,
       '#options' => $options,
+      '#default_value' => key($options),
       '#attributes' => array('ondblclick' => 'return select_customer_search();'),
     );
   }
@@ -1248,10 +1249,14 @@ function uc_order_edit_form_submit($form, &$form_state) {
     foreach ($_POST['products'] as $product) {
       if (!isset($product['remove']) && intval($product['qty']) > 0) {
         $product['data'] = unserialize($product['data']);
-        $order->products[] = (object) $product;
+        $product = (object)$product;
+        $order->products[] = $product;
 
         if (module_exists('uc_stock')) {
-          uc_stock_adjust($product['model'], $qtys[$product['order_product_id']] - $product['qty']);
+          $temp = $product->qty;
+          $product->qty = $product->qty - $qtys[$product->order_product_id];
+          uc_stock_decrement_product_stock($product, 0, $order);
+          $product->qty = $temp;
         }
       }
       else {
@@ -1335,7 +1340,7 @@ function uc_order_edit_products($order) {
 
       // Decrement stock?
       if (module_exists('uc_stock')) {
-        uc_stock_decrement_product_stock($product);
+        uc_stock_decrement_product_stock($product, 0, $order);
       }
       break;
     case 'remove':
@@ -1420,14 +1425,14 @@ function uc_order_edit_products_form($form_state, $products) {
       );
       $form['products'][$i]['cost'] = array(
         '#type' => 'textfield',
-        '#value' => $products[$i]->cost,
+        '#value' => uc_store_format_price_field_value($products[$i]->cost),
         '#name' => "products[$i][cost]",
         '#parents' => array(),
         '#size' => 5,
       );
       $form['products'][$i]['price'] = array(
         '#type' => 'textfield',
-        '#value' => $products[$i]->price,
+        '#value' => uc_store_format_price_field_value($products[$i]->price),
         '#name' => "products[$i][price]",
         '#parents' => array(),
         '#size' => 5,

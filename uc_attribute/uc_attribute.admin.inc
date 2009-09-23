@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_attribute.admin.inc,v 1.1.2.22 2009-09-21 14:34:50 islandusurper Exp $
+// $Id: uc_attribute.admin.inc,v 1.1.2.23 2009-09-23 19:50:45 islandusurper Exp $
 
 /**
  * @file
@@ -372,13 +372,13 @@ function uc_attribute_option_form($form_state, $attribute, $option = NULL) {
   $form['adjustments']['cost'] = array(
     '#type' => 'textfield',
     '#title' => t('Cost'),
-    '#default_value' => uc_product_format_price_field_value($option->cost),
+    '#default_value' => uc_store_format_price_field_value($option->cost),
     '#weight' => 1,
   );
   $form['adjustments']['price'] = array(
     '#type' => 'textfield',
     '#title' => t('Price'),
-    '#default_value' => uc_product_format_price_field_value($option->price),
+    '#default_value' => uc_store_format_price_field_value($option->price),
     '#weight' => 2,
   );
   $form['adjustments']['weight'] = array(
@@ -800,12 +800,12 @@ function uc_object_options_form($form_state, $object, $type) {
         );
         $form['attributes'][$aid]['options'][$oid]['cost'] = array(
           '#type' => 'textfield',
-          '#default_value' => uc_product_format_price_field_value(is_null($option->cost) ? $option->default_cost : $option->cost),
+          '#default_value' => uc_store_format_price_field_value(is_null($option->cost) ? $option->default_cost : $option->cost),
           '#size' => 6,
         );
         $form['attributes'][$aid]['options'][$oid]['price'] = array(
           '#type' => 'textfield',
-          '#default_value' => uc_product_format_price_field_value(is_null($option->price) ? $option->default_price : $option->price),
+          '#default_value' => uc_store_format_price_field_value(is_null($option->price) ? $option->default_price : $option->price),
           '#size' => 6,
         );
         $form['attributes'][$aid]['options'][$oid]['weight'] = array(

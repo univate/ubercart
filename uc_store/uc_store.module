@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_store.module,v 1.14.2.32 2009-09-23 15:45:55 islandusurper Exp $
+// $Id: uc_store.module,v 1.14.2.33 2009-09-23 19:50:45 islandusurper Exp $
 
 /**
  * @file
@@ -598,13 +598,13 @@ function theme_uc_price($value, $context, $options) {
   $output = '<span class="'. implode(' ', $context['class']) .'">';
   // Prefix(es).
   if ($options['label'] && isset($options['prefixes'])) {
-    $output .= implode('', $options['prefixes']);
+    $output .= '<span class="price-prefixes">'. implode('', $options['prefixes']) .'</span>';
   }
   // Value.
   $output .= $value;
   // Suffix(es).
   if ($options['label'] && isset($options['suffixes'])) {
-    $output .= implode('', $options['suffixes']);
+    $output .= '<span class="price-suffixes">'. implode('', $options['suffixes']) .'</span>';
   }
   $output .= '</span>';
 
@@ -2123,6 +2123,24 @@ function uc_store_mail_recipient_language($address) {
     $lang_object = language_default();
   }
   return $lang_object;
+}
+
+/**
+ * Display prices in forms with a minimum number of decimal places.
+ *
+ * @param $price
+ *   The price to display as the #default_value in a form field.
+ */
+function uc_store_format_price_field_value($price) {
+  $exact = rtrim(number_format($price, 6, '.', ''), '0');
+  $round = number_format($price, variable_get('uc_currency_prec', 2), '.', '');
+
+  if ($exact == rtrim($round, '0')) {
+    return $round;
+  }
+  else {
+    return $exact;
+  }
 }
 
 /**

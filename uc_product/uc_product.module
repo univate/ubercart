@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product.module,v 1.14.2.36 2009-09-23 15:45:56 islandusurper Exp $
+// $Id: uc_product.module,v 1.14.2.37 2009-09-23 19:50:45 islandusurper Exp $
 
 /**
  * @file
@@ -450,7 +450,7 @@ function uc_product_form(&$node) {
     '#type' => 'textfield',
     '#title' => t('List price'),
     '#required' => FALSE,
-    '#default_value' => isset($node->list_price) ? uc_product_format_price_field_value($node->list_price) : 0,
+    '#default_value' => isset($node->list_price) ? uc_store_format_price_field_value($node->list_price) : 0,
     '#description' => t('The listed MSRP.'),
     '#weight' => 0,
     '#size' => 20,
@@ -462,7 +462,7 @@ function uc_product_form(&$node) {
     '#type' => 'textfield',
     '#title' => t('Cost'),
     '#required' => FALSE,
-    '#default_value' => isset($node->cost) ? uc_product_format_price_field_value($node->cost) : 0,
+    '#default_value' => isset($node->cost) ? uc_store_format_price_field_value($node->cost) : 0,
     '#description' => t("Your store's cost."),
     '#weight' => 1,
     '#size' => 20,
@@ -474,7 +474,7 @@ function uc_product_form(&$node) {
     '#type' => 'textfield',
     '#title' => t('Sell price'),
     '#required' => TRUE,
-    '#default_value' => isset($node->sell_price) ? uc_product_format_price_field_value($node->sell_price) : 0,
+    '#default_value' => isset($node->sell_price) ? uc_store_format_price_field_value($node->sell_price) : 0,
     '#description' => t('Customer purchase price.'),
     '#weight' => 2,
     '#size' => 20,
@@ -2111,20 +2111,3 @@ function uc_product_views_api() {
   );
 }
 
-/**
- * Display prices in forms with a minimum number of decimal places.
- *
- * @param $price
- *   The price to display as the #default_value in a form field.
- */
-function uc_product_format_price_field_value($price) {
-  $exact = rtrim(number_format($price, 6, '.', ''), '0');
-  $round = number_format($price, variable_get('uc_currency_prec', 2), '.', '');
-
-  if ($exact == rtrim($round, '0')) {
-    return $round;
-  }
-  else {
-    return $exact;
-  }
-}

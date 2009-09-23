@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_stock.ca.inc,v 1.1.2.8 2009-09-23 15:45:57 islandusurper Exp $
+// $Id: uc_stock.ca.inc,v 1.1.2.9 2009-09-23 19:50:45 islandusurper Exp $
 
 /**
  * @file
@@ -59,6 +59,6 @@ function uc_stock_ca_action() {
  */
 function uc_stock_action_decrement_stock($order, $settings) {
   if (is_array($order->products)) {
-    array_walk($order->products, 'uc_stock_decrement_product_stock');
+    array_walk($order->products, 'uc_stock_decrement_product_stock', $order);
   }
 }

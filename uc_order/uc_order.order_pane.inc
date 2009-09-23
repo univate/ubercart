@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.order_pane.inc,v 1.1.2.18 2009-08-20 23:40:35 islandusurper Exp $
+// $Id: uc_order.order_pane.inc,v 1.1.2.19 2009-09-23 19:50:45 islandusurper Exp $
 
 /**
  * @file
@@ -433,7 +433,7 @@ function uc_order_pane_line_items($op, $arg1) {
           $form['line_items'][$item['line_item_id']]['amount'] = array(
             '#type' => 'textfield',
             '#title' => t('Amount'),
-            '#default_value' => $item['amount'],
+            '#default_value' => uc_store_format_price_field_value($item['amount']),
             '#size' => 6,
             '#maxlength' => 13,
             '#field_prefix' => variable_get('uc_sign_after_amount', FALSE) ? '' : variable_get('uc_currency_sign', '$'),
