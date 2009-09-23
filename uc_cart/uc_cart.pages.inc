@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.pages.inc,v 1.1.2.18 2009-09-21 14:34:47 islandusurper Exp $
+// $Id: uc_cart.pages.inc,v 1.1.2.19 2009-09-23 20:28:05 islandusurper Exp $
 
 /**
  * @file
@@ -284,6 +284,7 @@ function uc_cart_checkout_form_validate($form, &$form_state) {
     $order->order_status = uc_order_state_default('in_checkout');
   }
 
+  db_query("DELETE FROM {uc_order_products} WHERE order_id = %d", $order->order_id);
   $order->products = unserialize($form_state['values']['cart_contents']);
 
   $context = array(
