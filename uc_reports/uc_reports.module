@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_reports.module,v 1.11.2.11 2009-07-21 14:37:22 islandusurper Exp $
+// $Id: uc_reports.module,v 1.11.2.12 2009-09-23 15:45:57 islandusurper Exp $
 
 /**
  * @file
@@ -117,6 +117,22 @@ function uc_reports_menu() {
     'page callback' => 'uc_reports_products',
     'access arguments' => array('view reports'),
     'type' => MENU_NORMAL_ITEM,
+    'file' => 'uc_reports.admin.inc',
+  );
+  $items['admin/store/reports/products/summary'] = array(
+    'title' => 'Product report',
+    'access arguments' => array('view reports'),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+    'file' => 'uc_reports.admin.inc',
+  );
+  $items['admin/store/reports/products/custom'] = array(
+    'title' => 'Custom product report',
+    'description' => 'View a customized product report',
+    'page callback' => 'uc_reports_products_custom',
+    'access arguments' => array('view reports'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => -5,
     'file' => 'uc_reports.admin.inc',
   );
   $items['admin/store/reports/sales'] = array(

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_stock.module,v 1.12.2.17 2009-09-21 14:34:50 islandusurper Exp $
+// $Id: uc_stock.module,v 1.12.2.18 2009-09-23 15:45:57 islandusurper Exp $
 
 /**
  * @file
@@ -173,8 +173,18 @@ function uc_stock_uc_message() {
  * @param $qty
  *   The amount to add to or subtract from the stock level.
  */
-function uc_stock_adjust($sku, $qty) {
+function uc_stock_adjust($sku, $qty, $check_active = TRUE) {
+  $stock = db_fetch_object(db_query("SELECT active, stock FROM {uc_product_stock} WHERE sku = '%s'", $sku));
+
+  if ($check_active) {
+    if (!$stock->active) {
+      return;
+    }
+  }
+
   db_query("UPDATE {uc_product_stock} SET stock = stock + %d WHERE sku = '%s'", $qty, $sku);
+
+  module_invoke_all('uc_stock_adjusted', $sku, $stock->stock, $qty);
 }
 
 /**
@@ -195,10 +205,28 @@ function uc_stock_set($sku, $qty) {
  * @param $sku
  *   The Ubercart product SKU of the stock level to return.
  * @return:
- *   The associated stock level with the particular SKU or FALSE if not active.
+ *   The SKU's stock level, or FALSE if not active.
  */
 function uc_stock_level($sku) {
-  return db_result(db_query("SELECT stock FROM {uc_product_stock} WHERE sku = '%s' AND active = 1", $sku));
+  $stock = db_fetch_object(db_query("SELECT active, stock FROM {uc_product_stock} WHERE sku = '%s'", $sku));
+
+  if ($stock && $stock->active) {
+    return $stock->stock;
+  }
+
+  return FALSE;
+}
+
+/**
+ * Check if a sku has an active stock record.
+ *
+ * @param $sku
+ *   The Ubercart product SKU to check
+ * @return (bool)
+ *   Whether or not the sku has an active stock record.
+ */
+function uc_stock_is_active($sku) {
+  return (bool) db_result(db_query("SELECT active FROM {uc_product_stock} WHERE sku = '%s'", $sku));
 }
 
 /**
@@ -246,5 +274,32 @@ function uc_stock_views_api() {
     'api' => '2.0',
     'path' => drupal_get_path('module', 'uc_stock') .'/views',
   );
+}
+
+/**
+ * Decrement a product's stock.
+ *
+ * @param $product
+ *   The product whose stock is decrementing.
+ */
+function uc_stock_decrement_product_stock($product) {
+  // Product has an active stock?
+  if (!uc_stock_is_active($product->model)) {
+    return;
+  }
+
+  // Decrement the product's stock.
+  uc_stock_adjust($product->model, -$product->qty);
+
+  // Load the new stock record
+  $stock = db_fetch_object(db_query("SELECT * FROM {uc_product_stock} WHERE sku = '%s'", $product->model));
+
+  // Should we notify?
+  if (variable_get('uc_stock_threshold_notification', FALSE) && $stock->stock <= $stock->threshold) {
+    _uc_stock_send_mail($order, $stock);
+  }
+
+  // Save a comment about the stock level.
+  uc_order_comment_save($order->order_id, 0, t('The stock level for %model_name has been decreased to !qty.', array('%model_name' => $product->model, '!qty' => $stock->stock)));
 }
 

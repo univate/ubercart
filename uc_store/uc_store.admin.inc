@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_store.admin.inc,v 1.1.2.16 2009-08-17 21:27:54 islandusurper Exp $
+// $Id: uc_store.admin.inc,v 1.1.2.17 2009-09-23 15:45:55 islandusurper Exp $
 
 /**
  * @file
@@ -1195,7 +1195,7 @@ function uc_price_settings_form() {
   $form['uc_price_caching'] = array(
     '#type' => 'checkbox',
     '#title' => t('Cache generated price values until the next cron run.'),
-    '#description' => t('It may be helpful to disable caching when configuring modules that alter prices or price displays.<br />For high traffic sites with multiple price handlers, disabling this may hurt your performance.'),
+    '#description' => t('It may be helpful to disable caching while configuring modules that alter prices or price displays.') .'<br />'. t("For high traffic sites or sites with multiple price alterers, leaving this disabled may hurt the site's performance."),
     '#default_value' => variable_get('uc_price_caching', TRUE),
   );
 

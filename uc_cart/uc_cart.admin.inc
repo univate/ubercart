@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.admin.inc,v 1.1.2.15 2009-09-11 19:04:56 islandusurper Exp $
+// $Id: uc_cart.admin.inc,v 1.1.2.16 2009-09-23 15:45:56 islandusurper Exp $
 
 /**
  * @file
@@ -47,6 +47,11 @@ function uc_cart_cart_settings_form() {
     '#type' => 'fieldset',
     '#title' => t('General cart settings'),
     '#summary callback' => 'summarize_form',
+  );
+  $form['general']['uc_cart_add_item_msg'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Display an update message when an item is added to the cart through an add to cart form.'),
+    '#default_value' => variable_get('uc_cart_add_item_msg', TRUE),
   );
   $form['general']['uc_add_item_redirect'] = array(
     '#type' => 'textfield',

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.module,v 1.15.2.28 2009-09-21 14:34:47 islandusurper Exp $
+// $Id: uc_cart.module,v 1.15.2.29 2009-09-23 15:45:56 islandusurper Exp $
 
 /**
  * @file
@@ -786,8 +786,8 @@ function uc_cart_uc_message() {
   $messages['review_instructions'] = t("Your order is almost complete. Please review the details below and click 'Submit order' if all the information is correct.  You may use the 'Back' button to make changes to your order if necessary.");
   $messages['completion_message'] = t('Your order is complete! Your order number is [order-id].');
   $messages['completion_logged_in'] = t('Thank you for shopping at [store-name]. While logged in, you may continue shopping or <a href="[order-url]">view your current order status</a> and order history.');
-  $messages['completion_existing_user'] = t('Thank you for shopping at [store-name]. Your current order has been attached to the account we found matching your e-mail address.\n\n<a href="!user_url">Login</a> and view your current order status and order history. Remember to login when you make your next purchase for a faster checkout experience!', array('!user_url' => url('user')));
-  $messages['completion_new_user'] = t('Thank you for shopping at [store-name]. A new account has been created for you here that you may use to view your current order status.\n\n<a href="!user_url">Login</a> to your new account using the following information:\n\n<strong>Username:</strong> !new_username\n<strong>Password:</strong> !new_password', array('!user_url' => url('user')));
+  $messages['completion_existing_user'] = t("Thank you for shopping at [store-name]. Your current order has been attached to the account we found matching your e-mail address.\n\n<a href=\"!user_url\">Login</a> to view your current order status and order history. Remember to login when you make your next purchase for a faster checkout experience!", array('!user_url' => url('user')));
+  $messages['completion_new_user'] = t("Thank you for shopping at [store-name]. A new account has been created for you here that you may use to view your current order status.\n\n<a href=\"!user_url\">Login</a> to your new account using the following information:\n\n<strong>Username:</strong> !new_username\n<strong>Password:</strong> !new_password", array('!user_url' => url('user')));
   $messages['continue_shopping'] = t('<a href="[site-url]">Return to the front page.</a>');
 
   return $messages;
@@ -892,8 +892,11 @@ function uc_cart_login_update($uid) {
 
     // Loop through what the items should be and re-add them to the cart.
     foreach ($items as $key => $item) {
-      uc_cart_add_item($item->nid, $item->qty, $item->data, $uid, FALSE, FALSE);
+      uc_cart_add_item($item->nid, $item->qty, $item->data, $uid, FALSE, FALSE, FALSE);
     }
+
+    // Rebuild the cart item cache.
+    uc_cart_get_contents($uid, 'rebuild');
   }
 }
 
@@ -1328,7 +1331,7 @@ function uc_cart_get_contents($cid = NULL, $action = NULL) {
   $cid = $cid ? $cid : uc_cart_get_id();
 
   if ($action == 'rebuild') {
-    $items = array();
+    unset($items[$cid]);
   }
 
   if (!isset($items[$cid])) {
@@ -1439,7 +1442,7 @@ function uc_cart_update_item($item) {
 /**
  * Add an item to a user's cart.
  */
-function uc_cart_add_item($nid, $qty = 1, $data = NULL, $cid = NULL, $msg = TRUE, $check_redirect = TRUE) {
+function uc_cart_add_item($nid, $qty = 1, $data = NULL, $cid = NULL, $msg = TRUE, $check_redirect = TRUE, $rebuild = TRUE) {
   if (isset($_SESSION['cart_order'])) {
     unset($_SESSION['cart_order']);
   }
@@ -1510,6 +1513,11 @@ function uc_cart_add_item($nid, $qty = 1, $data = NULL, $cid = NULL, $msg = TRUE
     module_invoke($data['module'], 'update_cart_item', $node->nid, $data, min($qty, 999999), $cid);
   }
 
+  // If specified, rebuild the cached cart items array.
+  if ($rebuild) {
+    uc_cart_get_contents($cid, 'rebuild');
+  }
+
   if ($check_redirect) {
     if (isset($_GET['destination'])) {
       drupal_goto();
@@ -1561,6 +1569,9 @@ function uc_cart_update_item_object($cart) {
         module_invoke($item['module'], 'update_cart_item', $item['nid'], unserialize($item['data']), $item['qty']);
       }
     }
+
+    // Rebuild the cached cart items.
+    uc_cart_get_contents(NULL, 'rebuild');
   }
 }
 

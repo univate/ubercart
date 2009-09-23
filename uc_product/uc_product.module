@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product.module,v 1.14.2.35 2009-09-21 14:34:50 islandusurper Exp $
+// $Id: uc_product.module,v 1.14.2.36 2009-09-23 15:45:56 islandusurper Exp $
 
 /**
  * @file
@@ -1206,9 +1206,6 @@ function uc_product_update_cart_item($nid, $data = array(), $qty, $cid = NULL) {
   else {
     db_query("UPDATE {uc_cart_products} SET qty = %d, changed = %d WHERE nid = %d AND cart_id = '%s' AND data = '%s'", $qty, time(), $nid, $cid, serialize($data));
   }
-
-  // Rebuild the items hash
-  uc_cart_get_contents(NULL, 'rebuild');
 }
 
 /**
@@ -1411,7 +1408,7 @@ function uc_catalog_buy_it_now_form_validate($form, &$form_state) {
  * @see uc_catalog_buy_it_now_form()
  */
 function uc_catalog_buy_it_now_form_submit($form, &$form_state) {
-  $form_state['redirect'] = uc_cart_add_item($form_state['values']['nid'], 1,  module_invoke_all('add_to_cart_data', $form_state['values']));
+  $form_state['redirect'] = uc_cart_add_item($form_state['values']['nid'], 1,  module_invoke_all('add_to_cart_data', $form_state['values']), NULL, variable_get('uc_cart_add_item_msg', TRUE));
 }
 
 /**
@@ -1516,7 +1513,7 @@ function uc_product_add_to_cart_form_validate($form, &$form_state) {
  * @see uc_product_add_to_cart_form()
  */
 function uc_product_add_to_cart_form_submit($form, &$form_state) {
-  $form_state['redirect'] = uc_cart_add_item($form_state['values']['nid'], $form_state['values']['qty'],  module_invoke_all('add_to_cart_data', $form_state['values']));
+  $form_state['redirect'] = uc_cart_add_item($form_state['values']['nid'], $form_state['values']['qty'],  module_invoke_all('add_to_cart_data', $form_state['values']), NULL, variable_get('uc_cart_add_item_msg', TRUE));
 }
 
 /**

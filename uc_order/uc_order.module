@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.module,v 1.12.2.30 2009-09-21 14:34:46 islandusurper Exp $
+// $Id: uc_order.module,v 1.12.2.31 2009-09-23 15:45:56 islandusurper Exp $
 
 /**
  * @file
@@ -1059,8 +1059,6 @@ function uc_order_save($order) {
            ((is_null($order->billing_country) || $order->billing_country == 0) ? variable_get('uc_store_country', 840) : $order->billing_country),
            $order->payment_method, serialize($order->data), ip_address(), time(), $order->order_id);
 
-  // Review this query for removal in the future. -RS
-  db_query("DELETE FROM {uc_order_products} WHERE order_id = %d", $order->order_id);
   if (is_array($order->products)) {
     foreach ($order->products as $product) {
       drupal_alter('order_product', $product, $order);

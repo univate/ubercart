@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_paypal.pages.inc,v 1.1.2.9 2009-08-17 21:27:56 islandusurper Exp $
+// $Id: uc_paypal.pages.inc,v 1.1.2.10 2009-09-23 15:45:56 islandusurper Exp $
 
 /**
  * @file
@@ -194,8 +194,13 @@ function uc_paypal_ec_review() {
       $order->delivery_last_name = '';
     }
 
-    $zone_id = db_result(db_query("SELECT zone_id FROM {uc_zones} WHERE zone_code = '%s'", check_plain($nvp_response['SHIPTOSTATE'])));
-    $country_id = db_result(db_query("SELECT country_id FROM {uc_countries} WHERE country_iso_code_2 = '%s'", check_plain($nvp_response['SHIPTOCOUNTRYCODE'])));
+    $country_id = db_result(db_query("SELECT country_id FROM {uc_countries} WHERE country_iso_code_2 = '%s'", $nvp_response['SHIPTOCOUNTRYCODE']));
+    $zone = $nvp_response['SHIPTOSTATE'];
+    $zone_id = 0;
+
+    if (!empty($country_id) && !empty($zone)) {
+      $zone_id = db_result(db_query("SELECT zone_id FROM {uc_zones} WHERE zone_country_id = '%s' AND (zone_code = '%s' OR zone_name = '%s')", $country_id, $zone, $zone));
+    }
 
     $order->delivery_street1 = check_plain($nvp_response['SHIPTOSTREET']);
     $order->delivery_city = check_plain($nvp_response['SHIPTOCITY']);

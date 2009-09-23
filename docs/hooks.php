@@ -1,5 +1,5 @@
 <?php
-// $Id: hooks.php,v 1.1.2.18 2009-09-21 14:34:50 islandusurper Exp $
+// $Id: hooks.php,v 1.1.2.19 2009-09-23 15:45:55 islandusurper Exp $
 
 /**
  * @file
@@ -1518,6 +1518,25 @@ function hook_uc_product_models($node) {
   return $models;
 }
 
+/**
+ * Allow modules to take action when a stock level is changed.
+ *
+ * @param $sku
+ *   The SKU whose stock level is being changed.
+ * @param $stock
+ *   The stock level before the adjustment.
+ * @param $qty
+ *   The amount by which the stock level was changed.
+ */
+function hook_uc_stock_adjusted($sku, $stock, $qty) {
+  $params = array(
+    'sku' => $sku,
+    'stock' => $stock,
+    'qty' => $qty,
+  );
+
+  drupal_mail('uc_stock_notify', 'stock-adjusted', uc_store_email_from(), language_default(), $params);
+}
 
 /**
  * Allows modules to alter items before they're added to the UC Google Analytics

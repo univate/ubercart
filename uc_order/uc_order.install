@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.install,v 1.9.2.17 2009-09-21 14:34:46 islandusurper Exp $
+// $Id: uc_order.install,v 1.9.2.18 2009-09-23 15:45:56 islandusurper Exp $
 
 /**
  * @file
@@ -38,8 +38,8 @@ function uc_order_schema() {
       'order_total' => array(
         'description' => t('The total amount to be paid for the order.'),
         'type' => 'numeric',
-        'precision' => 15,
-        'scale' => 3,
+        'precision' => 16,
+        'scale' => 5,
         'not null' => TRUE,
         'default' => 0.0,
       ),
@@ -366,8 +366,8 @@ function uc_order_schema() {
       'amount' => array(
         'description' => t("The amount of the line item in the store's currency."),
         'type' => 'numeric',
-        'precision' => 15,
-        'scale' => 3,
+        'precision' => 16,
+        'scale' => 5,
         'not null' => TRUE,
         'default' => 0.0,
       ),
@@ -485,16 +485,16 @@ function uc_order_schema() {
       'cost' => array(
         'description' => t('The cost to the store for the product.'),
         'type' => 'numeric',
-        'precision' => 15,
-        'scale' => 3,
+        'precision' => 16,
+        'scale' => 5,
         'not null' => TRUE,
         'default' => 0.0,
       ),
       'price' => array(
         'description' => t('The price paid for the ordered product.'),
         'type' => 'numeric',
-        'precision' => 15,
-        'scale' => 3,
+        'precision' => 16,
+        'scale' => 5,
         'not null' => TRUE,
         'default' => 0.0,
       ),
@@ -1125,3 +1125,16 @@ function uc_order_6013_condition_helper(&$conditions, $pid, $save = FALSE) {
   return $save;
 }
 
+/**
+ * Change currency fields to numeric(16,5).
+ */
+function uc_order_update_6014() {
+  $ret = array();
+
+  db_change_field($ret, 'uc_orders', 'order_total', 'order_total', array('type' => 'numeric', 'precision' => 16, 'scale' => 5, 'not null' => TRUE, 'default' => 0.0));
+  db_change_field($ret, 'uc_order_line_items', 'amount', 'amount', array('type' => 'numeric', 'precision' => 16, 'scale' => 5, 'not null' => TRUE, 'default' => 0.0));
+  db_change_field($ret, 'uc_order_products', 'cost', 'cost', array('type' => 'numeric', 'precision' => 16, 'scale' => 5, 'not null' => TRUE, 'default' => 0));
+  db_change_field($ret, 'uc_order_products', 'price', 'price', array('type' => 'numeric', 'precision' => 16, 'scale' => 5, 'not null' => TRUE, 'default' => 0));
+
+  return $ret;
+}

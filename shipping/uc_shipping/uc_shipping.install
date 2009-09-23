@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_shipping.install,v 1.4.2.9 2009-07-21 14:37:18 islandusurper Exp $
+// $Id: uc_shipping.install,v 1.4.2.10 2009-09-23 15:45:56 islandusurper Exp $
 
 /**
  * @file
@@ -179,8 +179,8 @@ function uc_shipping_schema() {
       ),
       'cost' => array(
         'type' => 'numeric',
-        'precision' => 15,
-        'scale' => 3,
+        'precision' => 16,
+        'scale' => 5,
         'not null' => TRUE,
         'default' => 0.0,
       ),
@@ -232,8 +232,8 @@ function uc_shipping_schema() {
       ),
       'value' => array(
         'type' => 'numeric',
-        'precision' => 15,
-        'scale' => 3,
+        'precision' => 16,
+        'scale' => 5,
         'not null' => FALSE,
         'default' => 0.0,
       ),
@@ -389,3 +389,16 @@ function uc_shipping_update_6004() {
 
   return $ret;
 }
+
+/**
+ * Change currency fields to numeric(16,5).
+ */
+function uc_shipping_update_6005() {
+  $ret = array();
+
+  db_change_field($ret, 'uc_shipments', 'cost', 'cost', array('type' => 'numeric', 'precision' => 16, 'scale' => 5, 'not null' => TRUE, 'default' => 0));
+  db_change_field($ret, 'uc_packages', 'value', 'value', array('type' => 'numeric', 'precision' => 16, 'scale' => 5, 'not null' => FALSE));
+
+  return $ret;
+}
+

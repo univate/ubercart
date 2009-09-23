@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.admin.inc,v 1.1.2.24 2009-09-21 14:34:46 islandusurper Exp $
+// $Id: uc_order.admin.inc,v 1.1.2.25 2009-09-23 15:45:56 islandusurper Exp $
 
 /**
  * @file
@@ -1236,12 +1236,23 @@ function uc_order_edit_form_submit($form, &$form_state) {
     }
   }
 
+  if (module_exists('uc_stock')) {
+    $qtys = array();
+    foreach ($order->products as $product) {
+      $qtys[$product->order_product_id] = $product->qty;
+    }
+  }
+
   unset($order->products);
   if (is_array($_POST['products'])) {
     foreach ($_POST['products'] as $product) {
       if (!isset($product['remove']) && intval($product['qty']) > 0) {
         $product['data'] = unserialize($product['data']);
         $order->products[] = (object) $product;
+
+        if (module_exists('uc_stock')) {
+          uc_stock_adjust($product['model'], $qtys[$product['order_product_id']] - $product['qty']);
+        }
       }
       else {
         $log['remove_'. $product['nid']] = $product['title'] .' removed from order.';
@@ -1321,9 +1332,20 @@ function uc_order_edit_products($order) {
       if (variable_get('uc_order_logging', TRUE)) {
         uc_order_log_changes($order->order_id, array('add' => 'Added ('. $product->qty .') '. $product->title .' to order.'));
       }
+
+      // Decrement stock?
+      if (module_exists('uc_stock')) {
+        uc_stock_decrement_product_stock($product);
+      }
       break;
     case 'remove':
-      db_query("DELETE FROM {uc_order_products} WHERE order_product_id = %d", intval($_POST['opid']));
+      $order_product_id = intval($_POST['opid']);
+      // Put back the stock?
+      if (module_exists('uc_stock')) {
+        $product = db_fetch_object(db_query("SELECT model, qty FROM {uc_order_products} WHERE order_product_id = %d", $order_product_id));
+        uc_stock_adjust($product->model, $product->qty);
+      }
+      db_query("DELETE FROM {uc_order_products} WHERE order_product_id = %d", $order_product_id);
       break;
   }
 

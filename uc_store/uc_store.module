@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_store.module,v 1.14.2.31 2009-09-21 14:34:47 islandusurper Exp $
+// $Id: uc_store.module,v 1.14.2.32 2009-09-23 15:45:55 islandusurper Exp $
 
 /**
  * @file
@@ -921,32 +921,24 @@ function uc_currency_format($value, $sign = TRUE, $thou = TRUE, $dec = NULL) {
     return NULL;
   }
 
-  if (variable_get('uc_currency_prec', 2) > 0) {
-    if (abs($value) < '.'. str_repeat('0', variable_get('uc_currency_prec', 2) - 1) .'1') {
-      $value = 0;
-    }
+  $context = array(
+    'revision' => 'formatted',
+    'type' => 'amount',
+  );
+
+  $options = array();
+
+  if (!$sign) {
+    $options['sign'] = '';
+  }
+  if (!$thou) {
+    $options['thou'] = '';
+  }
+  if (!is_null($dec)) {
+    $options['dec'] = $dec;
   }
 
-  $format = '';
-  if ($value < 0) {
-    $value = abs($value);
-    $format = '-';
-  }
-  else {
-    $format = '';
-  }
-
-  if ($sign && !variable_get('uc_sign_after_amount', FALSE)) {
-    $format .= variable_get('uc_currency_sign', '$');
-  }
-
-  $format .= number_format($value, variable_get('uc_currency_prec', 2), !is_null($dec) ? $dec : variable_get('uc_currency_dec', '.'), $thou ? variable_get('uc_currency_thou', ',') : '');
-
-  if ($sign && variable_get('uc_sign_after_amount', FALSE)) {
-    $format .= variable_get('uc_currency_sign', '$');
-  }
-
-  return $format;
+  return uc_price($value, $context, $options);
 }
 
 /**

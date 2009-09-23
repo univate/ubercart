@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_payment.install,v 1.5.2.5 2009-07-08 12:56:52 islandusurper Exp $
+// $Id: uc_payment.install,v 1.5.2.6 2009-09-23 15:45:57 islandusurper Exp $
 
 /**
  * @file
@@ -30,8 +30,8 @@ function uc_payment_schema() {
       ),
       'amount' => array(
         'type' => 'numeric',
-        'precision' => 15,
-        'scale' => 3,
+        'precision' => 16,
+        'scale' => 5,
         'not null' => TRUE,
         'default' => 0,
       ),
@@ -148,10 +148,15 @@ function uc_payment_update_6000() {
   return $ret;
 }
 
-function uc_payment_update_6001() {
+// Removed obsolete update 6001.
+
+/**
+ * Change currency fields to numeric(16,5).
+ */
+function uc_payment_update_6002() {
   $ret = array();
 
-  db_change_field($ret, 'uc_payment_receipts', 'amount', 'amount', array('type' => 'numeric', 'precision' => 15, 'scale' => 3, 'not null' => TRUE, 'default' => 0));
+  db_change_field($ret, 'uc_payment_receipts', 'amount', 'amount', array('type' => 'numeric', 'precision' => 16, 'scale' => 5, 'not null' => TRUE, 'default' => 0));
 
   return $ret;
 }
