@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.pages.inc,v 1.1.2.19 2009-09-23 20:28:05 islandusurper Exp $
+// $Id: uc_cart.pages.inc,v 1.1.2.20 2009-10-20 20:58:07 islandusurper Exp $
 
 /**
  * @file
@@ -492,21 +492,25 @@ function uc_cart_checkout_review_form_submit($form, &$form_state) {
   $error = FALSE;
 
   // Invoke it on a per-module basis instead of all at once.
-  foreach (module_implements('order') as $module) {
-    $result = module_invoke($module, 'order', 'submit', $order, NULL);
+  foreach (module_list() as $module) {
+    $function = $module .'_order';
+    if (function_exists($function)) {
+      // $order must be passed by reference.
+      $result = $function('submit', $order, NULL);
 
-    $msg_type = 'status';
-    if ($result[0]['pass'] === FALSE) {
-      $error = TRUE;
-      $msg_type = 'error';
-    }
-    if (!empty($result[0]['message'])) {
-      drupal_set_message($result[0]['message'], $msg_type);
-    }
+      $msg_type = 'status';
+      if ($result[0]['pass'] === FALSE) {
+        $error = TRUE;
+        $msg_type = 'error';
+      }
+      if (!empty($result[0]['message'])) {
+        drupal_set_message($result[0]['message'], $msg_type);
+      }
 
-    // Stop invoking the hooks if there was an error.
-    if ($error) {
-      break;
+      // Stop invoking the hooks if there was an error.
+      if ($error) {
+        break;
+      }
     }
   }
 

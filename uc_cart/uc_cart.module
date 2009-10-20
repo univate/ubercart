@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.module,v 1.15.2.29 2009-09-23 15:45:56 islandusurper Exp $
+// $Id: uc_cart.module,v 1.15.2.30 2009-10-20 20:58:07 islandusurper Exp $
 
 /**
  * @file
@@ -1354,9 +1354,12 @@ function uc_cart_get_contents($cid = NULL, $action = NULL) {
       $item->model = $product->model;
 
       // Invoke hook_cart_item() with $op = 'load' in enabled modules.
-      foreach (module_implements('cart_item') as $module) {
+      foreach (module_list() as $module) {
         $func = $module .'_cart_item';
-        $func('load', $item);
+        if (function_exists($func)) {
+          // $item must be passed by reference.
+          $func('load', $item);
+        }
       }
 
       $items[$cid][] = $item;
@@ -1420,10 +1423,14 @@ function uc_cart_get_item($cart_item_id) {
   $item->model = $product->model;
 
   // Invoke hook_cart_item() with $op = 'load' in enabled modules.
-  foreach (module_implements('cart_item') as $module) {
+  foreach (module_list() as $module) {
     $func = $module .'_cart_item';
-    $func('load', $item);
+    if (function_exists($func)) {
+      // $item must be passed by reference.
+      $func('load', $item);
+    }
   }
+
   return $item;
 }
 
@@ -1547,9 +1554,12 @@ function uc_cart_remove_item($nid, $cid = NULL, $data = array()) {
   // Invoke hook_cart_item() with $op = 'remove' in enabled modules.
   $result = db_query("SELECT c.*, n.title, n.vid FROM {node} n INNER JOIN {uc_cart_products} c ON n.nid = c.nid WHERE c.cart_id = '%s' AND c.nid = %d", $cart_id, $nid);
   if ($item = db_fetch_object($result)) {
-    foreach (module_implements('cart_item') as $module) {
+    foreach (module_list() as $module) {
       $func = $module .'_cart_item';
-      $func('remove', $item);
+      if (function_exists($func)) {
+        // $item must be passed by reference.
+        $func('remove', $item);
+      }
     }
   }
 
@@ -1665,7 +1675,13 @@ function uc_cart_product_is_shippable($product) {
   }
 
   // See if any other modules have a say in the matter...
-  $result = module_invoke_all('cart_item', 'can_ship', $product);
+  foreach (module_list() as $module) {
+    $func = $module .'_cart_item';
+    if (function_exists($func) && $func('can_ship', $product)) {
+      // $product must be passed by reference.
+      $result[] = TRUE;
+    }
+  }
 
   // Return TRUE by default.
   if (empty($result) || in_array(TRUE, $result)) {

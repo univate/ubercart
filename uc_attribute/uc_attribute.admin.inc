@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_attribute.admin.inc,v 1.1.2.23 2009-09-23 19:50:45 islandusurper Exp $
+// $Id: uc_attribute.admin.inc,v 1.1.2.24 2009-10-20 20:58:06 islandusurper Exp $
 
 /**
  * @file
@@ -933,7 +933,7 @@ function theme_uc_object_options_form($form) {
  *     #options - Array of option names
  * @return Themed set of attribute options.
  */
-function theme_uc_product_attributes(&$element) {
+function theme_uc_product_attributes($element) {
   $option_rows = array();
 
   foreach (element_children($element) as $key) {

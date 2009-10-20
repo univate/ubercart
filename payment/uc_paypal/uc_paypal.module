@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_paypal.module,v 1.5.2.17 2009-09-21 14:34:47 islandusurper Exp $
+// $Id: uc_paypal.module,v 1.5.2.18 2009-10-20 20:58:07 islandusurper Exp $
 
 /**
  * @file
@@ -402,8 +402,9 @@ function uc_paypal_wpp_charge($order_id, $amount, $data) {
 
   switch ($nvp_response['ACK']) {
     case 'SuccessWithWarning':
-      watchdog('uc_payment', '<b>@type succeeded with a warning.</b>'. _uc_paypal_build_error_messages($nvp_response),
+      watchdog('uc_payment', '<b>@type succeeded with a warning.</b>!paypal_message',
         array(
+          '!paypal_message' => _uc_paypal_build_error_messages($nvp_response),
           '@type' => $types[$data['txn_type']],
         ),
         WATCHDOG_WARNING,
@@ -483,7 +484,7 @@ function _uc_paypal_build_error_messages($nvp_response) {
   $code = 0;
   $message = '';
   while (array_key_exists('L_SEVERITYCODE'. $code, $nvp_response)) {
-    $message .= '<br /><b>'. $nvp_response['L_SEVERITYCODE'. $code] .':</b> '. $nvp_response['L_ERRORCODE'. $code] .': '. $nvp_response['L_LONGMESSAGE'. $code];
+    $message .= '<br /><b>'. check_plain($nvp_response['L_SEVERITYCODE'. $code]) .':</b> '. check_plain($nvp_response['L_ERRORCODE'. $code]) .': '. check_plain($nvp_response['L_LONGMESSAGE'. $code]);
     $code++;
   }
   return $message;
@@ -1025,7 +1026,7 @@ function uc_paypal_api_request($request, $server) {
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
   $response = curl_exec($ch);
   if ($error = curl_error($ch)) {
-    watchdog('uc_paypal', $error, NULL, WATCHDOG_ERROR);
+    watchdog('uc_paypal', '!error', array('!error' => $error), WATCHDOG_ERROR);
   }
   curl_close($ch);
 

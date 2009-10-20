@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.admin.inc,v 1.1.2.26 2009-09-23 19:50:45 islandusurper Exp $
+// $Id: uc_order.admin.inc,v 1.1.2.27 2009-10-20 20:58:07 islandusurper Exp $
 
 /**
  * @file
@@ -1314,7 +1314,13 @@ function uc_order_edit_products($order) {
       $product->price = $product->sell_price;
       $product->data = module_invoke_all('add_to_cart_data', $form_state['values']);
 
-      module_invoke_all('cart_item', 'load', $product);
+      foreach (module_list() as $module) {
+        $function = $module .'_cart_item';
+        if (function_exists($function)) {
+          // $product must be passed by reference.
+          $function('load', $product);
+        }
+      }
 
       $price_info = array(
         'price' => $product->price,

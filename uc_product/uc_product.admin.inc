@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product.admin.inc,v 1.1.2.18 2009-07-21 14:37:17 islandusurper Exp $
+// $Id: uc_product.admin.inc,v 1.1.2.19 2009-10-20 20:58:06 islandusurper Exp $
 
 /**
  * @file
@@ -530,7 +530,6 @@ function uc_product_feature_add_form_submit($form, &$form_state) {
  */
 function uc_product_image_defaults() {
   uc_product_add_default_image_field();
-  uc_product_add_imagecache_presets();
 
   drupal_set_message(t('Default image support configured for Ubercart products using CCK and ImageCache.'));
 

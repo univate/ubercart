@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_attribute.module,v 1.12.2.35 2009-09-21 14:34:50 islandusurper Exp $
+// $Id: uc_attribute.module,v 1.12.2.36 2009-10-20 20:58:06 islandusurper Exp $
 
 /**
  * @file
@@ -350,11 +350,11 @@ function uc_attribute_nodeapi(&$node, $op, $arg3 = NULL, $arg4 = NULL) {
         switch ($GLOBALS['db_type']) {
           case 'mysqli':
           case 'mysql':
-            db_query("INSERT IGNORE INTO {uc_product_attributes} (nid, aid, ordering, required, display, default_option) SELECT %d, aid, ordering, required, display, default_option FROM {uc_class_attributes} WHERE pcid = '%s'", $node->nid, $node->type);
+            db_query("INSERT IGNORE INTO {uc_product_attributes} (nid, aid, label, ordering, required, display, default_option) SELECT %d, aid, label, ordering, required, display, default_option FROM {uc_class_attributes} WHERE pcid = '%s'", $node->nid, $node->type);
             db_query("INSERT IGNORE INTO {uc_product_options} (nid, oid, cost, price, weight, ordering) SELECT %d, oid, cost, price, weight, ordering FROM {uc_class_attribute_options} WHERE pcid = '%s'", $node->nid, $node->type);
             break;
           case 'pgsql':
-            db_query("INSERT INTO {uc_product_attributes} (nid, aid, ordering, required, display, default_option) SELECT %d, aid, ordering, required, display, default_option FROM {uc_class_attributes} WHERE pcid = '%s'", $node->nid, $node->type);
+            db_query("INSERT INTO {uc_product_attributes} (nid, aid, label, ordering, required, display, default_option) SELECT %d, aid, label, ordering, required, display, default_option FROM {uc_class_attributes} WHERE pcid = '%s'", $node->nid, $node->type);
             db_query("INSERT INTO {uc_product_options} (nid, oid, cost, price, weight, ordering) SELECT %d, oid, cost, price, weight, ordering FROM {uc_class_attribute_options} WHERE pcid = '%s'", $node->nid, $node->type);
             break;
         }
@@ -468,7 +468,7 @@ function uc_attribute_cart_item($op, &$item) {
       $item->weight += $op_weight;
 
       $combination = array();
-      foreach ($item->data['attributes'] as $aid => $value) {
+      foreach ((array)$item->data['attributes'] as $aid => $value) {
         if (is_numeric($value)) {
           $attribute = uc_attribute_load($aid, $item->nid, 'product');
           if ($attribute && ($attribute->display == 1 || $attribute->display == 2)) {

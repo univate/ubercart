@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_payment.module,v 1.5.2.12 2009-09-21 14:34:46 islandusurper Exp $
+// $Id: uc_payment.module,v 1.5.2.13 2009-10-20 20:58:06 islandusurper Exp $
 
 /**
  * @file
@@ -325,9 +325,22 @@ function uc_payment_order_state() {
  * Callback Functions, Forms, and Tables
  ******************************************************************************/
 
-function uc_payment_get_totals() {
+/**
+ * Return a formatted list of line items for an order total preview.
+ *
+ * @param $return
+ *   TRUE or FALSE to specify whether or not to return the results instead of
+ *     printing them and exiting.
+ * @param $order
+ *   Optionally pass in a full order object to use instead of finding it in the
+ *     $_POST data.
+ * @return
+ *   The formatted HTML of the order total preview if $return is set to TRUE.
+ */
+function uc_payment_get_totals($return = FALSE, $order = NULL) {
   $output = '';
-  if (is_array($_POST)) {
+
+  if (empty($order) && is_array($_POST) && isset($_POST['order'])) {
     $order = unserialize($_POST['order']);
   }
 
@@ -350,7 +363,7 @@ function uc_payment_get_totals() {
         $context['revision'] = 'themed';
         $context['subject']['line_item'] = $line;
 
-        $output .= '<tr><td align="right"><b>'. $line['title'] .':</b></td>'
+        $output .= '<tr><td align="right"><b>'. filter_xss($line['title']) .':</b></td>'
                   .'<td align="right">'. uc_price($line['amount'], $context) .'</td></tr>';
 
         if ($line['summed']) {
@@ -365,6 +378,10 @@ function uc_payment_get_totals() {
     $output .= '<tr><td align="right"><b>'. t('Order total:') .'</b></td>'
               .'<td align="right">'. uc_price(uc_order_get_total($order), $context)
               .'</td></tr></table>';
+  }
+
+  if ($return) {
+    return $output;
   }
 
   print $output;
@@ -668,7 +685,14 @@ function uc_payment_load($receipt_id) {
 }
 
 /**
- * Load an array of all the payments for order $order_id.
+ * Load an array of all the payments for an order.
+ *
+ * @param $order_id
+ *   The order's id.
+ * @param $action
+ *   Unused...
+ * @return
+ *   Array of payment objects or FALSE if there are none.
  */
 function uc_payment_load_payments($order_id, $action = NULL) {
   $payments = array();
@@ -763,4 +787,3 @@ function _payment_gateway_data($gateway_id, $key) {
     }
   }
 }
-

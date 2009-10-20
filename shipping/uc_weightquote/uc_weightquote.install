@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_weightquote.install,v 1.5.2.8 2009-09-23 15:45:56 islandusurper Exp $
+// $Id: uc_weightquote.install,v 1.5.2.9 2009-10-20 20:58:08 islandusurper Exp $
 
 /**
  * @file
@@ -39,7 +39,7 @@ function uc_weightquote_schema() {
         'not null' => FALSE,
       ),
     ),
-    'primary key' => array('vid, mid'),
+    'primary key' => array('vid', 'mid'),
   );
 
   $schema['uc_weightquote_methods'] = array(

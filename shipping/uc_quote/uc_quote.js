@@ -1,4 +1,4 @@
-// $Id: uc_quote.js,v 1.5.2.8 2009-09-21 14:34:47 islandusurper Exp $
+// $Id: uc_quote.js,v 1.5.2.9 2009-10-20 20:58:07 islandusurper Exp $
 
 /**
  * @file
@@ -52,7 +52,7 @@ function setTaxCallbacks() {
     var i = $(this).val();
     if (window.set_line_item) {
       var label = $(this).parent().text();
-      set_line_item("shipping", label.substr(0, label.indexOf(":")), Math.round($(this).parent().prev().val() * 100) / 100, 1, 1);
+      set_line_item("shipping", label.substr(0, label.indexOf(":")), $(this).parent().prev().val(), 1, 1);
     }
   });
 }
@@ -146,18 +146,18 @@ function displayQuote(data) {
 
       if (data[i].rate != undefined) {
         if (numQuotes > 1 && page != 'cart') {
-          item = "<input type=\"hidden\" name=\"rate[" + i + "]\" value=\"" + (Math.round(data[i].rate * 100) / 100) + "\" />"
+          item = "<input type=\"hidden\" name=\"rate[" + i + "]\" value=\"" + data[i].rate + "\" />"
             + "<label class=\"option\">"
             + "<input type=\"radio\" class=\"form-radio\" name=\"quote-option\" value=\"" + i + "\" />"
             + label + ": " + data[i].format + "</label>";
         }
         else {
           item = "<input type=\"hidden\" name=\"quote-option\" value=\"" + i + "\" />"
-            + "<input type=\"hidden\" name=\"rate[" + i + "]\" value=\"" + (Math.round(data[i].rate * 100) / 100) + "\" />"
+            + "<input type=\"hidden\" name=\"rate[" + i + "]\" value=\"" + data[i].rate + "\" />"
             + "<label class=\"option\">" + label + ": " + data[i].format + "</label>";
           if (page == "checkout") {
             if (label != "" && window.set_line_item) {
-              set_line_item("shipping", label, Math.round(data[i].rate * 100) / 100, 1);
+              set_line_item("shipping", label, data[i].rate, 1);
             }
           }
         }
@@ -180,7 +180,7 @@ function displayQuote(data) {
         quoteDiv.find("input:radio[value=" + i +"]").click(function() {
           var i = $(this).val();
           if (window.set_line_item) {
-            set_line_item("shipping", data[i].option_label, Math.round(data[i].rate * 100) / 100, 1, 1);
+            set_line_item("shipping", data[i].option_label, data[i].rate, 1, 1);
           }
         });
       }

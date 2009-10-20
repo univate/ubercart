@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_credit.module,v 1.5.2.18 2009-09-21 14:34:49 islandusurper Exp $
+// $Id: uc_credit.module,v 1.5.2.19 2009-10-20 20:58:08 islandusurper Exp $
 
 /**
  * @file
@@ -629,8 +629,13 @@ function uc_payment_method_credit($op, &$arg1, $silent = FALSE) {
       return $output;
 
     case 'order-details':
-      $details = drupal_get_form('uc_payment_method_credit_form', $arg1);
-      return uc_strip_form($details);
+      if (variable_get('uc_credit_debug', FALSE)) {
+        $details = drupal_get_form('uc_payment_method_credit_form', $arg1);
+        return uc_strip_form($details);
+      }
+      else {
+        return t('Use the terminal available through the<br />%button button on the View tab to<br />process credit card payments.', array('%button' => t('Process card')));
+      }
 
     case 'edit-process':
       $cache = uc_credit_cache('load');
@@ -1068,8 +1073,8 @@ function theme_uc_payment_method_credit_form($form) {
   if (arg(1) == 'checkout') {
     $path = base_path() . drupal_get_path('module', 'uc_credit');
     $output = '<table class="inline-pane-table" cellpadding="2">';
-    if (strlen($form['cc_policy']) > 0) {
-      $output .= '<tr><td colspan="2">'. variable_get('uc_credit_policy', '')
+    if (strlen($form['cc_policy']['#value']) > 0) {
+      $output .= '<tr><td colspan="2">'. $form['cc_policy']['#value']
                 .'</td></tr>';
     }
     if (variable_get('uc_credit_type_enabled', FALSE)) {
@@ -1123,9 +1128,18 @@ function theme_uc_payment_method_credit_form($form) {
     }
     $output .= '<tr><td class="oet-label">'. t('Card Number:') .'</td><td>'
              . drupal_render($form['cc_number']) .'</td></tr>';
+    if (variable_get('uc_credit_start_enabled', FALSE)) {
+      $output .= '<tr><td class="oet-label">'. t('Start Date:') .'</td><td>'
+               . drupal_render($form['cc_start_month']) .' '. drupal_render($form['cc_start_year'])
+                .' '. t('(if present)') .'</td></tr>';
+    }
     $output .= '<tr><td class="oet-label">'. t('Expiration Date:') .'</td><td>'
              . drupal_render($form['cc_exp_month']) .' '
              . drupal_render($form['cc_exp_year']) .'</td></tr>';
+    if (variable_get('uc_credit_issue_enabled', FALSE)) {
+      $output .= '<tr><td class="oet-label">'. t('Issue Number:') .'</td><td>'
+               . drupal_render($form['cc_issue']) .' '. t('(if present)') .'</td></tr>';
+    }
     if (variable_get('uc_credit_cvv_enabled', TRUE)) {
       $form['cc_cvv']['#title'] = '';
       $output .= '<tr><td class="oet-label">'. t('CVV:') .'</td><td>'
@@ -1583,4 +1597,3 @@ function uc_credit_gateway_txn_types($gateway) {
 
   return $types;
 }
-

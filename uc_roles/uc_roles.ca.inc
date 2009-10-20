@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_roles.ca.inc,v 1.1.2.12 2009-09-21 14:34:49 islandusurper Exp $
+// $Id: uc_roles.ca.inc,v 1.1.2.13 2009-10-20 20:58:08 islandusurper Exp $
 
 /**
  * @file
@@ -474,9 +474,6 @@ function uc_roles_action_order_renew($order, $settings) {
       // Determine the expiration timestamp for the role.
       $expiration = _uc_roles_product_get_expiration($role, $product->qty, !is_null($existing_role->expiration) ? $existing_role->expiration : NULL);
 
-      // Get the new expiration (if applicable)
-      $new_expiration = db_fetch_object(db_query("SELECT * FROM {uc_roles_expirations} WHERE uid = %d AND rid = %d", $account->uid, $role->rid));
-
       // Leave an order comment.
       if (!is_null($existing_role->expiration)) {
         $op = 'renew';
@@ -491,6 +488,15 @@ function uc_roles_action_order_renew($order, $settings) {
 
         // Grant the role to the user.
         uc_roles_grant($account, $role->rid, $expiration, TRUE, !$settings['message']);
+      }
+
+      // Get the new expiration (if applicable)
+      $new_expiration = db_fetch_object(db_query("SELECT * FROM {uc_roles_expirations} WHERE uid = %d AND rid = %d", $account->uid, $role->rid));
+      if (!$new_expiration) {
+        $new_expiration = new stdClass();
+        $new_expiration->uid = $account->uid;
+        $new_expiration->rid = $role->rid;
+        $new_expiration->expiration = NULL;
       }
 
       uc_order_comment_save($order->order_id, $user->uid, $comment);

@@ -1,4 +1,4 @@
-// $Id: uc_payment.js,v 1.5.2.6 2009-09-21 14:34:46 islandusurper Exp $
+// $Id: uc_payment.js,v 1.5.2.7 2009-10-20 20:58:06 islandusurper Exp $
 
 /**
  * Calculate the number of bytes of a Unicode string.
@@ -64,29 +64,29 @@ function show_progressBar(id) {
 }
 
 function serializeOrder() {
-  var products = $("[@name=cart_contents]").val();
+  var products = $("[name=cart_contents]").val();
   if (!products) {
     return false;
   }
 
-  var p_email = $("input[@name*=primary_email]").val() || '';
-  var s_f_name = $("input[@name*=delivery_first_name]").val() || '';
-  var s_l_name = $("input[@name*=delivery_last_name]").val() || '';
-  var s_street1 = $("input[@name*=delivery_street1]").val() || '';
-  var s_street2 = $("input[@name*=delivery_street2]").val() || '';
-  var s_city = $("input[@name*=delivery_city]").val() || '';
-  var s_zone = $("select[@name*=delivery_zone]").val() || '0';
-  var s_code = $("input[@name*=delivery_postal_code]").val() || '';
-  var s_country = $("select[@name*=delivery_country]").val() || '0';
+  var p_email = $("input[name*=primary_email]").val() || '';
+  var s_f_name = $("input[name*=delivery_first_name]").val() || '';
+  var s_l_name = $("input[name*=delivery_last_name]").val() || '';
+  var s_street1 = $("input[name*=delivery_street1]").val() || '';
+  var s_street2 = $("input[name*=delivery_street2]").val() || '';
+  var s_city = $("input[name*=delivery_city]").val() || '';
+  var s_zone = $("select[name*=delivery_zone]").val() || '0';
+  var s_code = $("input[name*=delivery_postal_code]").val() || '';
+  var s_country = $("select[name*=delivery_country]").val() || '0';
 
-  var b_f_name = $("input[@name*=billing_first_name]").val() || '';
-  var b_l_name = $("input[@name*=billing_last_name]").val() || '';
-  var b_street1 = $("input[@name*=billing_street1]").val() || '';
-  var b_street2 = $("input[@name*=billing_street2]").val() || '';
-  var b_city = $("input[@name*=billing_city]").val() || '';
-  var b_zone = $("select[@name*=billing_zone]").val() || '0';
-  var b_code = $("input[@name*=billing_postal_code]").val() || '';
-  var b_country = $("select[@name*=billing_country]").val() || '0';
+  var b_f_name = $("input[name*=billing_first_name]").val() || '';
+  var b_l_name = $("input[name*=billing_last_name]").val() || '';
+  var b_street1 = $("input[name*=billing_street1]").val() || '';
+  var b_street2 = $("input[name*=billing_street2]").val() || '';
+  var b_city = $("input[name*=billing_city]").val() || '';
+  var b_zone = $("select[name*=billing_zone]").val() || '0';
+  var b_code = $("input[name*=billing_postal_code]").val() || '';
+  var b_country = $("select[name*=billing_country]").val() || '0';
 
   var line_item = '';
   var key;

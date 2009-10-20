@@ -1,5 +1,5 @@
 <?php
-// $Id: hooks.php,v 1.1.2.19 2009-09-23 15:45:55 islandusurper Exp $
+// $Id: hooks.php,v 1.1.2.20 2009-10-20 20:58:06 islandusurper Exp $
 
 /**
  * @file
@@ -629,7 +629,7 @@ function hook_line_item() {
  * Alter a line item on an order when the order is loaded.
  *
  * @param &$item
- *   The line item object.
+ *   The line item array.
  * @param $order
  *   The order object containing the line item.
  */
@@ -1309,6 +1309,38 @@ function hook_tapir_table_header_alter(&$header, $table_id) {
 }
 
 /**
+ * Take action when checkout is completed.
+ *
+ * @param $order
+ *   The resulting order object from the completed checkout.
+ * @param $account
+ *   The customer that completed checkout, either the current user, or the
+ *   account created for an anonymous customer.
+ */
+function hook_uc_checkout_complete($order, $account) {
+  // Get previous records of customer purchases.
+  $nids = array();
+  $result = db_query("SELECT uid, nid, qty FROM {uc_customer_purchases} WHERE uid = %d", $account->uid);
+  while ($record = db_fetch_object($result)) {
+    $nids[$record->nid] = $record->qty;
+  }
+
+  // Update records with new data.
+  $record = array('uid' => $account->uid);
+  foreach ($order->products as $product) {
+    $record['nid'] = $product->nid;
+    if (isset($nids[$product->nid])) {
+      $record['qty'] = $nids[$product->nid] + $product->qty;
+      db_write_record($record, 'uc_customer_purchases', array('uid', 'nid'));
+    }
+    else {
+      $record['qty'] = $product->qty;
+      db_write_record($record, 'uc_customer_purchases');
+    }
+  }
+}
+
+/**
  * Allow modules to modify forms before Drupal invokes hook_form_alter().
  *
  * This hook will normally be used by core modules so any form modifications
@@ -1371,70 +1403,6 @@ function hook_uc_message() {
   $messages['configurable_message_example'] = t('This block of text represents a configurable message such as a set of instructions or an e-mail template.  Using hook_uc_message to handle the default values for these is so easy even your grandma can do it!');
 
   return $messages;
-}
-
-/**
- * Used to determine whether or not UC Google Analytics should add e-commerce
- *   tracking code to the bottom of the page.
- *
- * The Google Analytics module takes care of adding the necessary .js file from
- * Google for tracking general statistics.  The UC Google Analytics module works
- * in conjunction with this code to add e-commerce specific code.  However, the
- * e-commerce code should only be added on appropriate pages.  Generally, the
- * correct page will be the checkout completion page at cart/checkout/complete.
- * However, because modules can change the checkout flow as necessary, it must
- * be possible for alternate pages to be used.
- *
- * This hook allows other modules to tell the UC Google Analytics module that
- * it should go ahead and add the e-commerce tracking code to the current page.
- * A module simply needs to implement this hook and return TRUE on the proper
- * order completion page to let UC Google Analytics know it should add the
- * e-commerce tracking code to the current page.
- *
- * The implementation below comes from the 2Checkout.com module which uses an
- * alternate checkout completion page.
- *
- * @return
- *   TRUE if e-commerce tracking code should be added to the current page.
- */
-function hook_ucga_display() {
-  // Tell UC Google Analytics to display the e-commerce JS on the custom
-  // order completion page for this module.
-  if (arg(0) == 'cart' && arg(1) == '2checkout' && arg(2) == 'complete') {
-    return TRUE;
-  }
-}
-
-/**
- * Take action when checkout is completed.
- *
- * @param $order
- *   The resulting order object from the completed checkout.
- * @param $account
- *   The customer that completed checkout, either the current user, or the
- *   account created for an anonymous customer.
- */
-function hook_uc_checkout_complete($order, $account) {
-  // Get previous records of customer purchases.
-  $nids = array();
-  $result = db_query("SELECT uid, nid, qty FROM {uc_customer_purchases} WHERE uid = %d", $account->uid);
-  while ($record = db_fetch_object($result)) {
-    $nids[$record->nid] = $record->qty;
-  }
-
-  // Update records with new data.
-  $record = array('uid' => $account->uid);
-  foreach ($order->products as $product) {
-    $record['nid'] = $product->nid;
-    if (isset($nids[$product->nid])) {
-      $record['qty'] = $nids[$product->nid] + $product->qty;
-      db_write_record($record, 'uc_customer_purchases', array('uid', 'nid'));
-    }
-    else {
-      $record['qty'] = $product->qty;
-      db_write_record($record, 'uc_customer_purchases');
-    }
-  }
 }
 
 /**
@@ -1536,6 +1504,38 @@ function hook_uc_stock_adjusted($sku, $stock, $qty) {
   );
 
   drupal_mail('uc_stock_notify', 'stock-adjusted', uc_store_email_from(), language_default(), $params);
+}
+
+/**
+ * Used to determine whether or not UC Google Analytics should add e-commerce
+ *   tracking code to the bottom of the page.
+ *
+ * The Google Analytics module takes care of adding the necessary .js file from
+ * Google for tracking general statistics.  The UC Google Analytics module works
+ * in conjunction with this code to add e-commerce specific code.  However, the
+ * e-commerce code should only be added on appropriate pages.  Generally, the
+ * correct page will be the checkout completion page at cart/checkout/complete.
+ * However, because modules can change the checkout flow as necessary, it must
+ * be possible for alternate pages to be used.
+ *
+ * This hook allows other modules to tell the UC Google Analytics module that
+ * it should go ahead and add the e-commerce tracking code to the current page.
+ * A module simply needs to implement this hook and return TRUE on the proper
+ * order completion page to let UC Google Analytics know it should add the
+ * e-commerce tracking code to the current page.
+ *
+ * The implementation below comes from the 2Checkout.com module which uses an
+ * alternate checkout completion page.
+ *
+ * @return
+ *   TRUE if e-commerce tracking code should be added to the current page.
+ */
+function hook_ucga_display() {
+  // Tell UC Google Analytics to display the e-commerce JS on the custom
+  // order completion page for this module.
+  if (arg(0) == 'cart' && arg(1) == '2checkout' && arg(2) == 'complete') {
+    return TRUE;
+  }
 }
 
 /**

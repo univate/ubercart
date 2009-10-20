@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product_kit.module,v 1.11.2.25 2009-09-23 15:45:57 islandusurper Exp $
+// $Id: uc_product_kit.module,v 1.11.2.26 2009-10-20 20:58:07 islandusurper Exp $
 
 /**
  * @file
@@ -95,6 +95,21 @@ function uc_product_kit_enable() {
   // Add field_image_cache to product kits.
   if (module_exists('imagefield')) {
     uc_product_add_default_image_field('product_kit');
+  }
+}
+
+function uc_product_kit_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'node_delete_confirm' && uc_product_is_product((integer)$form['nid']['#value'])) {
+    $kits = 0;
+    $result = db_query("SELECT k.nid FROM {node} AS n JOIN {uc_product_kits} AS k ON n.vid = k.vid WHERE k.vid IN (SELECT DISTINCT vid FROM {uc_product_kits} WHERE product_id = %d) GROUP BY k.nid HAVING COUNT(product_id) = 1", $form['nid']['#value']);
+    while ($k = db_fetch_object($result)) {
+      $kits++;
+    }
+
+    if ($kits) {
+      $description = $form['description']['#value'];
+      $form['description']['#value'] = format_plural($kits, 'There is 1 product kit that consists of only this product. It will be deleted as well.', 'There are @count product kits that consist of only this products. They will be deleted as well.') .' '. $description;
+    }
   }
 }
 
@@ -400,6 +415,24 @@ function uc_product_kit_nodeapi(&$node, $op, $arg3 = NULL, $arg4 = NULL) {
           'submit_handlers' => array('node_form_submit'),
         );
         drupal_execute('product_kit_node_form', $form_state, $kit);
+      }
+    break;
+    case 'delete':
+      $result = db_query("SELECT DISTINCT nid FROM {uc_product_kits} WHERE product_id = %d", $node->nid);
+      while ($k = db_fetch_object($result)) {
+        $kit = node_load($k->nid, NULL, TRUE);
+        unset($kit->products[$node->nid]);
+
+        if (empty($kit->products)) {
+          node_delete($kit->nid);
+        }
+        else {
+          $form_state = array(
+            'values' => array('nid' => $kit->nid),
+            'submit_handlers' => array('node_form_submit'),
+          );
+          drupal_execute('product_kit_node_form', $form_state, $kit);
+        }
       }
     break;
   }
@@ -808,6 +841,9 @@ function uc_product_kit_buy_it_now_form($form_state, $node) {
       'class' => 'list-add-to-cart',
     ),
   );
+
+  uc_form_alter($form, $form_state, __FUNCTION__);
+
   return $form;
 }
 
@@ -950,7 +986,13 @@ function uc_product_kit_order_product_alter(&$product, $order) {
     $kit_product->data['kit_id'] = $product->nid;
 
     // Run the product through the alter mill.
-    module_invoke_all('cart_item', 'load', $kit_product);
+    foreach (module_list() as $module) {
+      $function = $module .'_cart_item';
+      if (function_exists($function)) {
+        // $product must be passed by reference.
+        $function('load', $kit_product);
+      }
+    }
 
     $price_info = array(
       'price' => $kit_product->price,

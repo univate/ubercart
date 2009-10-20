@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product.module,v 1.14.2.37 2009-09-23 19:50:45 islandusurper Exp $
+// $Id: uc_product.module,v 1.14.2.38 2009-10-20 20:58:06 islandusurper Exp $
 
 /**
  * @file
@@ -1005,7 +1005,7 @@ function uc_product_content_extra_fields_alter(&$extra, $type_name) {
  * Reset a content type's default image field setting when that field instance
  * is removed.
  */
-function uc_product_content_fieldapi($op, &$field) {
+function uc_product_content_fieldapi($op, $field) {
   switch ($op) {
     case 'delete instance':
       if ($field->field_name == variable_get('uc_image_'. $field->type_name, NULL)) {
@@ -1385,6 +1385,9 @@ function uc_catalog_buy_it_now_form($form_state, $node) {
       'class' => 'list-add-to-cart',
     ),
   );
+
+  uc_form_alter($form, $form_state, __FUNCTION__);
+
   return $form;
 }
 

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_authorizenet.module,v 1.4.2.11 2009-08-17 21:27:56 islandusurper Exp $
+// $Id: uc_authorizenet.module,v 1.4.2.12 2009-10-20 20:58:08 islandusurper Exp $
 
 /**
  * @file
@@ -985,7 +985,7 @@ function _uc_authorizenet_array_to_xml($data) {
     }
     else {
       // Render the element with its contents.
-      $xml .= '<'. $element .'>'. $contents .'</'. $element .'>';
+      $xml .= '<'. $element .'>'. htmlspecialchars($contents) .'</'. $element .'>';
     }
   }
 

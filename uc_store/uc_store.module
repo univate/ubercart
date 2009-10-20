@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_store.module,v 1.14.2.33 2009-09-23 19:50:45 islandusurper Exp $
+// $Id: uc_store.module,v 1.14.2.34 2009-10-20 20:58:07 islandusurper Exp $
 
 /**
  * @file
@@ -9,6 +9,9 @@
  * in different parts of the Ubercart core.  It also provides screens and
  * settings pages for use in store administration.
  */
+
+// Ubercart price API may be required before hook_init() is invoked.
+require_once dirname(__FILE__) .'/includes/uc_price.inc';
 
 /**
  * Unit conversion ratios.
@@ -325,13 +328,10 @@ function uc_store_menu() {
  * Implementation of hook_init().
  */
 function uc_store_init() {
-  $dir = drupal_get_path('module', 'uc_store');
+  module_load_include('inc', 'uc_store', 'includes/summaries');
+  module_load_include('inc', 'uc_store', 'includes/tapir');
 
-  require_once($dir .'/includes/summaries.inc');
-  require_once($dir .'/includes/tapir.inc');
-  require_once($dir .'/includes/uc_price.inc');
-
-  drupal_add_css($dir .'/uc_store.css');
+  drupal_add_css(drupal_get_path('module', 'uc_store') .'/uc_store.css');
 
   global $conf;
   $conf['i18n_variables'][] = 'uc_store_name';
@@ -2038,7 +2038,7 @@ function uc_referer_uri() {
  * Returns the current version of Ubercart.
  */
 function uc_version() {
-  return '2.0-rc3';
+  return '6.x-2.0';
 }
 
 /**

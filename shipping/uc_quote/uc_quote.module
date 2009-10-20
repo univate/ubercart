@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_quote.module,v 1.5.2.24 2009-09-21 14:34:47 islandusurper Exp $
+// $Id: uc_quote.module,v 1.5.2.25 2009-10-20 20:58:07 islandusurper Exp $
 
 /**
  * @file
@@ -430,7 +430,7 @@ function uc_quote_action_get_quote($order, $method) {
   ob_end_clean();
   //drupal_set_message('<pre>'. print_r($quote_data, TRUE) .'</pre>');
   if ($messages && variable_get('uc_quote_log_errors', FALSE)) {
-    watchdog('quote', $messages, NULL, WATCHDOG_WARNING);
+    watchdog('quote', '!messages', array('!messages' => $messages), WATCHDOG_WARNING);
     watchdog('quote', '<pre>@data</pre>', array('@data' => print_r($quote_data, TRUE)), WATCHDOG_WARNING);
   }
   return $quote_data;
@@ -914,9 +914,9 @@ function uc_checkout_pane_quotes($op, &$arg1, $arg2) {
         'subject' => array('order' => $arg1),
       );
       $result = db_query("SELECT * FROM {uc_order_line_items} WHERE order_id = %d AND type = '%s'", $arg1->order_id, 'shipping');
-      if ($line_item = db_fetch_object($result)) {
+      if ($line_item = db_fetch_array($result)) {
         $context['subject']['line_item'] = $line_item;
-        $review[] = array('title' => $line_item->title, 'data' => uc_price($line_item->amount, $context));
+        $review[] = array('title' => $line_item['title'], 'data' => uc_price($line_item['amount'], $context));
       }
       return $review;
   }
