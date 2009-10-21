@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product_kit.module,v 1.11.2.26 2009-10-20 20:58:07 islandusurper Exp $
+// $Id: uc_product_kit.module,v 1.11.2.27 2009-10-21 19:40:27 islandusurper Exp $
 
 /**
  * @file
@@ -931,10 +931,46 @@ function uc_product_kit_store_status() {
 function uc_product_kit_add_to_cart($nid, $qty, $kit_data) {
   $node = node_load($nid);
   if ($node->type == 'product_kit') {
+    $cart = uc_cart_get_contents();
     $unique = uniqid('', TRUE);
+    $update = array();
+    $product_data = array();
+
     foreach ($node->products as $product) {
-      $data = array('kit_id' => $node->nid, 'unique_id' => $unique, 'module' => 'uc_product_kit');
-      uc_cart_add_item($product->nid, $product->qty * $qty, $data +  module_invoke_all('add_to_cart_data', $kit_data['products'][$product->nid]), NULL, FALSE, FALSE, FALSE);
+      $data = array('kit_id' => $node->nid, 'module' => 'uc_product_kit') + module_invoke_all('add_to_cart_data', $kit_data['products'][$product->nid]);
+      $product_data[$product->nid] = $data;
+      foreach ($cart as $item) {
+        if ($item->nid == $product->nid && isset($item->data['kit_id']) && $item->data['kit_id'] == $node->nid) {
+          // There is something in the cart like the product kit. Update
+          // by default, but check that it's possible.
+          if (is_null($add_new)) {
+            $add_new = FALSE;
+          }
+          $data['unique_id'] = $item->data['unique_id'];
+          if ($item->data == $data) {
+            // This product is a candidate for updating the cart quantity.
+            // Make sure the data arrays will compare as equal when serialized.
+            $product_data[$product->nid] = $item->data;
+            $update[$product->nid] = TRUE;
+          }
+        }
+      }
+
+    }
+
+    // The product kit can update its items only if they all can be updated.
+    if (count($update) != count($node->products)) {
+      foreach ($node->products as $product) {
+        $data = $product_data[$product->nid];
+        $data['unique_id'] = $unique;
+        uc_cart_add_item($product->nid, $product->qty * $qty, $data, NULL, FALSE, FALSE);
+      }
+    }
+    else {
+      foreach ($node->products as $product) {
+        $data = $product_data[$product->nid];
+        uc_cart_add_item($product->nid, $product->qty * $qty, $data, NULL, FALSE, FALSE);
+      }
     }
 
     // Rebuild the cart items cache.

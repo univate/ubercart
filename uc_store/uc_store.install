@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_store.install,v 1.9.2.7 2009-07-21 14:37:21 islandusurper Exp $
+// $Id: uc_store.install,v 1.9.2.8 2009-10-21 19:40:27 islandusurper Exp $
 
 /**
  * @file
@@ -15,7 +15,7 @@ function uc_store_schema() {
   $schema['uc_countries'] = array(
     'fields' => array(
       'country_id' => array(
-        'type' => 'serial',
+        'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
@@ -297,6 +297,26 @@ function uc_store_update_6004() {
   variable_del('uc_store_site_id');
 
   $ret[] = array('success' => TRUE, 'query' => 'Removed broken statistics reporting.');
+
+  return $ret;
+}
+
+/**
+ * Remove auto-increment from uc_countries.country_id.
+ */
+function uc_store_update_6005() {
+  $ret = array();
+
+  switch ($GLOBALS['db_type']) {
+    case 'mysql':
+    case 'mysqli':
+      db_change_field($ret, 'uc_countries', 'country_id', 'country_id', array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE));
+      break;
+    case 'pgsql':
+      db_drop_primary_key($ret, 'uc_countries');
+      db_change_field($ret, 'uc_countries', 'country_id', 'country_id', array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE), array('primary key' => array('country_id')));
+      break;
+  }
 
   return $ret;
 }
