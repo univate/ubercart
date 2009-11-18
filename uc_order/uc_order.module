@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.module,v 1.12.2.35 2009-11-18 21:08:06 islandusurper Exp $
+// $Id: uc_order.module,v 1.12.2.36 2009-11-18 22:24:02 islandusurper Exp $
 
 /**
  * @file
@@ -1449,8 +1449,7 @@ function uc_order_get_total($order, $products_only = FALSE) {
     // unknowingly implemented (see date_order() in date_api.module), we verify
     // the results are numeric before continuing.
     if (function_exists($function) && ($value = $function('total', $order, NULL)) && is_numeric($value)) {
-        $total += $value;
-      }
+      $total += $value;
     }
   }
 
