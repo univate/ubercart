@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_ups.module,v 1.5.2.18 2009-11-17 22:06:22 islandusurper Exp $
+// $Id: uc_ups.module,v 1.5.2.19 2009-11-18 20:55:13 islandusurper Exp $
 
 /**
  * @file
@@ -19,7 +19,7 @@ function uc_ups_menu() {
 
   $items['admin/store/settings/quotes/methods/ups'] = array(
     'title' => 'UPS',
-    'page' => 'drupal_get_form',
+    'page callback' => 'drupal_get_form',
     'page arguments' => array('uc_ups_admin_settings'),
     'access arguments' => array('configure quotes'),
     'type' => MENU_LOCAL_TASK,
