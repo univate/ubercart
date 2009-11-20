@@ -1,4 +1,4 @@
-# $Id: payment-uc_payment.ja.po,v 1.1.2.1 2009-11-20 07:00:59 pineray Exp $
+# $Id: payment-uc_payment.ja.po,v 1.1.2.2 2009-11-20 07:09:08 pineray Exp $
 #
 # Japanese translation of Drupal (general)
 # Copyright PineRay <com.gmail@matsudaterutaka **reverse order**>
@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2009-10-22 00:01+0900\n"
 "PO-Revision-Date: 2009-11-20 15:57+0900\n"
-"Last-Translator: PineRay <com.gmail@matsudaterutaka **reverse order**>
+"Last-Translator: PineRay <com.gmail@matsudaterutaka **reverse order**>\n"
 "Language-Team: Japanese <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
