@@ -1,4 +1,4 @@
-# $Id: uc_reports.ja.po,v 1.1.2.1 2009-11-26 03:56:21 pineray Exp $
+# $Id: uc_reports.ja.po,v 1.1.2.2 2009-11-26 06:39:21 pineray Exp $
 #
 # Japanese translation of Drupal (general)
 # Copyright PineRay <com.gmail@matsudaterutaka **reverse order**>
@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2009-11-06 00:12+0900\n"
-"PO-Revision-Date: 2009-11-26 12:50+0900\n"
+"PO-Revision-Date: 2009-11-26 14:45+0900\n"
 "Last-Translator: PineRay <com.gmail@matsudaterutaka **reverse order**>\n"
 "Language-Team: Japanese <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -377,7 +377,7 @@ msgstr "カスタマイズした売上サマリーを表示"
 
 #: uc_reports.info:0
 msgid "Reports"
-msgstr ""
+msgstr "レポート"
 
 #: uc_reports.info:0
 msgid "View reports about your store's sales, customers, and products."
