@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.admin.inc,v 1.1.2.28 2009-11-18 21:08:06 islandusurper Exp $
+// $Id: uc_order.admin.inc,v 1.1.2.29 2010-01-04 15:13:10 islandusurper Exp $
 
 /**
  * @file
@@ -1046,7 +1046,7 @@ function uc_order_history($user) {
     $rows[] = array(
       array('data' => format_date($order->created, 'custom', variable_get('uc_date_format_default', 'm/d/Y'))),
       array('data' => $link, 'nowrap' => 'nowrap'),
-      array('data' => $order->title),
+      array('data' => check_plain($order->title)),
       array('data' => (!is_null($order->products) ? $order->products : 0), 'align' => 'center'),
       array('data' => uc_price($order->total, $context), 'align' => 'right'),
     );
