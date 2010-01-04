@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_store.module,v 1.14.2.35 2009-11-11 21:05:18 islandusurper Exp $
+// $Id: uc_store.module,v 1.14.2.36 2010-01-04 15:14:16 islandusurper Exp $
 
 /**
  * @file
@@ -466,6 +466,7 @@ function uc_store_token_list($type = 'all') {
   $tokens['global']['store-owner'] = t('The Ubercart store owner.');
   $tokens['global']['store-email'] = t('The Ubercart store e-mail address.');
   $tokens['global']['store-phone'] = t('The Ubercart store phone number.');
+  $tokens['global']['store-fax'] = t('The Ubercart store fax number.');
   $tokens['global']['store-address'] = t('The Ubercart store mailing address.');
   $tokens['global']['store-help-url'] = t('The URL to the store help page.');
 
