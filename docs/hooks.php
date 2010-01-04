@@ -1,5 +1,5 @@
 <?php
-// $Id: hooks.php,v 1.1.2.21 2009-11-23 18:22:58 islandusurper Exp $
+// $Id: hooks.php,v 1.1.2.22 2010-01-04 15:15:31 islandusurper Exp $
 
 /**
  * @file
@@ -179,7 +179,7 @@ function hook_calculate_tax($order) {
  *   - "remove"
  *     - #type: checkbox
  *     - #value: If selected, removes the $item from the cart.
- *   - "options"
+ *   - "description"
  *     - #type: markup
  *     - #value: Themed markup (usually an unordered list) displaying extra information.
  *   - "title"
@@ -203,26 +203,37 @@ function hook_cart_display($item) {
   $element['nid'] = array('#type' => 'value', '#value' => $node->nid);
   $element['module'] = array('#type' => 'value', '#value' => 'uc_product');
   $element['remove'] = array('#type' => 'checkbox');
-  $op_names = '';
-  if (module_exists('uc_attribute')){
-    $op_names = "<ul class=\"cart-options\">\n";
-    foreach ($item->options as $option){
-      $op_names .= '<li>'. $option['attribute'] .': '. $option['name'] ."</li>\n";
-    }
-    $op_names .= "</ul>\n";
-  }
-  $element['options'] = array('#value' => $op_names);
+
   $element['title'] = array(
-    '#value' => l($node->title, 'node/'. $node->nid),
+    '#value' => node_access('view', $node) ? l($item->title, 'node/'. $node->nid) : check_plain($item->title),
   );
-  $element['#total'] = $item->price * $item->qty;
+
+  $context = array(
+    'revision' => 'altered',
+    'type' => 'cart_item',
+    'subject' => array(
+      'cart_item' => $item,
+      'node' => $node,
+    ),
+  );
+  $price_info = array(
+    'price' => $item->price,
+    'qty' => $item->qty,
+  );
+
+  $element['#total'] = uc_price($price_info, $context);
   $element['data'] = array('#type' => 'hidden', '#value' => serialize($item->data));
   $element['qty'] = array(
     '#type' => 'textfield',
     '#default_value' => $item->qty,
-    '#size' => 3,
-    '#maxlength' => 3
+    '#size' => 5,
+    '#maxlength' => 6
   );
+
+  if ($description = uc_product_get_description($item)) {
+    $element['description'] = array('#value' => $description);
+  }
+
   return $element;
 }
 
