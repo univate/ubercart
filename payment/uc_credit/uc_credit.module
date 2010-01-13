@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_credit.module,v 1.5.2.20 2010-01-13 20:47:03 islandusurper Exp $
+// $Id: uc_credit.module,v 1.5.2.21 2010-01-13 20:56:22 islandusurper Exp $
 
 /**
  * @file
@@ -376,7 +376,7 @@ function uc_credit_payment_method() {
   $cc_types = array('visa', 'mastercard', 'discover', 'amex');
   foreach ($cc_types as $type) {
     if (variable_get('uc_credit_'. $type, TRUE)) {
-      $title .= ' <img src="'. $path .'/images/'. $type .'.gif" style="position: relative; top: 5px;">';
+      $title .= ' <img src="'. $path .'/images/'. $type .'.gif" style="position: relative; top: 5px;" />';
     }
   }
   $methods[] = array(
@@ -1104,7 +1104,7 @@ function theme_uc_payment_method_credit_form($form) {
     if (variable_get('uc_credit_cvv_enabled', TRUE)) {
       $form['cc_cvv']['#title'] = '';
       $output .= '<tr><td class="field-label">'. t('CVV:') .'</td><td>'. drupal_render($form['cc_cvv'])
-                .' <img src="'. $path .'/images/info.png" onclick="cvv_info_popup();" style="cursor: pointer; position: relative; top: 3px;"> <a style="cursor: pointer; font-weight: normal;" onclick="cvv_info_popup();">'
+                .' <img src="'. $path .'/images/info.png" onclick="cvv_info_popup();" style="cursor: pointer; position: relative; top: 3px;" /> <a style="cursor: pointer; font-weight: normal;" onclick="cvv_info_popup();">'
                 . t("What's the CVV?") .'</a></td></tr>';
     }
     if (variable_get('uc_credit_bank_enabled', FALSE)) {

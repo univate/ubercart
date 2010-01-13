@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_ups.admin.inc,v 1.1.2.11 2009-11-17 22:06:22 islandusurper Exp $
+// $Id: uc_ups.admin.inc,v 1.1.2.12 2010-01-13 20:56:22 islandusurper Exp $
 
 /**
  * @file
@@ -351,7 +351,7 @@ FOLD HERE</td>
 
 <table border="0" cellpadding="0" cellspacing="0" width="650" ><tr>
 <td align="left" valign="top">
-<img src="'. base_path() . $image_path .'" height="392" width="672">
+<img src="'. base_path() . $image_path .'" height="392" width="672" />
 </td>
 </tr></table>
 </body>
