@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cybersource.module,v 1.4.2.9 2009-08-17 21:27:54 islandusurper Exp $
+// $Id: uc_cybersource.module,v 1.4.2.10 2010-01-14 22:19:24 islandusurper Exp $
 
 /**
  * @file
@@ -553,7 +553,7 @@ function _uc_cybersource_soap_charge($order, $amount, $data, $cc_type, $country)
 
     // Separately add products and line item into the request items object if
     // we're charging the full order total.
-    if ($amount == $order->order_total) {
+    if (round($amount, 2) == round($order->order_total, 2)) {
       $request->item = array();
       $counter = 0;
 
@@ -619,7 +619,7 @@ function _uc_cybersource_soap_charge($order, $amount, $data, $cc_type, $country)
       $p_comment .= t(', AVS: @avs', array('@avs' => $reply->ccAuthReply->avsCode));
     }
     if (!empty($reply->ccAuthReply->cvCode)) {
-      $o_comment .= '<br />'. t('<b>CVV:</b> @cvv', array('!cvv' => _parse_cs_cvv_code($reply->ccAuthReply->cvCode)));
+      $o_comment .= '<br />'. t('<b>CVV:</b> @cvv', array('@cvv' => _parse_cs_cvv_code($reply->ccAuthReply->cvCode)));
       $p_comment .= t(', CVV: @cvv', array('@cvv' => $reply->ccAuthReply->cvCode));
     }
     uc_order_comment_save($order->order_id, $user->uid, $o_comment, 'admin');
