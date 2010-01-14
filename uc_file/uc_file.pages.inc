@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.pages.inc,v 1.1.2.12 2010-01-14 15:10:58 islandusurper Exp $
+// $Id: uc_file.pages.inc,v 1.1.2.13 2010-01-14 15:26:59 islandusurper Exp $
 
 /**
  * @file
@@ -227,15 +227,13 @@ function _uc_file_download_validate($file_download, &$user, $ip) {
  *   The file_user object from the uc_file_users
  * @param $ip
  *   The string containing the ip address the download is going to
- * @param $fid
- *   The file id of the file to transfer
  */
 function _uc_file_download_transfer($file_user, $ip) {
 
   // Check if any hook_file_transfer_alter calls alter the download.
   foreach (module_implements('file_transfer_alter') as $module) {
     $name = $module .'_file_transfer_alter';
-    $file_user->full_path = $name($file_user, $ip, $fid, $file_user->full_path);
+    $file_user->full_path = $name($file_user, $ip, $file_user->fid, $file_user->full_path);
   }
 
   // This could get clobbered, so make a copy.
