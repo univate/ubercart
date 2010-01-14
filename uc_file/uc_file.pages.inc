@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.pages.inc,v 1.1.2.13 2010-01-14 15:26:59 islandusurper Exp $
+// $Id: uc_file.pages.inc,v 1.1.2.14 2010-01-14 17:46:29 islandusurper Exp $
 
 /**
  * @file
@@ -29,12 +29,10 @@ define('UC_FILE_ERROR_EXPIRED'                , 6);
 define('UC_FILE_ERROR_HOOK_ERROR'             , 7);
 
 /**
- * Table builder for user downloads
+ * @param $files
+ *   Array of the files.
  */
-function uc_file_user_downloads($account) {
-
-  drupal_set_title(t('File downloads'));
-
+function theme_uc_file_user_downloads($files) {
   // Create a header and the pager it belongs to.
   $header = array(
     array('data' => t('Purchased'  ), 'field' => 'u.granted', 'sort' => 'asc'),
@@ -44,7 +42,41 @@ function uc_file_user_downloads($account) {
     array('data' => t('Addresses'  )),
   );
 
-  $files = pager_query(
+  $rows = array();
+  $row = 0;
+  foreach ($files as $file) {
+    $rows[] = array(
+      array('data' => format_date($file['granted'], 'custom', variable_get('uc_date_format_default', 'm/d/Y')), 'class' => 'date-row', 'id' => 'date-'. $row),
+      array('data' => $file['link'], 'class' => 'filename-row', 'id' => 'filename-'. $row),
+      array('data' => $file['description'], 'class' => 'description-row', 'id' => 'description-'. $row),
+      array('data' => $file['accessed'] .'/'. ($file['download_limit'] ? $file['download_limit'] : t('Unlimited')), 'class' => 'download-row', 'id' => 'download-'. $row),
+      array('data' => count(unserialize($file['addresses'])) .'/'. ($file['address_limit'] ? $file['address_limit'] : t('Unlimited')), 'class' => 'addresses-row', 'id' => 'addresses-'. $row),
+    );
+    $row++;
+  }
+  if (empty($rows)) {
+    $rows[] = array(array('data' => t('No downloads found'), 'colspan' => 5));
+  }
+
+  $output .= theme('table', $header, $rows);
+  $output .= theme('pager', NULL, UC_FILE_PAGER_SIZE, 0);
+  $output .= '<div class="form-item"><p class="description">'.
+  t('Once your download is finished, you must refresh the page to download again. (Provided you have permission)') .
+  '<br />'. t('Downloads will not be counted until the file is finished transferring, even though the number may increment when you click.') .
+  '<br /><b>'. t('Do not use any download acceleration feature to download the file, or you may lock yourself out of the download.') .'</b>'.
+  '</p></div>';
+  return $output;
+}
+
+/**
+ * Table builder for user downloads
+ */
+function uc_file_user_downloads($account) {
+  drupal_set_title(t('File downloads'));
+
+  $files = array();
+
+  $result = pager_query(
     "SELECT u.granted, f.filename, u.accessed, u.addresses, p.description, u.file_key, f.fid, u.download_limit, u.address_limit, u.expiration FROM {uc_file_users} as u ".
     "LEFT JOIN {uc_files} as f ON u.fid = f.fid ".
     "LEFT JOIN {uc_file_products} as p ON p.pfid = u.pfid WHERE uid = %d".
@@ -55,10 +87,9 @@ function uc_file_user_downloads($account) {
     $account->uid
   );
 
-  $rows = array();
-  while ($file = db_fetch_object($files)) {
+  $row = 0;
+  while ($file = db_fetch_object($result)) {
 
-    $row = count($rows);
     $download_limit = $file->download_limit;
 
     // Set the JS behavior when this link gets clicked.
@@ -83,26 +114,19 @@ function uc_file_user_downloads($account) {
       $file_link = l(basename($file->filename), 'download/'. $file->fid .'/'. $file->file_key, $onclick) .' ('. t('expires on @date', array('@date' => format_date($file->expiration, 'custom', variable_get('uc_date_format_default', 'm/d/Y')))) .')';
     }
 
-    $rows[] = array(
-      array('data' => format_date($file->granted, 'custom', variable_get('uc_date_format_default', 'm/d/Y')), 'class' => 'date-row', 'id' => 'date-'. $row),
-      array('data' => $file_link, 'class' => 'filename-row', 'id' => 'filename-'. $row),
-      array('data' => $file->description, 'class' => 'description-row', 'id' => 'description-'. $row),
-      array('data' => $file->accessed .'/'. ($file->download_limit ? $file->download_limit : t('Unlimited')), 'class' => 'download-row', 'id' => 'download-'. $row),
-      array('data' => count(unserialize($file->addresses)) .'/'. ($file->address_limit ? $file->address_limit : t('Unlimited')), 'class' => 'addresses-row', 'id' => 'addresses-'. $row),
+    $files[] = array(
+      'granted' => $file->granted,
+      'link' => $file_link,
+      'description' => $file->description,
+      'accessed' => $file->accessed,
+      'download_limit' => $file->download_limit,
+      'addresses' => $file->address,
+      'address_limit' => $file->address_limit,
     );
-  }
-  if (empty($rows)) {
-    $rows[] = array(array('data' => t('No downloads found'), 'colspan' => 5));
+    $row++;
   }
 
-  $output .= theme('table', $header, $rows);
-  $output .= theme('pager', NULL, UC_FILE_PAGER_SIZE, 0);
-  $output .= '<div class="form-item"><p class="description">'.
-  t('Once your download is finished, you must refresh the page to download again. (Provided you have permission)') .
-  '<br />'. t('Downloads will not be counted until the file is finished transferring, even though the number may increment when you click.') .
-  '<br /><b>'. t('Do not use any download acceleration feature to download the file, or you may lock yourself out of the download.') .'</b>'.
-  '</p></div>';
-  return $output;
+  return theme('uc_file_user_downloads', $files);
 }
 
 /**

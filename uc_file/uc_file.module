@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.module,v 1.2.2.21 2009-09-21 14:34:48 islandusurper Exp $
+// $Id: uc_file.module,v 1.2.2.22 2010-01-14 17:46:29 islandusurper Exp $
 
 /**
  * @file
@@ -126,6 +126,10 @@ function uc_file_theme() {
     ),
     'uc_file_hook_user_file_downloads' => array(
       'arguments' => array('form' => NULL),
+    ),
+    'uc_file_user_downloads' => array(
+      'arguments' => array('files' => NULL),
+      'file' => 'uc_file.pages.inc',
     ),
   );
 }
