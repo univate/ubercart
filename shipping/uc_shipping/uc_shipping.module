@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_shipping.module,v 1.6.2.14 2009-11-30 19:41:18 islandusurper Exp $
+// $Id: uc_shipping.module,v 1.6.2.15 2010-01-19 15:01:32 islandusurper Exp $
 
 /**
  * @file
@@ -261,7 +261,7 @@ function uc_shipping_package_view($package) {
   if ($package->tracking_number) {
     $rows[] = array(t('Tracking number:'), check_plain($package->tracking_number));
   }
-  if ($shipment && $package->label_image && file_exists($package->label_image)) {
+  if ($shipment && $package->label_image && file_exists(file_create_path($package->label_image))) {
     $rows[] = array(t('Label:'), l(t('Click to view.'), 'admin/store/orders/'. $package->order_id .'/shipments/labels/'. $shipment->shipping_method .'/'. $package->label_image));
   }
   else {

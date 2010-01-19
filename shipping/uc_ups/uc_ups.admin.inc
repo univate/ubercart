@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_ups.admin.inc,v 1.1.2.12 2010-01-13 20:56:22 islandusurper Exp $
+// $Id: uc_ups.admin.inc,v 1.1.2.13 2010-01-19 15:01:32 islandusurper Exp $
 
 /**
  * @file
@@ -282,7 +282,7 @@ function uc_ups_confirm_shipment_submit($form, &$form_state) {
       if ($label_file = fopen($label_path, 'wb')) {
         fwrite($label_file, base64_decode($label_image));
         fclose($label_file);
-        $package->label_image = $label_path;
+        $package->label_image = 'ups_labels/'. basename($label_path);
       }
       else {
         drupal_set_message(t('Could not open a file to save the label image.'), 'error');
@@ -310,7 +310,7 @@ function uc_ups_confirm_shipment_submit($form, &$form_state) {
  */
 function theme_uc_ups_label_image() {
   $args = func_get_args();
-  $image_path = implode('/', $args);
+  $image_path = file_create_url(implode('/', $args));
   print '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
 <html><head><title>
 View/Print Label</title></head><style>
@@ -351,7 +351,7 @@ FOLD HERE</td>
 
 <table border="0" cellpadding="0" cellspacing="0" width="650" ><tr>
 <td align="left" valign="top">
-<img src="'. base_path() . $image_path .'" height="392" width="672" />
+<img src="'. $image_path .'" height="392" width="672">
 </td>
 </tr></table>
 </body>
