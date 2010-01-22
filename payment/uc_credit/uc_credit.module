@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_credit.module,v 1.5.2.21 2010-01-13 20:56:22 islandusurper Exp $
+// $Id: uc_credit.module,v 1.5.2.22 2010-01-22 20:15:19 islandusurper Exp $
 
 /**
  * @file
@@ -711,7 +711,7 @@ function uc_payment_method_credit($op, &$arg1, $silent = FALSE) {
       $form['cc_clear'] = array(
         '#type' => 'fieldset',
         '#title' => t('Debug mode data clearing'),
-        '#description' => t('Specify below the status and age of orders whose credit card details will be removed.  This setting only applies when operating in debug mode.  When not in debug mode, no credit card information except the last 4 digits of the card number will be stored.', array('!url' => url('admin/store/settings/cart/edit'))),
+        '#description' => t('Specify below the status and age of orders whose credit card details will be removed.  This setting only applies when operating in debug mode.  When not in debug mode, no credit card information except the last 4 digits of the card number will be stored. <strong>Cron must be running for this feature to work.</strong>', array('!url' => url('admin/store/settings/cart/edit'))),
         '#collapsible' => FALSE,
       );
       foreach (uc_order_status_list() as $status) {
