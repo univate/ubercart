@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.pages.inc,v 1.1.2.14 2010-01-14 17:46:29 islandusurper Exp $
+// $Id: uc_file.pages.inc,v 1.1.2.15 2010-01-22 22:01:18 islandusurper Exp $
 
 /**
  * @file
@@ -317,8 +317,8 @@ function _uc_file_download_transfer($file_user, $ip) {
   drupal_set_header('Content-Disposition: attachment; filename="'. $filename .'"');
   drupal_set_header('Content-Length: '. ($seek_end - $seek_start + 1));
 
-  // Last-modified is required for content served dynamically
-  drupal_set_header('Last-modified: '. format_date(filemtime($file_user->full_path), 'large'));
+  // Last-Modified is required for content served dynamically
+  drupal_set_header('Last-Modified: '. gmdate("D, d M Y H:i:s", filemtime($file_user->full_path)) ." GMT");
 
   // Etag header is required for Firefox3 and other managers
   drupal_set_header('ETag: '. md5($file_user->full_path));
