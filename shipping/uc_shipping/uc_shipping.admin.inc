@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_shipping.admin.inc,v 1.1.2.11 2009-08-17 21:27:56 islandusurper Exp $
+// $Id: uc_shipping.admin.inc,v 1.1.2.12 2010-01-22 22:41:26 islandusurper Exp $
 
 /**
  * @file
@@ -887,6 +887,10 @@ function uc_shipping_make_shipment() {
     $methods = module_invoke_all('shipping_method');
     $method = $methods[$method_id];
     if (isset($method)) {
+      $inc_file = drupal_get_path('module', $method['module']) .'/'. $method['ship']['file'];
+      if (is_file($inc_file)) {
+        require_once $inc_file;
+      }
       return drupal_get_form($method['ship']['callback'], $order, $package_ids);
     }
     else {

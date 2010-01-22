@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_quote.module,v 1.5.2.26 2010-01-14 15:33:57 islandusurper Exp $
+// $Id: uc_quote.module,v 1.5.2.27 2010-01-22 22:41:26 islandusurper Exp $
 
 /**
  * @file
@@ -415,6 +415,14 @@ function uc_quote_action_get_quote($order, $method) {
     }
   }
   ob_start();
+  // Load include file containing quote callback, if there is one
+  if (isset($method['quote']['file'])) {
+    $inc_file = drupal_get_path('module', $method['module']) .'/'. $method['quote']['file'];
+    if (is_file($inc_file)) {
+      require_once $inc_file;
+    }
+  }
+
   if (function_exists($method['quote']['callback'])) {
     // This feels wrong, but it's the only way I can ensure that shipping
     // methods won't mess up the products in their methods.
