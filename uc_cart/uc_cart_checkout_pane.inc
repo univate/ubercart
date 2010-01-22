@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart_checkout_pane.inc,v 1.5.2.10 2009-08-17 21:27:55 islandusurper Exp $
+// $Id: uc_cart_checkout_pane.inc,v 1.5.2.11 2010-01-22 21:40:22 islandusurper Exp $
 
 /**
  * @file
@@ -617,7 +617,7 @@ function theme_cart_review_table($show_subtotal = TRUE) {
       'type' => 'amount',
     );
     $rows[] = array(
-      'data' => array(array('data' => '<span id="subtotal-title">' . t('Subtotal:') . '</span> ' . uc_price($subtotal, $context), 'colspan' => 4, 'class' => 'subtotal')),
+      'data' => array(array('data' => '<span id="subtotal-title">' . t('Subtotal:') . '</span> ' . uc_price($subtotal, $context), 'colspan' => 3, 'class' => 'subtotal')),
       'class' => 'subtotal',
     );
   }
