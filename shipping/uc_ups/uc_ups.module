@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_ups.module,v 1.5.2.21 2010-01-22 20:43:51 islandusurper Exp $
+// $Id: uc_ups.module,v 1.5.2.22 2010-01-22 21:28:02 islandusurper Exp $
 
 /**
  * @file
@@ -985,17 +985,25 @@ function uc_ups_fulfill_order($form_state, $order, $package_ids) {
     $form['destination'][$field]['#required'] = TRUE;
   }
 
-  $ups_services = _uc_ups_service_list();
-  $services = array_filter(variable_get('uc_ups_services', array()));
-  foreach ($services as $ups_id => $service) {
-    $services[$ups_id] = $ups_services[$ups_id];
+  $services = _uc_ups_service_list();
+  $default_service = '';
+  $method = $order->quote['method'];
+  if ($method == 'ups') {
+    $default_service = $order->quote['accessorials'];
+    $method = $services[$default_service];
   }
-  if (count($services)) {
-    $form['service'] = array('#type' => 'select',
-      '#title' => t('UPS service'),
-      '#options' => $services,
-    );
-  }
+
+  // Inform user of customer's shipping choice
+  $form['shipping_choice'] = array(
+    '#type' => 'markup',
+    '#value' => t('Customer selected @method as the shipping method and paid @rate', array('@method' => $method, '@rate' => uc_currency_format($order->quote['rate']))),
+  );
+
+  $form['service'] = array('#type' => 'select',
+    '#title' => t('UPS service'),
+    '#options' => $services,
+    '#default_value' => $default_service,
+  );
   $today = getdate();
   $form['ship_date'] = array('#type' => 'date',
     '#title' => t('Ship date'),
