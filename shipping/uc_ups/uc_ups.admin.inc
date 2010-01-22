@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_ups.admin.inc,v 1.1.2.13 2010-01-19 15:01:32 islandusurper Exp $
+// $Id: uc_ups.admin.inc,v 1.1.2.14 2010-01-22 20:43:51 islandusurper Exp $
 
 /**
  * @file
@@ -299,6 +299,45 @@ function uc_ups_confirm_shipment_submit($form, &$form_state) {
 
   unset($_SESSION['ups']);
   $form_state['redirect'] = 'admin/store/orders/'. $order_id .'/shipments';
+}
+
+/**
+ * Construct an XML label and pickup request.
+ *
+ * @param $digest
+ *   Base-64 encoded shipment request.
+ * @param $order_id
+ *   The order id of the shipment.
+ * @param $packages
+ *   An array of package ids to be shipped.
+ * @return
+ *   ShipmentAcceptRequest XML document to send to UPS.
+ */
+function uc_ups_request_pickup($digest, $order_id = 0, $packages = array()) {
+  $packages = (array)$packages;
+
+  $schema = uc_ups_access_request();
+  $schema .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<ShipmentAcceptRequest>
+  <Request>
+    <RequestAction>ShipAccept</RequestAction>";
+    if ($order_id || count($packages)) {
+      $schema .= "\n<TransactionReference>
+      <CustomerContext>";
+      if ($order_id) {
+        $schema .= "<OrderId>". $order_id ."</OrderId>\n";
+      }
+      foreach ($packages as $pkg_id) {
+        $schema .= "<PackageId>". $pkg_id ."</PackageId>\n";
+      }
+      $schema .= "</CustomerContext>\n</TransactionReference>\n";
+    }
+  $schema .= "  </Request>
+  <ShipmentDigest>". $digest ."</ShipmentDigest>
+</ShipmentAcceptRequest>";
+
+  //drupal_set_message('<pre>'. htmlentities($schema) .'</pre>');
+  return $schema;
 }
 
 /**
