@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_authorizenet.module,v 1.4.2.12 2009-10-20 20:58:08 islandusurper Exp $
+// $Id: uc_authorizenet.module,v 1.4.2.13 2010-01-22 19:49:15 islandusurper Exp $
 
 /**
  * @file
@@ -91,6 +91,15 @@ function uc_authorizenet_payment_gateway() {
  */
 function uc_authorizenet_settings_form() {
   $login_data = _uc_authorizenet_login_data();
+
+  // Allow admin to set duplicate window
+  $form['uc_authnet_duplicate_window'] = array(
+    '#type' => 'select',
+    '#title' => t('Duplicate window'),
+    '#description' => t('Blocks submission of duplicate transactions within the specified window.  Defaults to 120 seconds.'),
+    '#default_value' => variable_get('uc_authnet_duplicate_window', 120),
+    '#options' => drupal_map_assoc(array(0, 15, 30, 45, 60, 75, 90, 105, 120)),
+  );
 
   $form['api_id_key'] = array(
     '#type' => 'fieldset',
@@ -463,7 +472,7 @@ function _uc_authorizenet_charge($order, $amount, $data) {
     // 'x_trans_id' => '',
     // 'x_auth_code' => '',
     'x_test_request' => variable_get('uc_authnet_aim_txn_mode', 'live_test') == 'live_test' ? 'TRUE' : 'FALSE',
-    // 'x_duplicate_window' => '120',
+    'x_duplicate_window' => variable_get('uc_authnet_duplicate_window', 120),
 
     // Order Information
     'x_invoice_num' => $order->order_id,
