@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_ups.module,v 1.7 2010-01-25 15:38:18 islandusurper Exp $
+// $Id: uc_ups.module,v 1.8 2010-01-25 16:41:59 islandusurper Exp $
 
 /**
  * @file
@@ -78,7 +78,7 @@ function uc_ups_theme() {
  * @see uc_product_form()
  * @see uc_ups_product_alter_validate()
  */
-function uc_ups_form_alter(&$form, &$form_state, $form_id) {
+function uc_ups_form_alter(&$form, $form_state, $form_id) {
   if (uc_product_is_product_form($form)) {
     $node = $form['#node'];
     $enabled = variable_get('uc_quote_enabled', array());
