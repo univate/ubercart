@@ -1,4 +1,4 @@
-// $Id: uc_credit.js,v 1.4 2010-01-25 15:26:45 islandusurper Exp $
+// $Id: uc_credit.js,v 1.5 2010-01-25 15:38:19 islandusurper Exp $
 
 if (Drupal.jsEnabled) {
   $(document).ready(

@@ -1,4 +1,4 @@
-// $Id: uc_shipping.js,v 1.6 2010-01-25 15:26:44 islandusurper Exp $
+// $Id: uc_shipping.js,v 1.7 2010-01-25 15:38:18 islandusurper Exp $
 
 /**
  * @file

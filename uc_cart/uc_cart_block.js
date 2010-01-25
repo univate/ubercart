@@ -1,4 +1,4 @@
-// $Id: uc_cart_block.js,v 1.9 2010-01-25 15:26:45 islandusurper Exp $
+// $Id: uc_cart_block.js,v 1.10 2010-01-25 15:38:18 islandusurper Exp $
 
 /**
  * @file

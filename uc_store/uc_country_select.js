@@ -1,4 +1,4 @@
-// $Id: uc_country_select.js,v 1.7 2010-01-25 15:26:45 islandusurper Exp $
+// $Id: uc_country_select.js,v 1.8 2010-01-25 15:38:19 islandusurper Exp $
 
 /**
  * @file

@@ -1,5 +1,5 @@
 <?php
-// $Id: antigua_barbuda_28_1.cif,v 1.2 2010-01-25 15:26:44 islandusurper Exp $
+// $Id: antigua_barbuda_28_1.cif,v 1.3 2010-01-25 15:38:18 islandusurper Exp $
 
 function antigua_barbuda_install() {
   db_query("INSERT INTO {uc_countries} VALUES (28, 'Antigua and Barbuda', 'AG', 'ATG', 1)");

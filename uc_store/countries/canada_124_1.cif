@@ -1,5 +1,5 @@
 <?php
-// $Id: canada_124_1.cif,v 1.6 2010-01-25 15:26:44 islandusurper Exp $
+// $Id: canada_124_1.cif,v 1.7 2010-01-25 15:38:18 islandusurper Exp $
 
 function canada_install() {
   // VALUES = Country ID, Country Name, 2-digit Code, 3-digit Code, File Version

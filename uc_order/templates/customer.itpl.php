@@ -1,5 +1,5 @@
 <?php
-// $Id: customer.itpl.php,v 1.6 2010-01-25 15:26:45 islandusurper Exp $
+// $Id: customer.itpl.php,v 1.7 2010-01-25 15:38:18 islandusurper Exp $
 
 /**
  * @file
