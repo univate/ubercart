@@ -1,6 +1,6 @@
-; $Id: ca.info,v 1.1 2008-07-10 12:40:55 islandusurper Exp $
+; $Id: ca.info,v 1.2 2010-01-25 15:26:45 islandusurper Exp $
 name = Conditional Actions
 description = "REQUIRED. Create conditional action configurations for taxes, shipping, and more!"
 package = Ubercart - core
 core = 6.x
-
+php = 5.0
