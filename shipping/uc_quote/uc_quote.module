@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_quote.module,v 1.5.2.27 2010-01-22 22:41:26 islandusurper Exp $
+// $Id: uc_quote.module,v 1.5.2.28 2010-01-27 22:23:31 islandusurper Exp $
 
 /**
  * @file
@@ -145,7 +145,7 @@ function uc_quote_nodeapi(&$node, $op, $arg3 = NULL, $arg4 = NULL) {
  * Add a default shipping address for products and manufacturers. If it is left
  * blank, products default to their manufacturers', which default to the store's.
  */
-function uc_quote_form_alter(&$form, &$form_state, $form_id) {
+function uc_quote_form_alter(&$form, $form_state, $form_id) {
   // Alter the product node form.
   if (uc_product_is_product_form($form)) {
     // Get the shipping address.

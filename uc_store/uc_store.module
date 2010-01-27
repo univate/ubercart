@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_store.module,v 1.14.2.36 2010-01-04 15:14:16 islandusurper Exp $
+// $Id: uc_store.module,v 1.14.2.37 2010-01-27 22:23:31 islandusurper Exp $
 
 /**
  * @file
@@ -571,7 +571,7 @@ function uc_store_exit() {
 /**
  * Implementation of hook_form_alter().
  */
-function uc_store_form_alter(&$form, &$form_state, $form_id) {
+function uc_store_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == 'uc_product_table') {
     unset($form['table']['#value']['columns']['list_price']);
   }

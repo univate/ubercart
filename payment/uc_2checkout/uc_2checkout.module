@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_2checkout.module,v 1.6.2.11 2010-01-13 20:56:22 islandusurper Exp $
+// $Id: uc_2checkout.module,v 1.6.2.12 2010-01-27 22:23:32 islandusurper Exp $
 
 /**
  * @file
@@ -61,7 +61,7 @@ function uc_2checkout_ucga_display() {
 /**
  * Implementation of hook_form_alter().
  */
-function uc_2checkout_form_alter(&$form, &$form_state, $form_id) {
+function uc_2checkout_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == 'uc_cart_checkout_review_form' && ($order_id = intval($_SESSION['cart_order'])) > 0) {
     $order = uc_order_load($order_id);
 

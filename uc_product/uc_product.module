@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product.module,v 1.14.2.39 2009-11-17 14:26:34 islandusurper Exp $
+// $Id: uc_product.module,v 1.14.2.40 2010-01-27 22:23:32 islandusurper Exp $
 
 /**
  * @file
@@ -816,7 +816,7 @@ function uc_product_preprocess_node(&$variables) {
  *
  * @see uc_product_save_continue_submit()
  */
-function uc_product_form_alter(&$form, &$form_state, $form_id) {
+function uc_product_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == 'search_form' && arg(0) == 'admin' && arg(1) == 'store' && arg(2) == 'products' && user_access('use advanced search')) {
     // Keyword boxes:
     $form['advanced'] = array(

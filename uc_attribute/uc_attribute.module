@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_attribute.module,v 1.12.2.37 2009-11-23 18:22:58 islandusurper Exp $
+// $Id: uc_attribute.module,v 1.12.2.38 2010-01-27 22:23:31 islandusurper Exp $
 
 /**
  * @file
@@ -275,7 +275,7 @@ function uc_attribute_theme() {
 /**
  * Implementation of hook_form_alter().
  */
-function uc_attribute_form_alter(&$form, &$form_state, $form_id) {
+function uc_attribute_form_alter(&$form, $form_state, $form_id) {
   if (strpos($form_id, 'add_product_form')) {
     $node =& $form['node']['#value'];
     // If the node has a product list, add attributes to them
