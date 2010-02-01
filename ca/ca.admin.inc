@@ -1,5 +1,5 @@
 <?php
-// $Id: ca.admin.inc,v 1.3 2010-01-25 15:38:19 islandusurper Exp $
+// $Id: ca.admin.inc,v 1.4 2010-02-01 16:53:49 islandusurper Exp $
 
 /**
  * @file
@@ -114,6 +114,8 @@ function ca_admin($groupby = 'trigger') {
   // Put the tables in alphabetical order.
   ksort($tables);
 
+  $build = array();
+
   // Add the tables for each trigger to the output.
   foreach ($tables as $key => $value) {
     // Accommodate empty class names.
@@ -121,12 +123,21 @@ function ca_admin($groupby = 'trigger') {
       $key = t('- None -');
     }
 
-    $output .= theme('table', $header, $value['rows'], array('class' => $table_class), $table_label . check_plain($key));
+    $build[] = array(
+      '#theme' => 'table',
+      '#header' => $header,
+      '#rows' => $value['rows'],
+      '#attributes' => array('class' => $table_class),
+      '#caption' => $table_label . check_plain($key),
+    );
   }
 
-  $output .= l(t('Add a predicate'), CA_UI_PATH .'/add');
+  $build['add_link'] = array(
+    '#markup' => l(t('Add a predicate'), CA_UI_PATH .'/add'),
+    '#weight' => 5,
+  );
 
-  return $output;
+  return $build;
 }
 
 /**

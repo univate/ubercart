@@ -1,4 +1,4 @@
-// $Id: uc_country_select.js,v 1.8 2010-01-25 15:38:19 islandusurper Exp $
+// $Id: uc_country_select.js,v 1.9 2010-02-01 16:53:49 islandusurper Exp $
 
 /**
  * @file
@@ -8,12 +8,14 @@
 /**
  * Set the select box change behavior for the country selector
  */
-Drupal.behaviors.ucCountrySelect = function(context) {
-  $('select[id$=-country]:not(.ucCountrySelect-processed)', context).addClass('ucCountrySelect-processed').change(
-    function() {
-      uc_update_zone_select(this.id, '');
-    }
-  );
+Drupal.behaviors.ucCountrySelect = {
+  attach: function(context) {
+    $('select[id$=-country]:not(.ucCountrySelect-processed)', context).addClass('ucCountrySelect-processed').change(
+      function() {
+        uc_update_zone_select(this.id, '');
+      }
+    );
+  }
 }
 
 /**

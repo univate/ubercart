@@ -1,6 +1,12 @@
-; $Id: uc_store.info,v 1.9 2010-01-25 15:38:19 islandusurper Exp $
+; $Id: uc_store.info,v 1.10 2010-02-01 16:53:49 islandusurper Exp $
 name = Store
 description = REQUIRED. Setup the store settings and manage your Ubercart site.
 package = Ubercart - core
-core = 6.x
-php = 5.0
+core = 7.x
+files[] = uc_store.admin.inc
+files[] = uc_store.module
+files[] = includes/summaries.inc
+files[] = includes/tapir.inc
+files[] = includes/uc_price.inc
+files[] = uc_store.admin.inc
+php = 5.2

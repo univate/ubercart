@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.admin.inc,v 1.3 2010-01-25 15:38:18 islandusurper Exp $
+// $Id: uc_cart.admin.inc,v 1.4 2010-02-01 16:53:49 islandusurper Exp $
 
 /**
  * @file
@@ -33,7 +33,9 @@ function uc_cart_cart_settings_overview() {
   );
 
   // Theme it all up in a summaries overview.
-  return theme('summary_overview', $summaries);
+  return array(
+    '#markup' => theme('summary_overview', $summaries),
+  );
 }
 
 /**
@@ -262,7 +264,7 @@ function uc_cart_block_edit_info() {
           . t('<a href="!url">Click here</a> to goto the shopping cart block configuration page.',
               array('!url' => url('admin/build/block/configure/uc_cart/0')));
 
-  return $output;
+  return array('#markup' => $output);
 }
 
 /**
@@ -270,7 +272,7 @@ function uc_cart_block_edit_info() {
  */
 function uc_cart_checkout_settings_overview() {
   // Theme all the pages beneath this path into summary overviews.
-  return theme('summary_overview', summarize_child_form_pages('admin/store/settings/checkout/edit'));
+  return array('#markup' => theme('summary_overview', summarize_child_form_pages('admin/store/settings/checkout/edit')));
 }
 
 /**

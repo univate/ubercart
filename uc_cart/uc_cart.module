@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.module,v 1.17 2010-01-25 15:38:18 islandusurper Exp $
+// $Id: uc_cart.module,v 1.18 2010-02-01 16:53:49 islandusurper Exp $
 
 /**
  * @file
@@ -1290,7 +1290,7 @@ function uc_cart_complete_sale($order, $login = FALSE) {
   module_invoke_all('uc_checkout_complete', $order, $account);
   ca_pull_trigger('uc_checkout_complete', $order, $account);
 
-  return $themed_output;
+  return array('#markup' => $themed_output);
 }
 
 /**

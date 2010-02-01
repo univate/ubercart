@@ -1,5 +1,5 @@
 <?php
-// $Id: canada_124_1.cif,v 1.7 2010-01-25 15:38:18 islandusurper Exp $
+// $Id: canada_124_1.cif,v 1.8 2010-02-01 16:53:49 islandusurper Exp $
 
 function canada_install() {
   // VALUES = Country ID, Country Name, 2-digit Code, 3-digit Code, File Version
@@ -22,9 +22,11 @@ function canada_install() {
     array(124, 'YT', 'Yukon Territory'),
   );
 
+  $query = db_insert('uc_zones')->fields(array('zone_country_id', 'zone_code', 'zone_name'));
   foreach ($zones as $zone) {
-    db_query("INSERT INTO {uc_zones} (zone_country_id, zone_code, zone_name) VALUES (%d, '%s', '%s')", $zone);
+    $query->values($zone);
   }
+$query->execute();
 
   variable_set('uc_address_format_124',
                "!company\r\n!first_name !last_name\r\n!street1\r\n!street2"

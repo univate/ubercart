@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cybersource.install,v 1.3 2010-01-25 15:38:18 islandusurper Exp $
+// $Id: uc_cybersource.install,v 1.4 2010-02-01 16:53:49 islandusurper Exp $
 
 /**
  * @file
@@ -47,26 +47,5 @@ function uc_cybersource_requirements($phase) {
 function uc_cybersource_uninstall() {
   // Delete related variables all at once.
   db_query("DELETE FROM {variable} WHERE name LIKE 'uc_cybersource_%%' OR name LIKE 'cs_ship_from_%%'");
-}
-
-function uc_cybersource_update_1() {
-  // Change the variable used to define the default transaction type.
-  if (variable_get('uc_cybersource_transaction_type', 'sale') == 'sale') {
-    variable_set('uc_pg_cybersource_cc_txn_type', UC_CREDIT_AUTH_CAPTURE);
-  }
-  else {
-    variable_set('uc_pg_cybersource_cc_txn_type', UC_CREDIT_AUTH_ONLY);
-  }
-
-  variable_del('uc_cybersource_transaction_type');
-
-  // Convert the old subscription IDs to the new ones.
-  $result = db_query("SELECT order_id, data FROM {uc_orders} WHERE data LIKE '%%cybersource%%soap%%'");
-  while ($row = db_fetch_array($result)) {
-    $data = unserialize($row['data']);
-    uc_credit_log_reference($row['order_id'], $data['uc_cybersource']['soap']['subscription_id'], 'XXXX');
-  }
-
-  return array();
 }
 
