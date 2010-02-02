@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_store.module,v 1.18 2010-02-01 16:53:49 islandusurper Exp $
+// $Id: uc_store.module,v 1.19 2010-02-02 19:51:53 islandusurper Exp $
 
 /**
  * @file
@@ -579,7 +579,7 @@ function uc_store_exit() {
   }
 
   // Save the timestamp of the last access.
-  // $_SESSION['uc_last_access'] = time();
+  // $_SESSION['uc_last_access'] = REQUEST_TIME;
 }
 
 /**

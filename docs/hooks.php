@@ -1,5 +1,5 @@
 <?php
-// $Id: hooks.php,v 1.2 2010-01-25 16:05:35 islandusurper Exp $
+// $Id: hooks.php,v 1.3 2010-02-02 19:51:54 islandusurper Exp $
 
 /**
  * @file
@@ -1627,7 +1627,7 @@ function hook_update_cart_item($nid, $data = array(), $qty, $cid = NULL) {
     uc_cart_remove_item($nid, $cid, $data);
   }
   else {
-    db_query("UPDATE {uc_cart_products} SET qty = %d, changed = %d WHERE nid = %d AND cart_id = '%s' AND data = '%s'", $qty, time(), $nid, $cid, serialize($data));
+    db_query("UPDATE {uc_cart_products} SET qty = %d, changed = %d WHERE nid = %d AND cart_id = '%s' AND data = '%s'", $qty, REQUEST_TIME, $nid, $cid, serialize($data));
   }
 
   // Rebuild the items hash

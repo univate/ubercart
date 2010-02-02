@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.pages.inc,v 1.4 2010-02-01 16:53:49 islandusurper Exp $
+// $Id: uc_cart.pages.inc,v 1.5 2010-02-02 19:51:53 islandusurper Exp $
 
 /**
  * @file
@@ -502,7 +502,7 @@ function uc_cart_checkout_review_form_submit($form, &$form_state) {
   $error = FALSE;
 
   // Invoke it on a per-module basis instead of all at once.
-  foreach (module_list() as $module) {
+  foreach (module_implements('order') as $module) {
     $function = $module .'_order';
     if (function_exists($function)) {
       // $order must be passed by reference.

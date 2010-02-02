@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_usps.module,v 1.9 2010-01-25 16:42:00 islandusurper Exp $
+// $Id: uc_usps.module,v 1.10 2010-02-02 19:51:54 islandusurper Exp $
 
 /**
  * @file
@@ -365,7 +365,10 @@ function uc_usps_quote($products, $details, $method) {
       $services['data']['debug'] .= htmlentities(urldecode($request)) ."<br />\n";
     }
 
-    $result = drupal_http_request($connection_url, array(), 'POST', $request);
+    $result = drupal_http_request($connection_url, array(
+      'method' => 'POST',
+      'data' => $request,
+    ));
 
     if (user_access('configure quotes') && variable_get('uc_quote_display_debug', FALSE)) {
       $services['data']['debug'] .= htmlentities($result->data) ."<br />\n";
