@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_usps.module,v 1.10 2010-02-02 19:51:54 islandusurper Exp $
+// $Id: uc_usps.module,v 1.11 2010-02-03 22:10:49 islandusurper Exp $
 
 /**
  * @file
@@ -35,7 +35,7 @@ function uc_usps_menu() {
 function uc_usps_theme() {
   return array(
     'uc_usps_option_label' => array(
-      'arguments' => array('service' => NULL),
+      'variables' => array('service' => NULL),
     ),
   );
 }
@@ -430,7 +430,7 @@ function uc_usps_quote($products, $details, $method) {
       $services[$key]['rate'] = uc_price($quote['rate'], $context);
       $context['revision'] = 'formatted';
       $services[$key]['format'] = uc_price($quote['rate'], $context);
-      $services[$key]['option_label'] = theme('uc_usps_option_label', $quote['label']);
+      $services[$key]['option_label'] = theme('uc_usps_option_label', array('service' => $quote['label']));
     }
   }
 
@@ -447,7 +447,9 @@ function uc_usps_quote($products, $details, $method) {
  *   The USPS service name.
  * @ingroup themeable
  */
-function theme_uc_usps_option_label($service) {
+function theme_uc_usps_option_label($variables) {
+  $service = $variables['service'];
+
   // Start with logo
   $output = '<img class="usps-logo" src="'. url(drupal_get_path('module', 'uc_usps')) .'/uc_usps_logo.gif" alt="'. t('USPS Logo') .'" /> ';
 

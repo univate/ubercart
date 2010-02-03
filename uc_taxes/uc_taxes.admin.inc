@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_taxes.admin.inc,v 1.2 2010-01-25 16:05:33 islandusurper Exp $
+// $Id: uc_taxes.admin.inc,v 1.3 2010-02-03 22:10:49 islandusurper Exp $
 
 /**
  * @file
@@ -42,7 +42,7 @@ function uc_taxes_admin_settings() {
   }
 
   // Build the output including the table and a link to add a new rate.
-  $output = theme('table', $header, $rows)
+  $output = theme('table', array('header' => $header, 'rows' => $rows))
           . l(t('Add a tax rate'), 'admin/store/settings/taxes/add');
 
   return $output;

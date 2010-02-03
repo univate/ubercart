@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_price.inc,v 1.3 2010-01-25 15:38:18 islandusurper Exp $
+// $Id: uc_price.inc,v 1.4 2010-02-03 22:10:48 islandusurper Exp $
 
 /**
  * @file
@@ -157,8 +157,8 @@ function uc_price($price_info, $context, $options = array()) {
     }
 
     // Theme the price.
-    $values['themed-original'] = theme('uc_price', $values['formatted-original'], $context, $options);
-    $values['themed'] = theme('uc_price', $values['formatted'], $context, $options);
+    $values['themed-original'] = theme('uc_price', array('value' => $values['formatted-original'], 'context' => $context, 'options' => $options));
+    $values['themed'] = theme('uc_price', array('value' => $values['formatted'], 'context' => $context, 'options' => $options));
 
     // Cache this price values.
     // TODO: Determine if we can safely cache these things...

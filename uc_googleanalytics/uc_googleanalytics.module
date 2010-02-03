@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_googleanalytics.module,v 1.7 2010-01-25 15:38:19 islandusurper Exp $
+// $Id: uc_googleanalytics.module,v 1.8 2010-02-03 22:10:50 islandusurper Exp $
 
 /**
  * @file
@@ -35,7 +35,7 @@ function uc_googleanalytics_footer($main = 0) {
       $script = uc_googleanalytics_ecommerce_js($order);
 
       // Add the code to the footer.
-      drupal_add_js($script, 'inline', 'footer');
+      drupal_add_js($script, array('type' => 'inline', 'scope' => 'footer'));
     }
 
     // Clean out the session variable.

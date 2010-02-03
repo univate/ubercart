@@ -1,5 +1,5 @@
 <?php
-// $Id: ca.ca.inc,v 1.4 2010-02-02 19:51:53 islandusurper Exp $
+// $Id: ca.ca.inc,v 1.5 2010-02-03 22:10:49 islandusurper Exp $
 
 /**
  * @file
@@ -491,7 +491,7 @@ function _ca_custom_php_variables_table($arguments) {
     '#type' => 'fieldset',
     '#title' => t('Available PHP variables'),
     '#description' => t('You may use these variables in your custom PHP.')
-                    . theme('table', $header, $rows),
+                    . theme('table', array('header' => $header, 'rows' => $rows)),
     '#collapsible' => TRUE,
   );
 

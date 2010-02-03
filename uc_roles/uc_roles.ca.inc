@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_roles.ca.inc,v 1.2 2010-01-25 15:38:18 islandusurper Exp $
+// $Id: uc_roles.ca.inc,v 1.3 2010-02-03 22:10:49 islandusurper Exp $
 
 /**
  * @file
@@ -428,9 +428,6 @@ function ca_build_email_form($form_state, $settings, $token_filters) {
       '#title' => t('@name replacement patterns', array('@name' => drupal_ucfirst($name))),
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
-    );
-    $form['token_help'][$name]['content'] = array(
-      '#value' => theme('token_help', $name),
     );
   }
 

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.admin.inc,v 1.4 2010-02-01 16:53:49 islandusurper Exp $
+// $Id: uc_cart.admin.inc,v 1.5 2010-02-03 22:10:49 islandusurper Exp $
 
 /**
  * @file
@@ -34,7 +34,7 @@ function uc_cart_cart_settings_overview() {
 
   // Theme it all up in a summaries overview.
   return array(
-    '#markup' => theme('summary_overview', $summaries),
+    '#markup' => theme('summary_overview', array('summaries' => $summaries)),
   );
 }
 
@@ -272,7 +272,7 @@ function uc_cart_block_edit_info() {
  */
 function uc_cart_checkout_settings_overview() {
   // Theme all the pages beneath this path into summary overviews.
-  return array('#markup' => theme('summary_overview', summarize_child_form_pages('admin/store/settings/checkout/edit')));
+  return array('#markup' => theme('summary_overview', array('summaries' => summarize_child_form_pages('admin/store/settings/checkout/edit'))));
 }
 
 /**

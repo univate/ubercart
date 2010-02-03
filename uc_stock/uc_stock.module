@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_stock.module,v 1.13 2010-01-25 15:38:19 islandusurper Exp $
+// $Id: uc_stock.module,v 1.14 2010-02-03 22:10:48 islandusurper Exp $
 
 /**
  * @file
@@ -93,7 +93,7 @@ function uc_stock_perm() {
 function uc_stock_theme() {
   return array(
     'uc_stock_edit_form' => array(
-      'arguments' => array('content' => NULL),
+      'render element' => 'form',
       'file' => 'uc_stock.admin.inc',
     ),
   );

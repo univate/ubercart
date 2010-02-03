@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_payment_pack.admin.inc,v 1.3 2010-02-02 19:51:54 islandusurper Exp $
+// $Id: uc_payment_pack.admin.inc,v 1.4 2010-02-03 22:10:49 islandusurper Exp $
 
 /**
  * @file
@@ -66,13 +66,15 @@ function uc_payment_pack_receive_check_form($form_state, $order) {
   return $form;
 }
 
-function theme_uc_payment_pack_receive_check_form($form) {
+function theme_uc_payment_pack_receive_check_form($variables) {
+  $form = $variables['form'];
+
   drupal_add_js(drupal_get_path('module', 'uc_payment') .'/uc_payment.js');
 
   $output = '<p>'. t('Use the form to enter the check into the payments system and set the expected clear date.') .'</p>';
   $output .= '<p><strong>'. t('Order balance:') .'</strong> '. drupal_render($form['balance']) .'</p>';
 
-  $output .= drupal_render($form);
+  $output .= drupal_render_children($form);
 
   return $output;
 }

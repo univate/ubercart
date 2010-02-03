@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_reports.module,v 1.14 2010-02-02 19:51:54 islandusurper Exp $
+// $Id: uc_reports.module,v 1.15 2010-02-03 22:10:49 islandusurper Exp $
 
 /**
  * @file
@@ -184,7 +184,7 @@ function uc_reports_menu() {
 function uc_reports_theme() {
   return array(
     'uc_reports_product_table' => array(
-      'arguments' => array('header' => NULL, 'rows' => NULL, 'attributes' => array(), 'caption' => NULL),
+      'variables' => array('header' => NULL, 'rows' => NULL, 'attributes' => array(), 'caption' => NULL),
     ),
   );
 }

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_payment_pack.module,v 1.8 2010-02-02 19:51:54 islandusurper Exp $
+// $Id: uc_payment_pack.module,v 1.9 2010-02-03 22:10:49 islandusurper Exp $
 
 /**
  * @file Provides the check/money order, COD, and "other" payment methods.
@@ -25,10 +25,10 @@ function uc_payment_pack_menu() {
 function uc_payment_pack_theme() {
   return array(
     'uc_payment_method_other_form' => array(
-      'arguments' => array('form' => NULL),
+      'render element' => 'form',
     ),
     'uc_payment_pack_receive_check_form' => array(
-      'arguments' => array('form' => NULL),
+      'render element' => 'form',
       'file' => 'uc_payment_pack.admin.inc',
     ),
   );
@@ -128,7 +128,9 @@ function uc_payment_method_other_form($form_state, $order) {
   return $form;
 }
 
-function theme_uc_payment_method_other_form($form) {
+function theme_uc_payment_method_other_form($variables) {
+  $form = $variables['form'];
+
   $output = '<table class="order-edit-table"><tr><td class="oet-label">'
           . t('Description:') .'</td><td>'
           . drupal_render($form['pm_other_description'])

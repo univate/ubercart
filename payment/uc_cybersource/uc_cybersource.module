@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cybersource.module,v 1.7 2010-01-25 16:42:00 islandusurper Exp $
+// $Id: uc_cybersource.module,v 1.8 2010-02-03 22:10:50 islandusurper Exp $
 
 /**
  * @file
@@ -711,7 +711,7 @@ function uc_cybersource_tax_test($order) {
     $items[] = t('No taxes returned for this order.');
   }
 
-  return theme('item_list', $items);
+  return theme('item_list', array('items' => $items));
 }
 
 /**
