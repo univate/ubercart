@@ -1,7 +1,9 @@
-; $Id: uc_weightquote.info,v 1.4 2010-01-25 16:05:33 islandusurper Exp $
+; $Id: uc_weightquote.info,v 1.5 2010-02-03 14:19:06 islandusurper Exp $
 name = Weight quote
 description = Assigns a shipping rate to products based on weight.
 dependencies[] = uc_quote
 package = Ubercart - fulfillment
-core = 6.x
-php = 5.0
+core = 7.x
+files[] = uc_weightquote.module
+files[] = uc_weightquote.install
+files[] = uc_weightquote.admin.inc

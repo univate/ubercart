@@ -1,8 +1,11 @@
-; $Id: uc_credit.info,v 1.5 2010-01-25 15:38:19 islandusurper Exp $
+; $Id: uc_credit.info,v 1.6 2010-02-03 14:19:07 islandusurper Exp $
 name = Credit Card
 description = Receive credit card payments through checkout.
 dependencies[] = uc_store
 dependencies[] = uc_payment
 package = Ubercart - payment
-core = 6.x
-
+core = 7.x
+files[] = uc_credit.module
+files[] = uc_credit.install
+files[] = uc_credit.admin.inc
+files[] = uc_credit.pages.inc

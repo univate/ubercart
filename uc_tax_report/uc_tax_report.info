@@ -1,8 +1,8 @@
-; $Id: uc_tax_report.info,v 1.2 2010-01-25 15:38:18 islandusurper Exp $
+; $Id: uc_tax_report.info,v 1.3 2010-02-03 14:19:06 islandusurper Exp $
 name = Tax Report
 description = View a report about sales tax your customers paid.
 dependencies[] = uc_reports
 dependencies[] = uc_taxes
 package = "Ubercart - core (optional)"
-core = 6.x
-php = 5.0
+core = 7.x
+files[] = uc_tax_report.module

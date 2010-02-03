@@ -1,4 +1,4 @@
-; $Id: uc_stock.info,v 1.4 2010-01-25 15:38:19 islandusurper Exp $
+; $Id: uc_stock.info,v 1.5 2010-02-03 14:19:06 islandusurper Exp $
 name = Stock
 description = Manage stock levels of your Ubercart products
 dependencies[] = ca
@@ -6,5 +6,10 @@ dependencies[] = uc_product
 dependencies[] = uc_reports
 dependencies[] = uc_store
 package = "Ubercart - extra"
-core = 6.x
-php = 5.0
+core = 7.x
+files[] = uc_stock.module
+files[] = uc_stock.install
+files[] = uc_stock.admin.inc
+files[] = uc_stock.ca.inc
+files[] = views/uc_stock.views.inc
+files[] = views/uc_stock_views_handler_filter_below_threshold.inc

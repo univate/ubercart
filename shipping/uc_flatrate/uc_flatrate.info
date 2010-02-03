@@ -1,7 +1,9 @@
-; $Id: uc_flatrate.info,v 1.5 2010-01-25 16:05:34 islandusurper Exp $
+; $Id: uc_flatrate.info,v 1.6 2010-02-03 14:19:06 islandusurper Exp $
 name = Flatrate
 description = Assigns a flat shipping rate to products.
 dependencies[] = uc_quote
 package = Ubercart - fulfillment
-core = 6.x
-php = 5.0
+core = 7.x
+files[] = uc_flatrate.module
+files[] = uc_flatrate.install
+files[] = uc_flatrate.admin.inc

@@ -1,8 +1,10 @@
-; $Id: uc_reports.info,v 1.4 2010-01-25 15:38:18 islandusurper Exp $
+; $Id: uc_reports.info,v 1.5 2010-02-03 14:19:07 islandusurper Exp $
 name = Reports
 description = View reports about your store's sales, customers, and products.
 dependencies[] = uc_order
 dependencies[] = uc_product
 package = "Ubercart - core (optional)"
-core = 6.x
-php = 5.0
+core = 7.x
+files[] = uc_reports.module
+files[] = uc_reports.install
+files[] = uc_reports.admin.inc

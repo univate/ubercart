@@ -1,8 +1,13 @@
-; $Id: uc_payment.info,v 1.6 2010-01-25 15:38:18 islandusurper Exp $
+; $Id: uc_payment.info,v 1.7 2010-02-03 14:19:06 islandusurper Exp $
 name = Payment
 description = Defines an API to let payment modules interact with the cart.
 dependencies[] = ca
 dependencies[] = uc_order
 package = "Ubercart - core (optional)"
-core = 6.x
-php = 5.0
+core = 7.x
+files[] = uc_payment.module
+files[] = uc_payment.install
+files[] = uc_payment.admin.inc
+files[] = uc_payment.ca.inc
+files[] = uc_payment_checkout_pane.inc
+files[] = uc_payment_order_pane.inc

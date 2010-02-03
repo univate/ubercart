@@ -1,8 +1,13 @@
-; $Id: uc_order.info,v 1.7 2010-01-25 16:05:34 islandusurper Exp $
+; $Id: uc_order.info,v 1.8 2010-02-03 14:19:07 islandusurper Exp $
 name = Order
 description = REQUIRED. Receive and manage orders through your website.
 dependencies[] = ca
 dependencies[] = token
 package = Ubercart - core
-core = 6.x
-php = 5.0
+core = 7.x
+files[] = uc_order.module
+files[] = uc_order.install
+files[] = uc_order.admin.inc
+files[] = uc_order.ca.inc
+files[] = uc_order.line_item.inc
+files[] = uc_order.order_pane.inc

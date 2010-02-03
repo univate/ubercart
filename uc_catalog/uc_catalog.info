@@ -1,9 +1,12 @@
-; $Id: uc_catalog.info,v 1.7 2010-01-25 16:05:34 islandusurper Exp $
+; $Id: uc_catalog.info,v 1.8 2010-02-03 14:19:06 islandusurper Exp $
 name = Catalog
 description = Display a hierarchical product catalog page and block.
 dependencies[] = path
 dependencies[] = taxonomy
 dependencies[] = uc_product
 package = "Ubercart - core (optional)"
-core = 6.x
-php = 5.0
+core = 7.x
+files[] = uc_catalog.module
+files[] = uc_catalog.install
+files[] = uc_catalog.admin.inc
+files[] = uc_catalog.pages.inc

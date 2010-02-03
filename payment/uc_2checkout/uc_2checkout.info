@@ -1,7 +1,9 @@
-; $Id: uc_2checkout.info,v 1.4 2010-01-25 16:05:33 islandusurper Exp $
+; $Id: uc_2checkout.info,v 1.5 2010-02-03 14:19:06 islandusurper Exp $
 name = 2Checkout
 description = Enable to process payments using 2Checkout.com.
 dependencies[] = uc_payment
 package = Ubercart - payment
-core = 6.x
-php = 5.0
+core = 7.x
+files[] = uc_2checkout.module
+files[] = uc_2checkout.install
+files[] = uc_2checkout.pages.inc

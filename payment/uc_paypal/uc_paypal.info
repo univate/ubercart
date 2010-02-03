@@ -1,7 +1,9 @@
-; $Id: uc_paypal.info,v 1.5 2010-01-25 15:38:18 islandusurper Exp $
+; $Id: uc_paypal.info,v 1.6 2010-02-03 14:19:07 islandusurper Exp $
 name = PayPal
 description = Integrates various PayPal payment services and IPN feedback.
 dependencies[] = uc_payment
 package = Ubercart - payment
-core = 6.x
-php = 5.0
+core = 7.x
+files[] = uc_paypal.module
+files[] = uc_paypal.install
+files[] = uc_paypal.pages.inc
