@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product.install,v 1.15 2010-02-01 16:53:49 islandusurper Exp $
+// $Id: uc_product.install,v 1.16 2010-02-03 14:17:39 islandusurper Exp $
 
 /**
  * @file
@@ -212,7 +212,9 @@ function uc_product_schema() {
  * Implementation of hook_uninstall().
  */
 function uc_product_uninstall() {
-  db_query("DELETE FROM {variable} WHERE name LIKE 'uc_product_shippable_%%'");
+  db_delete('variable')
+    ->condition('name', 'uc_product_shippable_%', 'LIKE')
+    ->execute();
 
   variable_del('uc_product_nodes_per_page');
   variable_del('uc_product_add_to_cart_qty');

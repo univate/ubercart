@@ -1,5 +1,5 @@
 <?php
-// $Id: ca.admin.inc,v 1.4 2010-02-01 16:53:49 islandusurper Exp $
+// $Id: ca.admin.inc,v 1.5 2010-02-03 14:17:39 islandusurper Exp $
 
 /**
  * @file
@@ -25,7 +25,7 @@ function ca_admin($groupby = 'trigger') {
 
   // Load and loop through all the database stored predicates.
   $result = db_query("SELECT * FROM {ca_predicates}");
-  while ($predicate = db_fetch_array($result)) {
+  while ($predicate = $result->fetchAssoc()) {
     // Prepare the database data into a predicate.
     $predicate = ca_prepare_db_predicate($predicate);
 
