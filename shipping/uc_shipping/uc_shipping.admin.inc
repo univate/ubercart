@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_shipping.admin.inc,v 1.1.2.13 2010-01-27 22:24:45 islandusurper Exp $
+// $Id: uc_shipping.admin.inc,v 1.1.2.14 2010-02-05 16:15:12 islandusurper Exp $
 
 /**
  * @file
@@ -10,7 +10,7 @@
  * Display a list of an order's packaged products.
  */
 function uc_shipping_order_packages($order) {
-  $header = array(t('Package ID'), t('Products'), t('Shipping type'), t('Package type'), t('Shipment ID'), t('Tracking number'), t('Labels'), array('data' => t('Actions'), 'colspan' => 3));
+  $header = array(t('Package ID'), t('Products'), t('Shipping type'), t('Package type'), t('Shipment ID'), t('Tracking number'), t('Labels'), array('data' => t('Actions'), 'colspan' => 4));
   $rows = array();
   $result = db_query("SELECT * FROM {uc_packages} WHERE order_id = %d", $order->order_id);
   while ($package = db_fetch_object($result)) {
@@ -31,6 +31,7 @@ function uc_shipping_order_packages($order) {
     }
     $row[] = isset($package->label_image) ? l(theme('imagecache', 'uc_thumbnail', $package->label_image, t('Shipping Label'), t('Shipping Label')), 'admin/store/orders/'. $order->order_id .'/shipments/labels/'. $method .'/'. $package->label_image, array('html' => TRUE)) : '';
     $row[] = l(t('edit'), 'admin/store/orders/'. $order->order_id .'/packages/'. $package->package_id .'/edit');
+    $row[] = l(t('ship'), 'admin/store/orders/'. $order->order_id .'/shipments/new', array('query' => 'pkgs[]='. $package->package_id));
     $row[] = l(t('delete'), 'admin/store/orders/'. $order->order_id .'/packages/'. $package->package_id .'/delete');
     if ($package->sid) {
       $row[] = l(t('cancel shipment'), 'admin/store/orders/'. $order->order_id .'/packages/'. $package->package_id .'/cancel');
@@ -42,7 +43,7 @@ function uc_shipping_order_packages($order) {
     $rows[] = $row;
   }
   if (empty($rows)) {
-    $rows[][] = array('data' => t("This order's products have not been organized into packages."), 'colspan' => 10);
+    $rows[][] = array('data' => t("This order's products have not been organized into packages."), 'colspan' => 11);
   }
   $output = theme('table', $header, $rows);
   $result = db_query("SELECT op.order_product_id, CASE WHEN COUNT(pp.qty) = 0 THEN 0 ELSE SUM(op.qty) / COUNT(pp.qty) END AS total, SUM(pp.qty) AS packaged FROM {uc_order_products} AS op LEFT JOIN {uc_packaged_products} AS pp ON op.order_product_id = pp.order_product_id WHERE op.order_id = %d AND op.data LIKE '%%%s%%' GROUP BY op.order_product_id HAVING SUM(pp.qty) IS NULL OR CASE WHEN COUNT(pp.qty) = 0 THEN 0 ELSE SUM(op.qty) / COUNT(pp.qty) END > SUM(pp.qty)", $order->order_id, 's:9:"shippable";s:1:"1";');
@@ -442,6 +443,8 @@ function uc_shipping_new_shipment($form_state, $order) {
   $breadcrumb[] = l(t('Shipments'), 'admin/store/orders/'. $order->order_id .'/shipments');
   drupal_set_breadcrumb($breadcrumb);
 
+  $checked_pkgs = (array) $_REQUEST['pkgs'];
+
   $form = array('#tree' => TRUE);
   $form['order_id'] = array('#type' => 'hidden', '#value' => $order->order_id);
 
@@ -476,7 +479,7 @@ function uc_shipping_new_shipment($form_state, $order) {
     foreach ($packages as $package) {
       $pkgs_exist = TRUE;
       $package_row = array();
-      $package_row['checked'] = array('#type' => 'checkbox', '#default_value' => 0);
+      $package_row['checked'] = array('#type' => 'checkbox', '#default_value' => (in_array($package->package_id, $checked_pkgs) ? 1 : 0));
       $package_row['package_id'] = array('#value' => $package->package_id);
       $product_list = array();
       foreach ($package->products as $product) {
