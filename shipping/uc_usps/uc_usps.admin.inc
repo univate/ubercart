@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_usps.admin.inc,v 1.1.2.6 2010-02-08 15:33:28 islandusurper Exp $
+// $Id: uc_usps.admin.inc,v 1.1.2.7 2010-02-08 16:31:28 islandusurper Exp $
 
 /**
  * @file
@@ -29,6 +29,13 @@ function uc_usps_admin_settings() {
     '#collapsed' => TRUE,
   );
 
+  $form['domestic']['uc_usps_online_rates'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Display USPS "online" rates'),
+    '#default_value' => variable_get('uc_usps_online_rates', FALSE),
+    '#description' => t('Show your customer standard USPS rates (default) or discounted "online" rates.  Online rates apply only if you, the merchant, pay for and print out postage from the USPS <a href="https://sss-web.usps.com/cns/landing.do">Click-N-Ship</a> web site.'),
+  );
+
   $form['domestic']['uc_usps_env_services'] = array(
     '#type' => 'checkboxes',
     '#title' => t('USPS envelope services'),
@@ -47,7 +54,7 @@ function uc_usps_admin_settings() {
 
   $form['international'] = array(
     '#type' => 'fieldset',
-    '#title' => t('USPS International.'),
+    '#title' => t('USPS International'),
     '#description' => l(t('Set the conditions that will return a USPS International quote.'), CA_UI_PATH .'/uc_usps_get_intl_quote/edit/conditions'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
