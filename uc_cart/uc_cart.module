@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.module,v 1.15.2.31 2009-11-02 22:04:08 islandusurper Exp $
+// $Id: uc_cart.module,v 1.15.2.32 2010-02-08 16:20:55 islandusurper Exp $
 
 /**
  * @file
@@ -207,21 +207,21 @@ function uc_cart_theme() {
     'uc_cart_block_title' => array(
       'arguments' => array('title' => NULL, 'icon_class' => FALSE, 'collapsible' => FALSE),
     ),
-    'uc_cart_block_title_icon' => array(
-      'arguments' => array(),
-    ),
-    'uc_cart_block_content_cachable' => array(
-      'arguments' => array(),
-    ),
-    'uc_cart_block_content' => array(
-      'arguments' => array(),
-    ),
-    'uc_cart_block_items' => array(
-      'arguments' => array(),
-    ),
-    'uc_cart_block_summary' => array(
-      'arguments' => array(),
-    ),
+     'uc_cart_block_title_icon' => array(
+      'arguments' => array('icon_class' => NULL),
+     ),
+     'uc_cart_block_content_cachable' => array(
+       'arguments' => array(),
+     ),
+     'uc_cart_block_content' => array(
+      'arguments' => array('help_text' => NULL, 'items' => NULL, 'item_count' => NULL, 'item_text' => NULL, 'total' => NULL, 'summary_links' => NULL),
+     ),
+     'uc_cart_block_items' => array(
+      'arguments' => array('items' => NULL),
+     ),
+     'uc_cart_block_summary' => array(
+      'arguments' => array('item_count' => NULL, 'item_text' => NULL, 'total' => NULL, 'summary_links' => NULL),
+     ),
     'uc_empty_cart' => array(
       'arguments' => array(),
     ),
