@@ -1,5 +1,5 @@
 <?php
-// $Id: customer.itpl.php,v 1.5.2.9 2009-09-21 14:34:49 islandusurper Exp $
+// $Id: customer.itpl.php,v 1.5.2.10 2010-02-08 16:16:38 islandusurper Exp $
 
 /**
  * @file
@@ -132,6 +132,15 @@
                       </td>
                       <td width="98%">
                         [order-link]
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td nowrap="nowrap">
+                        <b><?php echo t('Order Date: '); ?></b>
+                      </td>
+                      <td width="98%">
+                        [order-date-created]
                       </td>
                     </tr>
 
