@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.ca.inc,v 1.3 2010-02-03 22:10:50 islandusurper Exp $
+// $Id: uc_file.ca.inc,v 1.4 2010-02-08 20:18:53 islandusurper Exp $
 
 /**
  * @file
@@ -281,9 +281,9 @@ function uc_file_action_order_renew($order) {
     $files = db_query("SELECT * FROM {uc_file_products} AS fp ".
       "INNER JOIN {uc_product_features} AS pf ON pf.pfid = fp.pfid ".
       "INNER JOIN {uc_files} as f ON f.fid = fp.fid ".
-      "WHERE nid = %d", $product->nid, $order_user->uid);
+      "WHERE nid = :nid", array(':nid' => $product->nid));
 
-    while ($file = db_fetch_object($files)) {
+    foreach ($files as $file) {
 
       // Either they match, or the file was set to any SKU.
       if (!empty($file->model) && $file->model != $product->model) {

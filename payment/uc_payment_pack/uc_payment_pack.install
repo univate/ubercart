@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_payment_pack.install,v 1.4 2010-02-01 16:53:49 islandusurper Exp $
+// $Id: uc_payment_pack.install,v 1.5 2010-02-08 20:18:53 islandusurper Exp $
 
 /**
  * @file
@@ -98,7 +98,11 @@ function uc_payment_pack_schema() {
 }
 
 function uc_payment_pack_uninstall() {
-  db_query("DELETE FROM {variable} WHERE name LIKE 'uc_check_%%'");
-  db_query("DELETE FROM {variable} WHERE name LIKE 'uc_cod_%%'");
+  db_delete('variable')
+    ->condition(db_or()
+      ->condition('name', 'uc_check_%', 'LIKE')
+      ->condition('name', 'uc_cod_%', 'LIKE')
+    )
+    ->execute();
 }
 

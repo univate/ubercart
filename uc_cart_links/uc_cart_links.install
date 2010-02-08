@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart_links.install,v 1.4 2010-02-01 16:53:49 islandusurper Exp $
+// $Id: uc_cart_links.install,v 1.5 2010-02-08 20:18:53 islandusurper Exp $
 
 /**
  * @file
@@ -45,7 +45,9 @@ function uc_cart_links_schema() {
  * Implementation of hook_uninstall().
  */
 function uc_cart_links_uninstall() {
-  db_query("DELETE FROM {variable} WHERE name LIKE 'uc_cart_links_%%'");
+  db_delete('variable')
+    ->condition('name', 'uc_cart_links_%', 'LIKE')
+    ->execute();
   cache_clear_all('variables', 'cache');
 }
 

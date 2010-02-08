@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_roles.install,v 1.4 2010-02-01 16:53:49 islandusurper Exp $
+// $Id: uc_roles.install,v 1.5 2010-02-08 20:18:54 islandusurper Exp $
 
 /**
  * @file
@@ -162,6 +162,8 @@ function uc_roles_schema() {
  * Implementation of hook_uninstall().
  */
 function uc_roles_uninstall() {
-  db_query("DELETE FROM {variable} WHERE name LIKE 'uc_roles_%%'");
+  db_delete('variable')
+    ->condition('name', 'uc_roles_%', 'LIKE')
+    ->execute();
 }
 

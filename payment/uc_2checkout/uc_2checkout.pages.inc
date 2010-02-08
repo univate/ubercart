@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_2checkout.pages.inc,v 1.2 2010-01-25 16:05:33 islandusurper Exp $
+// $Id: uc_2checkout.pages.inc,v 1.3 2010-02-08 20:18:53 islandusurper Exp $
 
 /**
  * @file
@@ -31,12 +31,12 @@ function uc_2checkout_complete($cart_id = 0) {
   $order->billing_postal_code = $_POST['zip'];
   $order->billing_phone = $_POST['phone'];
 
-  $zone_id = db_result(db_query("SELECT zone_id FROM {uc_zones} WHERE zone_code LIKE '%s'", $_POST['state']));
+  $zone_id = db_query("SELECT zone_id FROM {uc_zones} WHERE zone_code LIKE :code", array(':code' => $_POST['state']))->fetchField();
   if (!empty($zone_id)) {
     $order->billing_zone = $zone_id;
   }
 
-  $country_id = db_result(db_query("SELECT country_id FROM {uc_countries} WHERE country_name LIKE '%s'", $_POST['country']));
+  $country_id = db_query("SELECT country_id FROM {uc_countries} WHERE country_name LIKE :name", array(':name' => $_POST['country']))->fetchField();
   if (!empty($zone_id)) {
     $order->billing_country = $country_id;
   }

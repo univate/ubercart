@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_authorizenet.install,v 1.3 2010-02-01 16:53:49 islandusurper Exp $
+// $Id: uc_authorizenet.install,v 1.4 2010-02-08 20:18:54 islandusurper Exp $
 
 /**
  * @file
@@ -28,6 +28,8 @@ function uc_authorizenet_requirements($phase) {
 
 function uc_authorizenet_uninstall() {
   // Delete related variables all at once.
-  db_query("DELETE FROM {variable} WHERE name LIKE 'uc_authnet_%%'");
+  db_delete('variable')
+    ->condition('name', 'uc_authnet_%', 'LIKE')
+    ->execute();
 }
 

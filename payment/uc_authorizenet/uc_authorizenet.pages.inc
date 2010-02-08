@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_authorizenet.pages.inc,v 1.2 2010-01-25 16:05:33 islandusurper Exp $
+// $Id: uc_authorizenet.pages.inc,v 1.3 2010-02-08 20:18:54 islandusurper Exp $
 
 /**
  * @file
@@ -53,7 +53,7 @@ function uc_authorizenet_silent_post() {
       // **** start @deprecated code ******
       if (function_exists('uc_recurring_fee_save')) {
         // Otherwise, update the recurring fee information in our database.
-        $fee = db_fetch_array(db_query("SELECT * FROM {uc_recurring_users} WHERE fee_handler = 'uc_authorizenet' AND data = '%s'", $_POST['x_subscription_id']));
+        $fee = db_query("SELECT * FROM {uc_recurring_users} WHERE fee_handler = :handler AND data = :data", array(':handler' => 'uc_authorizenet',':data' => $_POST['x_subscription_id']))->fetchAssoc();
 
         // Only process if the fee actually exists!
         if (!empty($fee)) {

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_2checkout.install,v 1.2 2010-01-25 16:05:33 islandusurper Exp $
+// $Id: uc_2checkout.install,v 1.3 2010-02-08 20:18:53 islandusurper Exp $
 
 /**
  * @file
@@ -10,6 +10,8 @@
  * Implementation of hook_uninstall().
  */
 function uc_2checkout_uninstall() {
-  db_query("DELETE FROM {variable} WHERE name LIKE 'uc_2checkout_%%'");
+  db_delete('variable')
+    ->condition('name', 'uc_2checkout_%', 'LIKE')
+    ->execute();
 }
 
