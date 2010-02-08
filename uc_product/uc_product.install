@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product.install,v 1.16 2010-02-03 14:17:39 islandusurper Exp $
+// $Id: uc_product.install,v 1.17 2010-02-08 17:40:07 islandusurper Exp $
 
 /**
  * @file
@@ -223,5 +223,47 @@ function uc_product_uninstall() {
   variable_del('uc_product_add_to_cart_text');
   variable_del('uc_product_field_enabled');
   variable_del('uc_product_field_weight');
+}
+
+/**
+ * Rename node permissions for the Product type.
+ */
+function uc_product_update_7000() {
+  db_update('role_permission')
+    ->fields(array(
+      'permission' => 'create product products',
+    ))
+    ->condition('permission', 'create products')
+    ->execute();
+
+  db_update('role_permission')
+    ->fields(array(
+      'permission' => 'edit own product products',
+    ))
+    ->condition('permission', 'edit own products')
+    ->execute();
+
+  db_update('role_permission')
+    ->fields(array(
+      'permission' => 'edit all product products',
+    ))
+    ->condition('permission', 'edit all products')
+    ->execute();
+
+  db_update('role_permission')
+    ->fields(array(
+      'permission' => 'delete own product products',
+    ))
+    ->condition('permission', 'delete own products')
+    ->execute();
+
+  db_update('role_permission')
+    ->fields(array(
+      'permission' => 'delete all product products',
+    ))
+    ->condition('permission', 'delete all products')
+    ->execute();
+
+  return t('Renamed node permissions for the Product type.')
 }
 
