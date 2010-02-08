@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart_links.module,v 1.4 2010-02-08 17:24:46 islandusurper Exp $
+// $Id: uc_cart_links.module,v 1.5 2010-02-08 17:28:24 islandusurper Exp $
 
 /**
  * @file
@@ -61,10 +61,10 @@ function uc_cart_links_menu() {
 function uc_cart_links_permission() {
   return array(
     'administer cart links' => array(
-      'title' => t('administer cart links'),
+      'title' => t('Administer cart links'),
     ),
     'view cart links report' => array(
-      'title' => t('view cart links report'),
+      'title' => t('View cart links report'),
     ),
   );
 }

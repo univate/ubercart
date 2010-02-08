@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.module,v 1.7 2010-02-08 17:24:46 islandusurper Exp $
+// $Id: uc_file.module,v 1.8 2010-02-08 17:28:23 islandusurper Exp $
 
 /**
  * @file
@@ -108,10 +108,10 @@ function uc_file_init() {
 function uc_file_permission() {
   return array(
     'download file' => array(
-      'title' => t('download file'),
+      'title' => t('Download file'),
     ),
-  'view all downloads' => array(
-      'title' => t('view all downloads'),
+    'view all downloads' => array(
+      'title' => t('View all downloads'),
     ),
   );
 }

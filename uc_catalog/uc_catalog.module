@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_catalog.module,v 1.19 2010-02-08 17:24:46 islandusurper Exp $
+// $Id: uc_catalog.module,v 1.20 2010-02-08 17:28:24 islandusurper Exp $
 
 /**
  * @file
@@ -131,10 +131,10 @@ function uc_catalog_menu() {
 function uc_catalog_permission() {
   return array(
     'administer catalog' => array(
-      'title' => t('administer catalog'),
+      'title' => t('Administer catalog'),
     ),
-  'view catalog' => array(
-      'title' => t('view catalog'),
+    'view catalog' => array(
+      'title' => t('View catalog'),
     ),
   );
 }

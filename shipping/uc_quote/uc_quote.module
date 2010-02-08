@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_quote.module,v 1.9 2010-02-08 17:24:46 islandusurper Exp $
+// $Id: uc_quote.module,v 1.10 2010-02-08 17:28:24 islandusurper Exp $
 
 /**
  * @file
@@ -18,7 +18,11 @@
  * Implementation of hook_permission().
  */
 function uc_quote_permission() {
-  return array('configure quotes');
+  return array(
+    'configure quotes' => array(
+      'title' => t('Configure quotes'),
+    ),
+  );
 }
 
 /**

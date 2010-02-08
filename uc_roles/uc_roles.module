@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_roles.module,v 1.6 2010-02-08 17:24:46 islandusurper Exp $
+// $Id: uc_roles.module,v 1.7 2010-02-08 17:28:23 islandusurper Exp $
 
 /**
  * @file
@@ -131,7 +131,7 @@ function uc_roles_init() {
 function uc_roles_permission() {
   return array(
     'view all role expirations' => array(
-      'title' => t('view all role expirations'),
+      'title' => t('View all role expirations'),
     )
   );
 }

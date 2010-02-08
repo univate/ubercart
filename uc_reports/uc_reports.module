@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_reports.module,v 1.16 2010-02-08 17:24:46 islandusurper Exp $
+// $Id: uc_reports.module,v 1.17 2010-02-08 17:28:23 islandusurper Exp $
 
 /**
  * @file
@@ -202,7 +202,11 @@ function uc_reports_init() {
  * Implementation of hook_permission().
  */
 function uc_reports_permission() {
-  return array('view reports');
+  return array(
+    'view reports' => array(
+      'title' => t('View reports'),
+    ),
+  );
 }
 
 /******************************************************************************

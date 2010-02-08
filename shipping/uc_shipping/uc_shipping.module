@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_shipping.module,v 1.11 2010-02-08 17:24:46 islandusurper Exp $
+// $Id: uc_shipping.module,v 1.12 2010-02-08 17:28:24 islandusurper Exp $
 
 /**
  * @file
@@ -159,7 +159,11 @@ function uc_shipping_order_access($order) {
  * Implementation of hook_permission().
  */
 function uc_shipping_permission() {
-  return array('fulfill orders');
+  return array(
+    'fulfill orders' => array(
+      'title' => t('Fulfill orders'),
+    ),
+  );
 }
 
 /**

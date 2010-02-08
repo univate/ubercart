@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_stock.module,v 1.15 2010-02-08 17:24:46 islandusurper Exp $
+// $Id: uc_stock.module,v 1.16 2010-02-08 17:28:23 islandusurper Exp $
 
 /**
  * @file
@@ -86,7 +86,7 @@ function uc_stock_product_access($node) {
 function uc_stock_permission() {
   return array(
     'administer product stock' => array(
-    'title' => t('administer product stock'),
+      'title' => t('Administer product stock'),
     )
   );
 }
