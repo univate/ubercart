@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_payment.module,v 1.10 2010-02-03 22:10:48 islandusurper Exp $
+// $Id: uc_payment.module,v 1.11 2010-02-08 17:24:46 islandusurper Exp $
 
 /**
  * @file
@@ -166,10 +166,20 @@ function uc_payment_token_list($type = 'all') {
 }
 
 /**
- * Implementation of hook_perm().
+ * Implementation of hook_permission().
  */
-function uc_payment_perm() {
-  return array('view payments', 'manual payments', 'delete payments');
+function uc_payment_permission() {
+  return array(
+    'view payments' => array(
+      'title' => t('view payments'),
+    ),
+    'manual payments' => array(
+      'title' => t('manual payments'),
+    ),
+    'delete payments' => array(
+      'title' => t('delete payments'),
+    ),
+  );
 }
 
 /**

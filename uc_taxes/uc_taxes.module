@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_taxes.module,v 1.14 2010-01-25 16:41:59 islandusurper Exp $
+// $Id: uc_taxes.module,v 1.15 2010-02-08 17:24:46 islandusurper Exp $
 
 /**
  * @file
@@ -29,10 +29,14 @@ function uc_taxes_help($path, $arg) {
 }
 
 /**
- * Implementation of hook_perm().
+ * Implementation of hook_permission().
  */
-function uc_taxes_perm() {
-  return array('configure taxes');
+function uc_taxes_permission() {
+  return array(
+    'configure taxes' => array(
+    'title' => t('configure taxes'),
+    )
+  );
 }
 
 /**

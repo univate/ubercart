@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product_kit.module,v 1.15 2010-02-03 22:10:49 islandusurper Exp $
+// $Id: uc_product_kit.module,v 1.16 2010-02-08 17:24:46 islandusurper Exp $
 
 /**
  * @file
@@ -37,9 +37,9 @@ function uc_product_kit_menu() {
 }
 
 /**
- * Implementation of hook_perm().
+ * Implementation of hook_permission().
  */
-function uc_product_kit_perm() {
+function uc_product_kit_permission() {
   return array('administer product kits');
 }
 

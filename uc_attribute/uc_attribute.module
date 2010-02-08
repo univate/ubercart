@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_attribute.module,v 1.15 2010-02-03 22:10:48 islandusurper Exp $
+// $Id: uc_attribute.module,v 1.16 2010-02-08 17:24:46 islandusurper Exp $
 
 /**
  * @file
@@ -232,10 +232,20 @@ function uc_attribute_product_option_access($node) {
 }
 
 /**
- * Implementation of hook_perm().
+ * Implementation of hook_permission().
  */
-function uc_attribute_perm() {
-  return array('administer attributes', 'administer product attributes', 'administer product options');
+function uc_attribute_permission() {
+  return array(
+    'administer attributes' => array(
+      'title' => t('administer attributes'),
+    ),
+    'administer product attributes' => array(
+      'title' => t('administer product attributes'),
+    ),
+    'administer product options' => array(
+      'title' => t('administer product options'),
+    ),
+  );
 }
 
 /**

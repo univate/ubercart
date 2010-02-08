@@ -1,5 +1,5 @@
 <?php
-// $Id: ca.module,v 1.5 2010-02-03 14:17:39 islandusurper Exp $
+// $Id: ca.module,v 1.6 2010-02-08 17:24:46 islandusurper Exp $
 
 /**
  * @file
@@ -139,10 +139,14 @@ function ca_convert_configurations_access() {
 }
 
 /**
- * Implementation of hook_perm().
+ * Implementation of hook_permission().
  */
-function ca_perm() {
-  return array('administer conditional actions');
+function ca_permission() {
+  return array(
+    'administer conditional actions' => array(
+    'title' => t('administer conditional actions'),
+    )
+  );
 }
 
 

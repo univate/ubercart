@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_stock.module,v 1.14 2010-02-03 22:10:48 islandusurper Exp $
+// $Id: uc_stock.module,v 1.15 2010-02-08 17:24:46 islandusurper Exp $
 
 /**
  * @file
@@ -81,10 +81,14 @@ function uc_stock_product_access($node) {
 }
 
 /**
- * Implementation of hook_perm().
+ * Implementation of hook_permission().
  */
-function uc_stock_perm() {
-  return array('administer product stock');
+function uc_stock_permission() {
+  return array(
+    'administer product stock' => array(
+    'title' => t('administer product stock'),
+    )
+  );
 }
 
 /**

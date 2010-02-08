@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_paypal.module,v 1.9 2010-02-02 19:51:53 islandusurper Exp $
+// $Id: uc_paypal.module,v 1.10 2010-02-08 17:24:46 islandusurper Exp $
 
 /**
  * @file
@@ -83,9 +83,9 @@ function uc_paypal_ipn_access() {
 }
 
 /**
- * Implementation of hook_perm().
+ * Implementation of hook_permission().
  */
-function uc_paypal_perm() {
+function uc_paypal_permission() {
   return array('administer paypal');
 }
 
