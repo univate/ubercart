@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.pages.inc,v 1.4 2010-02-03 22:10:50 islandusurper Exp $
+// $Id: uc_file.pages.inc,v 1.5 2010-02-08 17:25:52 islandusurper Exp $
 
 /**
  * @file
@@ -267,16 +267,12 @@ function _uc_file_download_transfer($file_user, $ip) {
 
   // Gather relevant info about the file.
   $size = filesize($file_user->full_path);
-  $fileinfo = pathinfo($file_user->full_path);
   $mimetype = file_get_mimetype($filename);
 
   // Workaround for IE filename bug with multiple periods / multiple dots in filename
   // that adds square brackets to filename - eg. setup.abc.exe becomes setup[1].abc.exe
   if (strstr($_SERVER['HTTP_USER_AGENT'], 'MSIE')) {
-    $filename = preg_replace('/\./', '%2e', $fileinfo['basename'], substr_count($fileinfo['basename'], '.') - 1);
-  }
-  else {
-    $filename = $fileinfo['basename'];
+    $filename = preg_replace('/\./', '%2e', $filename, substr_count($filename, '.') - 1);
   }
 
   // Check if HTTP_RANGE is sent by browser (or download manager)

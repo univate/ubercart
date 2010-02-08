@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_ups.admin.inc,v 1.6 2010-02-03 22:10:49 islandusurper Exp $
+// $Id: uc_ups.admin.inc,v 1.7 2010-02-08 17:25:52 islandusurper Exp $
 
 /**
  * @file
@@ -153,6 +153,10 @@ function uc_ups_admin_settings_validate($form, &$form_state) {
     else {
       form_set_error('uc_ups_password', t('Password field is required.'));
     }
+  }
+
+  if (!is_numeric($form_state['values']['uc_ups_markup'])) {
+    form_set_error('uc_ups_markup', t('Rate markup must be a numeric value.'));
   }
 }
 
