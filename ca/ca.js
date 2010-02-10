@@ -1,4 +1,5 @@
-// $Id: ca.js,v 1.3 2010-01-25 15:38:19 islandusurper Exp $
+// $Id: ca.js,v 1.4 2010-02-10 19:21:50 islandusurper Exp $
+(function($) {
 
 /**
  * @file
@@ -8,9 +9,12 @@
 /**
  * Add confirmation prompts to remove buttons.
  */
-Drupal.behaviors.caRemoveConfirm = function(context) {
-  $('.ca-remove-confirm:not(.caRemoveConfirm-processed)', context).addClass('caRemoveConfirm-processed').click(function() {
-    return confirm(Drupal.t('Are you sure you want to remove this item?'));
-  });
+Drupal.behaviors.caRemoveConfirm = {
+  attach: function(context, settings) {
+    $('.ca-remove-confirm:not(.caRemoveConfirm-processed)', context).addClass('caRemoveConfirm-processed').click(function() {
+      return confirm(Drupal.t('Are you sure you want to remove this item?'));
+    });
+  }
 }
 
+})(jQuery);

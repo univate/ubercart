@@ -1,4 +1,4 @@
-// $Id: uc_quote.js,v 1.6 2010-01-25 15:38:19 islandusurper Exp $
+// $Id: uc_quote.js,v 1.7 2010-02-10 19:21:50 islandusurper Exp $
 
 /**
  * @file
@@ -8,6 +8,8 @@
 var page;
 var details;
 var methods;
+
+(function($) {
 
 /**
  * Set event handlers on address fields.
@@ -207,3 +209,5 @@ function displayQuote(data) {
     }
   } */
 }
+
+})(jQuery);

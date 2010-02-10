@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.admin.inc,v 1.4 2010-02-08 20:18:53 islandusurper Exp $
+// $Id: uc_file.admin.inc,v 1.5 2010-02-10 19:21:50 islandusurper Exp $
 
 /**
  * @file
@@ -535,8 +535,8 @@ function _uc_file_build_js_file_display($file_ids) {
 
   // Set up some JS to dynamically update the list based on the
   // recursion checkbox state.
-  drupal_add_js('uc_file_list[false] = '. drupal_to_js('<li>'. implode('</li><li>', $no_recursion) .'</li>') .';', 'inline');
-  drupal_add_js('uc_file_list[true] = '. drupal_to_js('<li>'. implode('</li><li>', $recursion) .'</li>') .';', 'inline');
+  drupal_add_js('uc_file_list[false] = '. drupal_json_encode('<li>'. implode('</li><li>', $no_recursion) .'</li>') .';', 'inline');
+  drupal_add_js('uc_file_list[true] = '. drupal_json_encode('<li>'. implode('</li><li>', $recursion) .'</li>') .';', 'inline');
 
   return $result;
 }

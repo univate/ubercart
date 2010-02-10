@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.line_item.inc,v 1.3 2010-02-03 14:17:40 islandusurper Exp $
+// $Id: uc_order.line_item.inc,v 1.4 2010-02-10 19:21:50 islandusurper Exp $
 
 /**
  * @file
@@ -62,7 +62,7 @@ function uc_line_item_subtotal($op, $arg1) {
           ),
         );
 
-        drupal_add_js("if (Drupal.jsEnabled) { \$(document).ready( function() { set_line_item('subtotal', '". $line_item['name'] ."', ". uc_price($line_item['amount'], $context) .", ". $line_item['weight'] ."); } )};", 'inline');
+        drupal_add_js("jQuery(document).ready( function() { set_line_item('subtotal', '". $line_item['name'] ."', ". uc_price($line_item['amount'], $context) .", ". $line_item['weight'] ."); } );", 'inline');
       }
       break;
   }

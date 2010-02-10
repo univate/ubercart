@@ -1,4 +1,4 @@
-// $Id: uc_taxes.js,v 1.11 2010-01-25 16:05:33 islandusurper Exp $
+// $Id: uc_taxes.js,v 1.12 2010-02-10 19:21:50 islandusurper Exp $
 
 /**
  * @file
@@ -12,6 +12,8 @@ if ($("input[name*=delivery_]").length) {
 else if ($("input[name*=billing_]").length) {
   pane = 'billing'
 }
+
+(function($) {
 
 $(document).ready(function() {
   getTax();
@@ -88,3 +90,5 @@ function getTax() {
     });
   }
 }
+
+})(jQuery);

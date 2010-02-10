@@ -1,4 +1,5 @@
-// $Id: uc_shipping.js,v 1.7 2010-01-25 15:38:18 islandusurper Exp $
+// $Id: uc_shipping.js,v 1.8 2010-02-10 19:21:50 islandusurper Exp $
+(function($) {
 
 /**
  * @file
@@ -36,3 +37,5 @@ function apply_address(type, json_address) {
     $('#edit-' + type + '-zone').val(address.zone);
   //}
 }
+
+})(jQuery);
