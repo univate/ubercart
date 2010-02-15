@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_catalog.admin.inc,v 1.4 2010-02-08 20:18:54 islandusurper Exp $
+// $Id: uc_catalog.admin.inc,v 1.5 2010-02-15 19:23:15 islandusurper Exp $
 
 /**
  * @file
@@ -38,7 +38,7 @@ function uc_catalog_settings_form() {
   }
 
   $vocabs = array();
-  $vocabularies = taxonomy_get_vocabularies();
+  $vocabularies = taxonomy_vocabulary_load_multiple(FALSE, array());
   foreach ($vocabularies as $vid => $vocabulary) {
     $vocabs[$vid] = $vocabulary->name;
   }
