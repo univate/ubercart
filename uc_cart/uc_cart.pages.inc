@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.pages.inc,v 1.7 2010-02-03 22:10:49 islandusurper Exp $
+// $Id: uc_cart.pages.inc,v 1.8 2010-02-17 22:18:09 islandusurper Exp $
 
 /**
  * @file
@@ -128,7 +128,7 @@ function uc_cart_checkout() {
  *   uc_cart_checkout_form_review()
  *   uc_cart_checkout_review()
  */
-function uc_cart_checkout_form() {
+function uc_cart_checkout_form($form, &$form_state) {
   global $user;
 
   // Cancel an order when a customer clicks the 'Cancel' button.
@@ -468,7 +468,7 @@ function theme_uc_cart_checkout_review($variables) {
  *   uc_cart_checkout_review_form_back()
  *   uc-cart_checkout_review_form_submit()
  */
-function uc_cart_checkout_review_form() {
+function uc_cart_checkout_review_form($form, &$form_state) {
   // Set the session variable to pass the redirect check on the pageload.
   if ($_POST['op'] == t('Back')) {
     $_SESSION['do_review'] = TRUE;

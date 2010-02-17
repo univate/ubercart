@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_payment_checkout_pane.inc,v 1.8 2010-02-03 22:10:48 islandusurper Exp $
+// $Id: uc_payment_checkout_pane.inc,v 1.9 2010-02-17 22:18:10 islandusurper Exp $
 
 /**
  * @file
@@ -32,7 +32,7 @@ function uc_checkout_pane_payment($op, &$arg1, $arg2) {
           '#value' => $arg1->order_total > 0 ? $arg1->order_total : NULL,
         );
         $contents['shown_total'] = array(
-          '#value' => '<div style="padding: .5em 1em; margin-bottom: 1em; border: dashed 1px #bbb;" id="line-items-div"><em>'. t('Javascript must be enabled to view the order total preview.') .'</em></div>',
+          '#markup' => '<div style="padding: .5em 1em; margin-bottom: 1em; border: dashed 1px #bbb;" id="line-items-div"><em>'. t('Javascript must be enabled to view the order total preview.') .'</em></div>',
           '#weight' => -20,
         );
 
@@ -75,7 +75,7 @@ function uc_checkout_pane_payment($op, &$arg1, $arg2) {
         '#theme' => 'uc_payment_method_select',
       );
       $contents['details'] = array(
-        '#value' => '<div id="payment_details" class="solid-border display-none"></div>',
+        '#markup' => '<div id="payment_details" class="solid-border display-none"></div>',
       );
 
       return array('description' => $description, 'contents' => $contents);

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_2checkout.module,v 1.8 2010-01-25 16:42:00 islandusurper Exp $
+// $Id: uc_2checkout.module,v 1.9 2010-02-17 22:18:10 islandusurper Exp $
 
 /**
  * @file
@@ -195,7 +195,7 @@ function uc_payment_method_2checkout($op, &$arg1) {
 /**
  * Form to build the submission to 2Checkout.com.
  */
-function uc_2checkout_form($form_state, $order) {
+function uc_2checkout_form($form, &$form_state, $order) {
   $country = uc_get_country_data(array('country_id' => $order->billing_country));
   if ($country === FALSE) {
     $country = array(0 => array('country_iso_code_3' => 'USA'));

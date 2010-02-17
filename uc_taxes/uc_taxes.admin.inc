@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_taxes.admin.inc,v 1.4 2010-02-08 20:18:54 islandusurper Exp $
+// $Id: uc_taxes.admin.inc,v 1.5 2010-02-17 22:18:09 islandusurper Exp $
 
 /**
  * @file
@@ -58,9 +58,7 @@ function uc_taxes_admin_settings() {
  *   uc_taxes_form_validate()
  *   uc_taxes_form_submit()
  */
-function uc_taxes_form($form_state, $rate_id = NULL) {
-  $form = array();
-
+function uc_taxes_form($form, &$form_state, $rate_id = NULL) {
   // If a rate ID was specified...
   if ($rate_id) {
     // Load the tax rate and set the page title.

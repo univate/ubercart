@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_flatrate.admin.inc,v 1.4 2010-02-08 20:18:53 islandusurper Exp $
+// $Id: uc_flatrate.admin.inc,v 1.5 2010-02-17 22:18:09 islandusurper Exp $
 
 /**
  * @file
@@ -51,8 +51,7 @@ function uc_flatrate_admin_methods() {
  *   uc_flatrate_admin_method_edit_form_delete()
  *   uc_flatrate_admin_method_edit_form_submit()
  */
-function uc_flatrate_admin_method_edit_form($form_state, $mid = 0) {
-  $form = array();
+function uc_flatrate_admin_method_edit_form($form, &$form_state, $mid = 0) {
   $sign_flag = variable_get('uc_sign_after_amount', FALSE);
   $currency_sign = variable_get('uc_currency_sign', '$');
 

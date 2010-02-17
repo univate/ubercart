@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_authorizenet.pages.inc,v 1.3 2010-02-08 20:18:54 islandusurper Exp $
+// $Id: uc_authorizenet.pages.inc,v 1.4 2010-02-17 22:18:09 islandusurper Exp $
 
 /**
  * @file
@@ -87,9 +87,7 @@ function uc_authorizenet_silent_post() {
 }
 
 // Displays a form for customers to update their CC info.
-function uc_authorizenet_arb_user_update_form($form_state, $user, $rfid) {
-  $form = array();
-
+function uc_authorizenet_arb_user_update_form($form, &$form_state, $user, $rfid) {
   $fee = uc_recurring_fee_load('user', $rfid);
 
   $form['uid'] = array(
@@ -101,7 +99,7 @@ function uc_authorizenet_arb_user_update_form($form_state, $user, $rfid) {
     '#value' => $rfid,
   );
   $form['description'] = array(
-    '#value' => '<div>'. t('Recurring fee order ID: @order_id', array('@order_id' => $fee['order_id'])) .'</div>',
+    '#markup' => '<div>'. t('Recurring fee order ID: @order_id', array('@order_id' => $fee['order_id'])) .'</div>',
   );
 
   $form['cc_data'] = array(

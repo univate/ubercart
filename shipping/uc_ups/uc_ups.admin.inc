@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_ups.admin.inc,v 1.7 2010-02-08 17:25:52 islandusurper Exp $
+// $Id: uc_ups.admin.inc,v 1.8 2010-02-17 22:18:10 islandusurper Exp $
 
 /**
  * @file
@@ -19,7 +19,7 @@ function uc_ups_admin_settings() {
   $form = array();
 
   $form['uc_ups_conditions'] = array(
-    '#value' => '<p>'. l(t('Set the conditions that will return a UPS quote.'), CA_UI_PATH .'/uc_ups_get_quote/edit/conditions') .'</p>',
+    '#markup' => '<p>'. l(t('Set the conditions that will return a UPS quote.'), CA_UI_PATH .'/uc_ups_get_quote/edit/conditions') .'</p>',
   );
 
   $form['uc_ups_access_license'] = array('#type' => 'textfield',
@@ -167,10 +167,10 @@ function uc_ups_admin_settings_validate($form, &$form_state) {
  * @see theme_uc_ups_confirm_shipment()
  * @see uc_ups_confirm_shipment_submit()
  */
-function uc_ups_confirm_shipment($order) {
-  $form = array();
+function uc_ups_confirm_shipment($form, &$form_state, $order) {
   $form['digest'] = array('#type' => 'hidden', '#value' => $_SESSION['ups']['digest']);
   $form['submit'] = array('#type' => 'submit', '#value' => t('Request Pickup'));
+
   return $form;
 }
 

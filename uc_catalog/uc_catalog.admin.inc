@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_catalog.admin.inc,v 1.7 2010-02-15 21:38:57 islandusurper Exp $
+// $Id: uc_catalog.admin.inc,v 1.8 2010-02-17 22:18:10 islandusurper Exp $
 
 /**
  * @file
@@ -34,7 +34,7 @@ function uc_catalog_settings_form() {
       '#summary' => t('The taxonomy vocabulary <a href="!edit-url">%name</a> is set as the product catalog.', array('!edit-url' => url('admin/content/taxonomy/'. $vid), '%name' => $catalog->name)),
       '#suffix' => '</div>',
     );
-    $form['catalog_vid']['#value'] = $form['catalog_vid']['#summary'];
+    $form['catalog_vid']['#markup'] = $form['catalog_vid']['#summary'];
   }
 
   $vocabs = array();

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_weightquote.admin.inc,v 1.4 2010-02-08 20:18:54 islandusurper Exp $
+// $Id: uc_weightquote.admin.inc,v 1.5 2010-02-17 22:18:10 islandusurper Exp $
 
 /**
  * @file
@@ -52,8 +52,7 @@ function uc_weightquote_admin_methods() {
  *   uc_weightquote_admin_method_edit_form_delete()
  *   uc_weightquote_admin_method_edit_form_submit()
  */
-function uc_weightquote_admin_method_edit_form($form_state, $mid = 0) {
-  $form = array();
+function uc_weightquote_admin_method_edit_form($form, &$form_state, $mid = 0) {
   $sign_flag = variable_get('uc_sign_after_amount', FALSE);
   $currency_sign = variable_get('uc_currency_sign', '$');
 

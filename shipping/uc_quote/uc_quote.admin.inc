@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_quote.admin.inc,v 1.3 2010-02-03 22:10:48 islandusurper Exp $
+// $Id: uc_quote.admin.inc,v 1.4 2010-02-17 22:18:09 islandusurper Exp $
 
 /**
  * @file
@@ -31,9 +31,8 @@ function uc_quote_overview() {
  * @ingroup forms
  * @see uc_quote_admin_settings_submit()
  */
-function uc_quote_admin_settings() {
+function uc_quote_admin_settings($form, &$form_state) {
   $address = variable_get('uc_quote_store_default_address', new stdClass());
-  $form = array();
 
   $form['uc_quote_log_errors'] = array(
     '#type' => 'checkbox',
@@ -176,9 +175,7 @@ function uc_quote_admin_settings_submit($form, &$form_state) {
  *   uc_quote_method_settings_validate()
  *   uc_quote_method_settings_submit()
  */
-function uc_quote_method_settings() {
-  $form = array();
-
+function uc_quote_method_settings($form, &$form_state) {
   $form['methods'] = array(
     '#tree' => TRUE,
     '#summary callback' => 'summarize_form',
