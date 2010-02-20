@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_paypal.module,v 1.5.2.22 2010-02-20 18:48:19 tr Exp $
+// $Id: uc_paypal.module,v 1.5.2.23 2010-02-20 21:04:26 tr Exp $
 
 /**
  * @file
@@ -1218,5 +1218,5 @@ function _uc_paypal_reversal_message($reason) {
 
 // Returns an array of possible currency codes.
 function _uc_paypal_currency_array() {
-  return drupal_map_assoc(array('AUD', 'CAD', 'CHF', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'ILS', 'JPY', 'MXN', 'NOK', 'NZD', 'PLN', 'SEK', 'SGD', 'USD'));
+  return drupal_map_assoc(array('AUD', 'BRL', 'CAD', 'CHF', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'ILS', 'JPY', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PLN', 'SEK', 'SGD', 'THB', 'TWD', 'USD'));
 }
