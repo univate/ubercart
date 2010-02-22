@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_credit.module,v 1.5.2.23 2010-01-27 22:23:31 islandusurper Exp $
+// $Id: uc_credit.module,v 1.5.2.24 2010-02-22 05:42:53 tr Exp $
 
 /**
  * @file
@@ -163,11 +163,6 @@ function uc_credit_form_alter(&$form, $form_state, $form_id) {
       foreach (element_children($form['gateways']) as $key) {
         // Get the transaction types associated with this gateway.
         $gateway_types = uc_credit_gateway_txn_types($key);
-
-        // Default to authorization plus capture if none are specified.
-        if (empty($types) && !is_null(_payment_gateway_data($key, 'credit'))) {
-          $types = array(UC_CREDIT_AUTH_CAPTURE);
-        }
 
         // Loop through all the available transaction types.
         $options = array();
