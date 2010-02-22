@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_attribute.install,v 1.10.2.10 2009-09-23 15:45:57 islandusurper Exp $
+// $Id: uc_attribute.install,v 1.10.2.11 2010-02-22 03:32:37 tr Exp $
 
 /**
  * @file
@@ -695,7 +695,7 @@ function uc_attribute_update_6004() {
   while($row = db_fetch_object($result)) {
     $combination = unserialize($row->combination);
     ksort($combination);
-    db_query('UPDATE {uc_product_adjustments} SET combination = "%s" WHERE nid = %d AND model = "%s"', serialize($combination), $row->nid, $row->model);
+    db_query("UPDATE {uc_product_adjustments} SET combination = '%s' WHERE nid = %d AND model = '%s'", serialize($combination), $row->nid, $row->model);
     $changes++;
   }
 
