@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_flatrate.admin.inc,v 1.5 2010-02-17 22:18:09 islandusurper Exp $
+// $Id: uc_flatrate.admin.inc,v 1.6 2010-02-25 17:04:43 islandusurper Exp $
 
 /**
  * @file
@@ -10,7 +10,7 @@
  * List and compare all flatrate shipping quote methods.
  */
 function uc_flatrate_admin_methods() {
-  $output = '';
+  $build = array();
 
   $context = array(
     'revision' => 'themed',
@@ -35,11 +35,20 @@ function uc_flatrate_admin_methods() {
 
   if (count($rows)) {
     $header = array(t('Title'), t('Label'), t('Base rate'), t('Default product rate'), array('data' => t('Operations'), 'colspan' => 2));
-    $output .= theme('table', array('header' => $header, 'rows' => $rows));
+    $build['methods'] = array(
+      '#theme' => 'table',
+      '#header' => $header,
+      '#rows' => $rows,
+    );
   }
-  $output .= l(t('Add a new flat rate shipping method.'), 'admin/store/settings/quotes/methods/flatrate/add');
 
-  return $output;
+  $build['add_more'] = array(
+    '#theme' => 'link',
+    '#text' => t('Add a new flat rate shipping method.'),
+    '#href' => 'admin/store/settings/quotes/methods/flatrate/add',
+  );
+
+  return $build;
 }
 
 /**

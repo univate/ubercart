@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_2checkout.pages.inc,v 1.3 2010-02-08 20:18:53 islandusurper Exp $
+// $Id: uc_2checkout.pages.inc,v 1.4 2010-02-25 17:04:43 islandusurper Exp $
 
 /**
  * @file
@@ -83,7 +83,7 @@ function uc_2checkout_finalize() {
   // Add a comment to let sales team know this came in through the site.
   uc_order_comment_save($order->order_id, 0, t('Order created through website.'), 'admin');
 
-  $output = uc_cart_complete_sale($order, variable_get('uc_new_customer_login', FALSE));
+  $build = uc_cart_complete_sale($order, variable_get('uc_new_customer_login', FALSE));
 
   $page = variable_get('uc_cart_checkout_complete_page', '');
 
@@ -91,6 +91,6 @@ function uc_2checkout_finalize() {
     drupal_goto($page);
   }
 
-  return $output;
+  return $build;
 }
 

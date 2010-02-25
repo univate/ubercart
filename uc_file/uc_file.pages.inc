@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.pages.inc,v 1.6 2010-02-08 20:18:53 islandusurper Exp $
+// $Id: uc_file.pages.inc,v 1.7 2010-02-25 17:04:44 islandusurper Exp $
 
 /**
  * @file
@@ -154,7 +154,10 @@ function uc_file_user_downloads($account) {
     $row++;
   }
 
-  return theme('uc_file_user_downloads', array('files' => $files));
+  return array(
+    '#theme' => 'uc_file_user_downloads',
+    '#files' => $files,
+  );
 }
 
 /**

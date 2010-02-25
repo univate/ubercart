@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_catalog.pages.inc,v 1.6 2010-02-23 21:59:58 islandusurper Exp $
+// $Id: uc_catalog.pages.inc,v 1.7 2010-02-25 17:04:43 islandusurper Exp $
 
 /**
  * @file
@@ -49,7 +49,7 @@ function theme_uc_catalog_browse($variables) {
       );
     }
     if (!empty($child->uc_catalog_image)) {
-      $image = field_view_field('taxonomy_term', $child, 'uc_catalog_image');
+      $image = drupal_render(field_view_field('taxonomy_term', $child, 'uc_catalog_image'));
     }
     else {
       $image = '<div></div>';

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_quote.admin.inc,v 1.4 2010-02-17 22:18:09 islandusurper Exp $
+// $Id: uc_quote.admin.inc,v 1.5 2010-02-25 17:04:43 islandusurper Exp $
 
 /**
  * @file
@@ -17,7 +17,10 @@ function uc_quote_overview() {
   $summaries = array_merge($summaries, summarize_child_form_pages('admin/store/settings/quotes/methods', FALSE, TRUE));
 
   // Theme it all up in a summaries overview.
-  return theme('summary_overview', array('summaries' => $summaries));
+  return array(
+    '#theme' => 'summary_overview',
+    '#summaries' => $summaries,
+  );
 }
 
 /**
