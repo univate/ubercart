@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.install,v 1.5 2010-02-08 20:18:53 islandusurper Exp $
+// $Id: uc_file.install,v 1.6 2010-02-25 16:39:01 islandusurper Exp $
 
 /**
  * @file
@@ -184,7 +184,7 @@ function uc_file_schema() {
  */
 function uc_file_uninstall() {
   db_delete('uc_product_features')
-    ->condition('fid', 'file');
+    ->condition('fid', 'file')
     ->execute();
 
   db_delete('variable')
