@@ -1,4 +1,4 @@
-; $Id: uc_cart.info,v 1.10 2010-02-03 14:19:06 islandusurper Exp $
+; $Id: uc_cart.info,v 1.11 2010-02-25 16:25:33 islandusurper Exp $
 name = Cart
 description = REQUIRED. Controls the shopping cart for an Ubercart e-commerce site.
 dependencies[] = ca
@@ -11,5 +11,5 @@ files[] = uc_cart.install
 files[] = uc_cart.admin.inc
 files[] = uc_cart.ca.inc
 files[] = uc_cart.pages.inc
-files[] = uc_cat.test
+files[] = uc_cart.test
 files[] = uc_cart_checkout_pane.inc
