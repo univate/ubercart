@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.module,v 1.23 2010-02-23 21:59:58 islandusurper Exp $
+// $Id: uc_cart.module,v 1.24 2010-02-26 20:18:29 islandusurper Exp $
 
 /**
  * @file
@@ -827,12 +827,21 @@ function uc_cart_uc_message() {
  * Implementation of hook_cart_pane().
  */
 function uc_cart_cart_pane($items) {
+  $body = array();
+
+  if (!is_null($items)) {
+    $body = drupal_get_form('uc_cart_view_form', $items) + array(
+      '#prefix' => '<div id="cart-form-pane">',
+      '#suffix' => '</div>',
+    );
+  }
+
   $panes[] = array(
     'id' => 'cart_form',
     'title' => t('Default cart form'),
     'enabled' => TRUE,
     'weight' => 0,
-    'body' => !is_null($items) ? '<div id="cart-form-pane">'. drupal_get_form('uc_cart_view_form', $items) .'</div>': '',
+    'body' => $body,
   );
 
   return $panes;

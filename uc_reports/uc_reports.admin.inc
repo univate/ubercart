@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_reports.admin.inc,v 1.9 2010-02-25 17:04:44 islandusurper Exp $
+// $Id: uc_reports.admin.inc,v 1.10 2010-02-26 20:18:28 islandusurper Exp $
 
 /**
  * @file
@@ -11,7 +11,7 @@
  *
  * @ingroup forms
  */
-function uc_reports_settings_form() {
+function uc_reports_settings_form($form, &$form_state) {
   $form['uc_reports_table_size'] = array(
     '#type' => 'textfield',
     '#title' => t('Paged table size'),

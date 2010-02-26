@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_roles.ca.inc,v 1.4 2010-02-08 20:18:54 islandusurper Exp $
+// $Id: uc_roles.ca.inc,v 1.5 2010-02-26 20:18:29 islandusurper Exp $
 
 /**
  * @file
@@ -383,9 +383,7 @@ function uc_roles_action_user_email_form($form_state, $settings = array()) {
 /**
  * Build an email settings form.
  */
-function ca_build_email_form($form_state, $settings, $token_filters) {
-  $form = array();
-
+function ca_build_email_form($form, &$form_state, $settings, $token_filters) {
   $form['from'] = array(
     '#type' => 'textfield',
     '#title' => t('Sender'),
@@ -507,9 +505,7 @@ function uc_roles_action_order_renew($order, $settings) {
 /**
  * @see uc_roles_action_order_renew()
  */
-function uc_roles_action_order_renew_form($form_state, $settings = array()) {
-  $form = array();
-
+function uc_roles_action_order_renew_form($form, &$form_state, $settings = array()) {
   $form['message'] = array(
     '#type' => 'checkbox',
     '#title' => t('Display messages to alert users of any new or updated roles.'),

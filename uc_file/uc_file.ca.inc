@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.ca.inc,v 1.4 2010-02-08 20:18:53 islandusurper Exp $
+// $Id: uc_file.ca.inc,v 1.5 2010-02-26 20:18:29 islandusurper Exp $
 
 /**
  * @file
@@ -204,9 +204,7 @@ function uc_file_action_order_email_form($form_state, $settings = array()) {
 /**
  * Build an email action settings form.
  */
-function uc_file_build_email_form($form_state, $settings, $token_filters) {
-  $form = array();
-
+function uc_file_build_email_form($form, &$form_state, $settings, $token_filters) {
   $form['from'] = array(
     '#type' => 'textfield',
     '#title' => t('Sender'),

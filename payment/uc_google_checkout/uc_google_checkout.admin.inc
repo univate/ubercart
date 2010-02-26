@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_google_checkout.admin.inc,v 1.6 2010-02-25 17:04:44 islandusurper Exp $
+// $Id: uc_google_checkout.admin.inc,v 1.7 2010-02-26 20:18:29 islandusurper Exp $
 
 /**
  * @file
@@ -7,9 +7,7 @@
  *
  */
 
-function uc_google_checkout_settings() {
-  $form = array();
-
+function uc_google_checkout_settings($form, &$form_state) {
   $form['authentication'] = array(
     '#type' => 'fieldset',
     '#title' => t('Authentication'),

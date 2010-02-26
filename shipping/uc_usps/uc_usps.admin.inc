@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_usps.admin.inc,v 1.4 2010-02-08 17:25:52 islandusurper Exp $
+// $Id: uc_usps.admin.inc,v 1.5 2010-02-26 20:18:29 islandusurper Exp $
 
 /**
  * @file
@@ -11,9 +11,7 @@
  *
  * @ingroup forms
  */
-function uc_usps_admin_settings() {
-  $form = array();
-
+function uc_usps_admin_settings($form, &$form_state) {
   $form['uc_usps_user_id'] = array(
     '#type' => 'textfield',
     '#title' => t('USPS user ID'),

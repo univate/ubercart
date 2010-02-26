@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_catalog.module,v 1.25 2010-02-23 21:59:58 islandusurper Exp $
+// $Id: uc_catalog.module,v 1.26 2010-02-26 20:18:28 islandusurper Exp $
 
 /**
  * @file
@@ -681,7 +681,7 @@ function theme_uc_catalog_product_grid($variables) {
         $product_table .= theme('uc_product_add_to_cart', array('node' => $product));
       }
       else {
-        $product_table .= drupal_get_form('uc_catalog_buy_it_now_form_'. $product->nid, $product);
+        $product_table .= drupal_render(drupal_get_form('uc_catalog_buy_it_now_form_'. $product->nid, $product));
       }
     }
     $product_table .= '</td>';

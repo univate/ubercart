@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart.pages.inc,v 1.9 2010-02-25 14:28:42 islandusurper Exp $
+// $Id: uc_cart.pages.inc,v 1.10 2010-02-26 20:18:29 islandusurper Exp $
 
 /**
  * @file
@@ -40,9 +40,7 @@ function uc_cart_view() {
     // If the pane is enabled...
     if ($pane['enabled']) {
       // Add its output to the cart view.
-      $build[$pane['id']] = array(
-        '#markup' => $pane['body'],
-      );
+      $build[$pane['id']] = $pane['body'];
     }
   }
 
@@ -113,9 +111,9 @@ function uc_cart_checkout() {
   }
 
   drupal_add_js(drupal_get_path('module', 'uc_cart') .'/uc_cart.js');
-  $output = drupal_get_form('uc_cart_checkout_form');
+  $build = drupal_get_form('uc_cart_checkout_form');
 
-  return $output;
+  return $build;
 }
 
 /**

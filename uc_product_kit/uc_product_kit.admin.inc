@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product_kit.admin.inc,v 1.2 2010-01-25 16:05:34 islandusurper Exp $
+// $Id: uc_product_kit.admin.inc,v 1.3 2010-02-26 20:18:29 islandusurper Exp $
 
 /**
  * @file
@@ -11,9 +11,7 @@
  *
  * @ingroup forms
  */
-function uc_product_kit_settings_form() {
-  $form = array();
-
+function uc_product_kit_settings_form($form, &$form_state) {
   $form['uc_product_kit_mutable'] = array(
     '#type' => 'radios',
     '#title' => t('Product kit cart display'),

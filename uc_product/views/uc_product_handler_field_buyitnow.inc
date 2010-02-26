@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product_handler_field_buyitnow.inc,v 1.2 2010-01-25 15:26:44 islandusurper Exp $
+// $Id: uc_product_handler_field_buyitnow.inc,v 1.3 2010-02-26 20:18:29 islandusurper Exp $
 
 /**
  * @file
@@ -25,7 +25,7 @@ class uc_product_handler_field_buyitnow extends views_handler_field {
   function render($values) {
     $product = node_load($values->{$this->aliases['nid']});
     if (uc_product_is_product($product)) {
-      return drupal_get_form('uc_catalog_buy_it_now_form_'. $values->{$this->aliases['nid']}, $product);
+      return drupal_render(drupal_get_form('uc_catalog_buy_it_now_form_'. $values->{$this->aliases['nid']}, $product));
     }
   }
 }

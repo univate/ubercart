@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart_links.admin.inc,v 1.6 2010-02-25 17:04:44 islandusurper Exp $
+// $Id: uc_cart_links.admin.inc,v 1.7 2010-02-26 20:18:29 islandusurper Exp $
 
 /**
  * @file
@@ -11,9 +11,7 @@
  *
  * @ingroup forms
  */
-function uc_cart_links_settings_form() {
-  $form = array();
-
+function uc_cart_links_settings_form($form, &$form_state) {
   $form['instructions'] = array(
     '#markup' => '<div>'. t('<a href="!url">View the help page</a> to learn how to create cart links.', array('!url' => url('admin/store/help/cart_links'))) .'</div>',
   );

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_catalog.admin.inc,v 1.9 2010-02-25 17:04:43 islandusurper Exp $
+// $Id: uc_catalog.admin.inc,v 1.10 2010-02-26 20:18:28 islandusurper Exp $
 
 /**
  * @file
@@ -25,9 +25,7 @@ function uc_catalog_settings_overview() {
  *
  * @ingroup forms
  */
-function uc_catalog_settings_form() {
-  $form = array();
-
+function uc_catalog_settings_form($form, &$form_state) {
   $vid = variable_get('uc_catalog_vid', NULL);
   if ($vid) {
     $catalog = taxonomy_vocabulary_load($vid);
@@ -155,9 +153,7 @@ function uc_catalog_settings_form() {
  *
  * @ingroup forms
  */
-function uc_catalog_grid_settings_form() {
-  $form = array();
-
+function uc_catalog_grid_settings_form($form, &$form_state) {
   $form['uc_catalog_grid_display'] = array(
     '#type' => 'checkbox',
     '#title' => t('Display products in the catalog in a grid.'),

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_stock.admin.inc,v 1.6 2010-02-25 17:04:43 islandusurper Exp $
+// $Id: uc_stock.admin.inc,v 1.7 2010-02-26 20:18:28 islandusurper Exp $
 
 /**
  * @file
@@ -12,7 +12,7 @@
  *
  * @ingroup forms
  */
-function uc_stock_settings_form() {
+function uc_stock_settings_form($form, &$form_state) {
   $form['uc_stock_threshold_notification'] = array(
     '#type' => 'checkbox',
     '#title' => t('Send email notification when stock level reaches its threshold value'),

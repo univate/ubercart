@@ -1,5 +1,5 @@
 <?php
-// $Id: ca.admin.inc,v 1.7 2010-02-17 22:18:10 islandusurper Exp $
+// $Id: ca.admin.inc,v 1.8 2010-02-26 20:18:29 islandusurper Exp $
 
 /**
  * @file
@@ -290,7 +290,7 @@ function ca_predicate_meta_form_submit($form, &$form_state) {
 /**
  * Form to reset a modified module defined predicate to its original state.
  */
-function ca_predicate_delete_form($form_state, $pid) {
+function ca_predicate_delete_form($form, &$form_state, $pid) {
   $predicate = ca_load_predicate($pid);
 
   // Fail if we received an invalid predicate ID.

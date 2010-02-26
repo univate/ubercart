@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_weightquote.admin.inc,v 1.6 2010-02-25 17:04:44 islandusurper Exp $
+// $Id: uc_weightquote.admin.inc,v 1.7 2010-02-26 20:18:29 islandusurper Exp $
 
 /**
  * @file
@@ -168,8 +168,7 @@ function uc_weightquote_admin_method_edit_form_submit($form, &$form_state) {
  *
  * @see uc_weightquote_admin_method_confirm_delete_submit()
  */
-function uc_weightquote_admin_method_confirm_delete($form_state, $mid) {
-  $form = array();
+function uc_weightquote_admin_method_confirm_delete($form, &$form_state, $mid) {
   $form['mid'] = array('#type' => 'value', '#value' => $mid);
 
   return confirm_form($form, t('Do you want to delete this shipping method?'),
