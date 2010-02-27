@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.pages.inc,v 1.1.2.16 2010-02-08 15:44:44 islandusurper Exp $
+// $Id: uc_file.pages.inc,v 1.1.2.17 2010-02-27 19:45:33 tr Exp $
 
 /**
  * @file
@@ -35,7 +35,7 @@ define('UC_FILE_ERROR_HOOK_ERROR'             , 7);
 function theme_uc_file_user_downloads($files) {
   // Create a header and the pager it belongs to.
   $header = array(
-    array('data' => t('Purchased'  ), 'field' => 'u.granted', 'sort' => 'asc'),
+    array('data' => t('Purchased'  ), 'field' => 'u.granted', 'sort' => 'desc'),
     array('data' => t('Filename'   ), 'field' => 'f.filename'),
     array('data' => t('Description'), 'field' => 'p.description'),
     array('data' => t('Downloads'  ), 'field' => 'u.accessed'),
