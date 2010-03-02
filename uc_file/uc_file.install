@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_file.install,v 1.6 2010-02-25 16:39:01 islandusurper Exp $
+// $Id: uc_file.install,v 1.7 2010-03-02 16:32:02 islandusurper Exp $
 
 /**
  * @file
@@ -192,3 +192,12 @@ function uc_file_uninstall() {
     ->execute();
 }
 
+/**
+ * Change 'uc_file_file_mask' variable to a preg regular expression.
+ */
+function uc_file_update_7000() {
+  $mask = '/' . variable_get('uc_file_file_mask', '.*') . '/';
+  variable_set('uc_file_file_mask', $mask);
+
+  return t("Variable 'uc_file_file_mask' changed to @mask.", array('@mask', $mask));
+}
