@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.module,v 1.20 2010-03-02 16:32:02 islandusurper Exp $
+// $Id: uc_order.module,v 1.21 2010-03-03 14:28:15 islandusurper Exp $
 
 /**
  * @file
@@ -510,25 +510,21 @@ function uc_order_access_order_log() {
 }
 
 /**
- * Implementation of hook_user().
+ * Implements hook_user_view().
  */
-function uc_order_user($op, &$edit, &$account, $category = NULL) {
+function uc_order_user_view($account, $view_mode) {
   global $user;
-  switch ($op) {
-    case 'view':
-      if ($user->uid && (($user->uid == $account->uid && user_access('view own orders')) || user_access('view all orders'))) {
-        $account->content['orders'] = array(
-          '#type' => 'user_profile_category',
-          '#weight' => -5,
-          '#title' => t('Orders'),
-          'link' => array(
-            '#type' => 'user_profile_item',
-            '#value' => l(t('Click here to view your order history.'), 'user/'. $account->uid .'/orders'),
-          ),
-        );
-      }
 
-      break;
+  if ($user->uid && (($user->uid == $account->uid && user_access('view own orders')) || user_access('view all orders'))) {
+    $account->content['orders'] = array(
+      '#type' => 'user_profile_category',
+      '#weight' => -5,
+      '#title' => t('Orders'),
+      'link' => array(
+        '#type' => 'user_profile_item',
+        '#value' => l(t('Click here to view your order history.'), 'user/'. $account->uid .'/orders'),
+      ),
+    );
   }
 }
 
