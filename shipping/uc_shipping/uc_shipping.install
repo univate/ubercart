@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_shipping.install,v 1.8 2010-03-02 16:32:02 islandusurper Exp $
+// $Id: uc_shipping.install,v 1.9 2010-03-03 19:34:13 islandusurper Exp $
 
 /**
  * @file
@@ -7,7 +7,7 @@
  */
 
 /**
- * Implementation of hook_schema().
+ * Implement hook_schema().
  */
 function uc_shipping_schema() {
   $schema = array();

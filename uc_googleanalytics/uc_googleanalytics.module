@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_googleanalytics.module,v 1.10 2010-02-10 19:21:50 islandusurper Exp $
+// $Id: uc_googleanalytics.module,v 1.11 2010-03-03 19:34:13 islandusurper Exp $
 
 /**
  * @file
@@ -12,7 +12,7 @@
  */
 
 /**
- * Implementation of hook_enable().
+ * Implement hook_enable().
  */
 function uc_googleanalytics_enable() {
   // Get the weight of the Google Analytics module.
@@ -27,7 +27,7 @@ function uc_googleanalytics_enable() {
 }
 
 /**
- * Implementation of hook_footer().
+ * Implement hook_footer().
  */
 function uc_googleanalytics_footer($main = 0) {
   // Check to see if we are at the order completion page.
@@ -47,7 +47,7 @@ function uc_googleanalytics_footer($main = 0) {
 }
 
 /**
- * Implementation of hook_order().
+ * Implement hook_order().
  */
 function uc_googleanalytics_order($op, &$arg1, $arg2) {
   // If a new order is created during the checkout process...

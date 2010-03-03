@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product.views_default.inc,v 1.2 2010-01-25 15:26:44 islandusurper Exp $
+// $Id: uc_product.views_default.inc,v 1.3 2010-03-03 19:34:13 islandusurper Exp $
 
 /**
  * @file
@@ -7,7 +7,7 @@
  */
 
 /**
- * Implementation of hook_views_default_views().
+ * Implement hook_views_default_views().
  */
 function uc_product_views_default_views() {
   $view = new view;

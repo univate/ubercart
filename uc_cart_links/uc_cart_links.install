@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart_links.install,v 1.5 2010-02-08 20:18:53 islandusurper Exp $
+// $Id: uc_cart_links.install,v 1.6 2010-03-03 19:34:13 islandusurper Exp $
 
 /**
  * @file
@@ -7,7 +7,7 @@
  */
 
 /**
- * Implementation of hook_schema().
+ * Implement hook_schema().
  */
 function uc_cart_links_schema() {
   $schema['uc_cart_link_clicks'] = array(
@@ -42,7 +42,7 @@ function uc_cart_links_schema() {
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implement hook_uninstall().
  */
 function uc_cart_links_uninstall() {
   db_delete('variable')

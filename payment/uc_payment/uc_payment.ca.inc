@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_payment.ca.inc,v 1.3 2010-01-25 15:38:18 islandusurper Exp $
+// $Id: uc_payment.ca.inc,v 1.4 2010-03-03 19:34:13 islandusurper Exp $
 
 /**
  * @file
@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /**
- * Implementation of hook_ca_predicate().
+ * Implement hook_ca_predicate().
  */
 function uc_payment_ca_predicate() {
   $predicates = array();
@@ -119,7 +119,7 @@ function uc_payment_ca_predicate() {
 }
 
 /**
- * Implementation of hook_ca_trigger().
+ * Implement hook_ca_trigger().
  */
 function uc_payment_ca_trigger() {
   $triggers['uc_payment_entered'] = array(
@@ -141,7 +141,7 @@ function uc_payment_ca_trigger() {
 }
 
 /**
- * Implementation of hook_ca_condition().
+ * Implement hook_ca_condition().
  */
 function uc_payment_ca_condition() {
   $conditions['uc_payment_condition_order_balance'] = array(

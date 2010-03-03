@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_catalog.install,v 1.15 2010-02-23 21:59:58 islandusurper Exp $
+// $Id: uc_catalog.install,v 1.16 2010-03-03 19:34:12 islandusurper Exp $
 
 /**
  * @file
@@ -7,7 +7,7 @@
  */
 
 /**
- * Implementation of hook_schema().
+ * Implement hook_schema().
  */
 function uc_catalog_schema() {
   $schema = array();
@@ -58,7 +58,7 @@ function uc_catalog_schema() {
 }
 
 /**
- * Implementation of hook_install().
+ * Implement hook_install().
  *
  * Creates a Catalog vocabulary or uses one by that name that may already exist.
  */
@@ -103,7 +103,7 @@ function uc_catalog_install() {
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implement hook_uninstall().
  */
 function uc_catalog_uninstall() {
   if ($vid = variable_get('uc_catalog_vid', 0)) {
@@ -116,7 +116,7 @@ function uc_catalog_uninstall() {
 }
 
 /**
- * Implements hook_update_dependencies().
+ * Implement hook_update_dependencies().
  */
 function uc_catalog_update_dependencies() {
   $dependencies['uc_catalog'][7000] = array(

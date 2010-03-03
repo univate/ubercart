@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_taxes.ca.inc,v 1.2 2010-01-25 16:05:33 islandusurper Exp $
+// $Id: uc_taxes.ca.inc,v 1.3 2010-03-03 19:34:12 islandusurper Exp $
 
 /**
  * @file
@@ -12,7 +12,7 @@
  ******************************************************************************/
 
 /**
- * Implementation of hook_ca_entity().
+ * Implement hook_ca_entity().
  */
 function uc_taxes_ca_entity() {
   $entities['tax'] = array(
@@ -23,7 +23,7 @@ function uc_taxes_ca_entity() {
 }
 
 /**
- * Implementation of hook_ca_trigger().
+ * Implement hook_ca_trigger().
  *
  * Register an event for each tax rule in {uc_taxes}.
  */
@@ -44,7 +44,7 @@ function uc_taxes_ca_trigger() {
 }
 
 /**
- * Implementation of hook_action_info().
+ * Implement hook_action_info().
  */
 function uc_taxes_ca_action() {
   $actions = array();
@@ -80,7 +80,7 @@ function uc_taxes_action_apply_tax($order, $tax) {
 }
 
 /**
- * Implementation of hook_ca_predicate().
+ * Implement hook_ca_predicate().
  *
  * Create a predicate for each event corresponding to a tax rule.
  */

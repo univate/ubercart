@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.install,v 1.13 2010-02-25 16:25:33 islandusurper Exp $
+// $Id: uc_order.install,v 1.14 2010-03-03 19:34:13 islandusurper Exp $
 
 /**
  * @file
@@ -7,7 +7,7 @@
  */
 
 /**
- * Implementation of hook_schema().
+ * Implement hook_schema().
  */
 function uc_order_schema() {
   $schema = array();
@@ -586,7 +586,7 @@ function uc_order_schema() {
 }
 
 /**
- * Implementation of hook_install().
+ * Implement hook_install().
  */
 function uc_order_install() {
   $t = get_t();
@@ -645,7 +645,7 @@ function uc_order_install() {
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implement hook_uninstall().
  */
 function uc_order_uninstall() {
   db_delete('variable')

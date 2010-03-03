@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_price.inc,v 1.4 2010-02-03 22:10:48 islandusurper Exp $
+// $Id: uc_price.inc,v 1.5 2010-03-03 19:34:12 islandusurper Exp $
 
 /**
  * @file
@@ -264,7 +264,7 @@ function _uc_price_get_handlers($options = array()) {
 }
 
 /**
- * Implementation of hook_uc_price_handler().
+ * Implement hook_uc_price_handler().
  */
 function uc_store_uc_price_handler() {
   return array(

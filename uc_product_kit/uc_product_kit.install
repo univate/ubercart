@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product_kit.install,v 1.13 2010-02-01 16:53:49 islandusurper Exp $
+// $Id: uc_product_kit.install,v 1.14 2010-03-03 19:34:12 islandusurper Exp $
 
 /**
  * @file
@@ -7,7 +7,7 @@
  */
 
 /**
- * Implementation of hook_schema().
+ * Implement hook_schema().
  */
 function uc_product_kit_schema() {
   $schema['uc_product_kits'] = array(
@@ -73,7 +73,7 @@ function uc_product_kit_schema() {
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implement hook_uninstall().
  */
 function uc_product_kit_uninstall() {
   variable_del('uc_product_kit_mutable');

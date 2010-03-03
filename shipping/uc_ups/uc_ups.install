@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_ups.install,v 1.8 2010-02-01 16:53:48 islandusurper Exp $
+// $Id: uc_ups.install,v 1.9 2010-03-03 19:34:12 islandusurper Exp $
 
 /**
  * @file
@@ -7,7 +7,7 @@
  */
 
 /**
- * Implementation of hook_requirements().
+ * Implement hook_requirements().
  */
 function uc_ups_requirements($phase) {
   $t = get_t();
@@ -26,7 +26,7 @@ function uc_ups_requirements($phase) {
 }
 
 /**
- * Implementation of hook_schema().
+ * Implement hook_schema().
  */
 function uc_ups_schema() {
   $schema = array();
@@ -63,7 +63,7 @@ function uc_ups_schema() {
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implement hook_uninstall().
  */
 function uc_ups_uninstall() {
   variable_del('uc_ups_access_license');

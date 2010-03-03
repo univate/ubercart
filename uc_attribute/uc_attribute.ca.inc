@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_attribute.ca.inc,v 1.4 2010-02-26 20:18:29 islandusurper Exp $
+// $Id: uc_attribute.ca.inc,v 1.5 2010-03-03 19:34:12 islandusurper Exp $
 
 /**
  * @file
@@ -7,7 +7,7 @@
  */
 
 /**
- * Implementation of hook_ca_condition().
+ * Implement hook_ca_condition().
  */
 function uc_attribute_ca_condition() {
   $conditions = array();

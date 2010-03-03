@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_ups.admin.inc,v 1.10 2010-03-02 16:32:02 islandusurper Exp $
+// $Id: uc_ups.admin.inc,v 1.11 2010-03-03 19:34:12 islandusurper Exp $
 
 /**
  * @file
@@ -258,8 +258,8 @@ function uc_ups_confirm_shipment_submit($form, &$form_state) {
 
   $shipment = new stdClass();
   $shipment->order_id = $order_id;
-  $shipment->origin = drupal_clone($_SESSION['ups']['origin']);
-  $shipment->destination = drupal_clone($_SESSION['ups']['destination']);
+  $shipment->origin = clone $_SESSION['ups']['origin'];
+  $shipment->destination = clone $_SESSION['ups']['destination'];
   $shipment->packages = $_SESSION['ups']['packages'];
   $shipment->shipping_method = 'ups';
   $shipment->accessorials = $_SESSION['ups']['service'];
