@@ -1,4 +1,10 @@
 <?php
+// $Id$
+
+/**
+ * @file
+ * Ubercart Attribute Tests
+ */
 
 class UbercartAttributeTestCase extends DrupalWebTestCase {
 
