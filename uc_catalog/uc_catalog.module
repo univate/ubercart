@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_catalog.module,v 1.15.2.23 2010-01-27 22:23:32 islandusurper Exp $
+// $Id: uc_catalog.module,v 1.15.2.24 2010-03-10 23:24:20 tr Exp $
 
 /**
  * @file
@@ -402,6 +402,7 @@ function uc_catalog_block($op = 'list', $delta = 0, $edit = array()) {
   switch ($op) {
     case 'list':
       $blocks[0]['info'] = variable_get('uc_catalog_name', t('Catalog'));
+      $blocks[0]['cache'] = BLOCK_CACHE_PER_PAGE;
       return $blocks;
 
     case 'view':
