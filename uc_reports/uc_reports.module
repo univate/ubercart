@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_reports.module,v 1.11.2.12 2009-09-23 15:45:57 islandusurper Exp $
+// $Id: uc_reports.module,v 1.11.2.13 2010-03-10 01:22:28 tr Exp $
 
 /**
  * @file
@@ -65,7 +65,7 @@ function uc_reports_help($path, $arg) {
         break;
     }
     if (strpos($path, 'admin/store/reports/sales/year') === 0) {
-      $year = (is_null($_GET['year'])) ? format_date(time(), 'custom', "Y") : $_GET['year'];
+      $year = $arg[5] ? $arg[5] : format_date(time(), 'custom', "Y");
       $output .= t('This is the monthly break down of sales for the year @year. Clicking on each link will take you to a list of orders during that month.', array('@year' => $year));
     }
     $output .= '</p>';
