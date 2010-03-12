@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_store.module,v 1.14.2.37 2010-01-27 22:23:31 islandusurper Exp $
+// $Id: uc_store.module,v 1.14.2.38 2010-03-12 23:09:34 tr Exp $
 
 /**
  * @file
@@ -518,7 +518,7 @@ function uc_store_footer() {
     case 'node':
       // No footer on /node or /node/[type]/add.
       // Only add a footer on /node/[nid] if that node is a product.
-      if (count($parts) < 1 || intval($parts[1]) == 0) {
+      if (count($parts) != 2 || intval($parts[1]) == 0) {
         break;
       }
       else {

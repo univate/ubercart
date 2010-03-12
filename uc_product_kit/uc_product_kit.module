@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product_kit.module,v 1.11.2.29 2010-01-27 22:23:31 islandusurper Exp $
+// $Id: uc_product_kit.module,v 1.11.2.30 2010-03-12 23:09:34 tr Exp $
 
 /**
  * @file
@@ -449,7 +449,7 @@ function uc_product_kit_nodeapi(&$node, $op, $arg3 = NULL, $arg4 = NULL) {
  */
 function uc_product_kit_forms($form_id, $args) {
   $forms = array();
-  if (is_object($args[0]) && isset($args[0]->type)) {
+  if (isset($args[0]) && isset($args[0]->nid) && isset($args[0]->type)) {
     $product = $args[0];
     if ($product->type == 'product_kit') {
       $forms['uc_product_kit_add_to_cart_form_'. $product->nid] = array('callback' => 'uc_product_kit_add_to_cart_form');
