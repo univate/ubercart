@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_roles.module,v 1.2.2.20 2009-09-21 14:34:49 islandusurper Exp $
+// $Id: uc_roles.module,v 1.2.2.21 2010-03-13 05:45:11 tr Exp $
 
 /**
  * @file
@@ -50,7 +50,7 @@ function uc_roles_cron() {
 
     // Cleanup if this role was deleted off the user already.
     if (!in_array($expiration->rid, array_keys($account->roles))) {
-      uc_roles_delete($account->uid, $expiration->rid);
+      uc_roles_delete($account, $expiration->rid);
     }
 
     // Role expired.
@@ -170,7 +170,7 @@ function uc_roles_nodeapi(&$node, $op, $arg3 = NULL, $arg4 = NULL) {
  * Implementation of hook_user_delete().
  */
 function uc_roles_user_delete(&$account) {
-  uc_roles_delete($account->uid);
+  uc_roles_delete($account);
 }
 
 /**
