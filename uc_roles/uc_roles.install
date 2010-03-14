@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_roles.install,v 1.2.2.12 2009-07-21 14:37:19 islandusurper Exp $
+// $Id: uc_roles.install,v 1.2.2.13 2010-03-14 03:06:07 tr Exp $
 
 /**
  * @file
@@ -161,7 +161,7 @@ function uc_roles_install() {
  */
 function uc_roles_uninstall() {
   drupal_uninstall_schema('uc_roles');
-
+  db_query("DELETE FROM {uc_product_features} WHERE fid = 'role'");
   db_query("DELETE FROM {variable} WHERE name LIKE 'uc_roles_%%'");
 }
 
