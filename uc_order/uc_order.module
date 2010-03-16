@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.module,v 1.12.2.36 2009-11-18 22:24:02 islandusurper Exp $
+// $Id: uc_order.module,v 1.12.2.37 2010-03-16 03:50:38 tr Exp $
 
 /**
  * @file
@@ -1242,7 +1242,7 @@ function uc_order_load_line_items($order, $stored) {
               'type' => $type['id'],
               'title' => $line['title'],
               'amount' => $line['amount'],
-              'weight' => !isset($line['weight']) ? $line['weight'] : $type['weight'],
+              'weight' => isset($line['weight']) ? $line['weight'] : $type['weight'],
               'data' => $line['data'],
             );
           }
