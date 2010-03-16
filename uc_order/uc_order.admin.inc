@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.admin.inc,v 1.1.2.29 2010-01-04 15:13:10 islandusurper Exp $
+// $Id: uc_order.admin.inc,v 1.1.2.30 2010-03-16 23:48:18 tr Exp $
 
 /**
  * @file
@@ -888,7 +888,7 @@ function uc_order_select_customer($email = NULL) {
         $account->password = $fields['pass'];
 
         // Send the e-mail through the user module.
-        drupal_mail('user', 'register_no_approval_required', $email, NULL, array('account' => $account), uc_store_email_from());
+        drupal_mail('user', 'register_admin_created', $email, NULL, array('account' => $account), uc_store_email_from());
 
         $output .= t('Account details sent to e-mail provided.<br /><br /><strong>Username:</strong> @username<br /><strong>Password:</strong> @password', array('@username' => $fields['name'], '@password' => $fields['pass'])) .'<br /><br />';
       }
