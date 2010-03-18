@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_order.module,v 1.12.2.37 2010-03-16 03:50:38 tr Exp $
+// $Id: uc_order.module,v 1.12.2.38 2010-03-18 03:09:41 tr Exp $
 
 /**
  * @file
@@ -805,7 +805,7 @@ function uc_order_search_form() {
   $form['search']['table1'] = array('#value' => '<table><tbody style="border: 0em;"><tr><td colspan="4">');
 
   $form['search']['desc'] = array(
-    '#value' => '<div>'. t("Search for customers based on any of the following fields.  Use * as a wildcard to match any character.<br/>For example, searching by last name for 's*' will return all customers whose last name starts with an s.<br/>(<em>Leave a field empty to ignore it in the search.</em>)") .'</div>',
+    '#value' => '<div>'. t("Search for customers based on any of the following fields.  Use * as a wildcard to match any character.<br />For example, searching by last name for 's*' will return all customers whose last name starts with an s.<br />(<em>Leave a field empty to ignore it in the search.</em>)") .'</div>',
   );
 
   $form['search']['table2'] = array('#value' => '</td></tr><tr><td>');

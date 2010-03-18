@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_ups.admin.inc,v 1.1.2.16 2010-02-08 15:33:28 islandusurper Exp $
+// $Id: uc_ups.admin.inc,v 1.1.2.17 2010-03-18 03:09:41 tr Exp $
 
 /**
  * @file
@@ -385,7 +385,7 @@ Your driver will pickup your shipment(s) as usual. </ul>
 FOLD HERE</td>
 </tr>
 <tr>
-<td align="left" valign="top"><hr>
+<td align="left" valign="top"><hr />
 </td>
 </tr>
 </table>

@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_roles.module,v 1.2.2.21 2010-03-13 05:45:11 tr Exp $
+// $Id: uc_roles.module,v 1.2.2.22 2010-03-18 03:09:41 tr Exp $
 
 /**
  * @file
@@ -847,8 +847,8 @@ function uc_roles_feature_form_submit($form, &$form_state) {
     'end_time'     => $form_state['values']['expiration'  ] === 'abs' ? $form_state['values']['uc_roles_expire_absolute'] : NULL,
   );
 
-  $description = empty($product_role['model']) ? t('<strong>SKU:</strong> Any<br/>') : t('<strong>SKU:</strong> !sku<br/>', array('!sku' => $product_role['model']));
-  $description .=  t('<strong>Role:</strong> !role_name<br/>', array('!role_name' => _uc_roles_get_name($product_role['rid'])));
+  $description = empty($product_role['model']) ? t('<strong>SKU:</strong> Any<br />') : t('<strong>SKU:</strong> !sku<br />', array('!sku' => $product_role['model']));
+  $description .=  t('<strong>Role:</strong> !role_name<br />', array('!role_name' => _uc_roles_get_name($product_role['rid'])));
 
   if ($product_role['end_override']) {
     if ($product_role['end_time']) {
@@ -857,19 +857,19 @@ function uc_roles_feature_form_submit($form, &$form_state) {
     else {
       switch ($product_role['granularity']) {
         case 'never':
-          $description .= t('<strong>Expiration:</strong> never<br/>');
+          $description .= t('<strong>Expiration:</strong> never<br />');
           break;
         case 'day':
-          $description .= t('<strong>Expiration:</strong> !qty day(s)<br/>', array('!qty' => $product_role['duration']));
+          $description .= t('<strong>Expiration:</strong> !qty day(s)<br />', array('!qty' => $product_role['duration']));
           break;
         case 'week':
-          $description .= t('<strong>Expiration:</strong> !qty week(s)<br/>', array('!qty' => $product_role['duration']));
+          $description .= t('<strong>Expiration:</strong> !qty week(s)<br />', array('!qty' => $product_role['duration']));
           break;
         case 'month':
-          $description .= t('<strong>Expiration:</strong> !qty month(s)<br/>', array('!qty' => $product_role['duration']));
+          $description .= t('<strong>Expiration:</strong> !qty month(s)<br />', array('!qty' => $product_role['duration']));
           break;
         case 'year':
-          $description .= t('<strong>Expiration:</strong> !qty year(s)<br/>', array('!qty' => $product_role['duration']));
+          $description .= t('<strong>Expiration:</strong> !qty year(s)<br />', array('!qty' => $product_role['duration']));
           break;
         default:
           break;
@@ -877,9 +877,9 @@ function uc_roles_feature_form_submit($form, &$form_state) {
     }
   }
   else {
-    $description .= t('<strong>Expiration:</strong> !link (not overridden)<br/>', array('!link' => l(t('Global expiration'), 'admin/store/settings/products/edit/features')));
+    $description .= t('<strong>Expiration:</strong> !link (not overridden)<br />', array('!link' => l(t('Global expiration'), 'admin/store/settings/products/edit/features')));
   }
-  $description .= $product_role['shippable'] ? t('<strong>Shippable:</strong> Yes<br/>') : t('<strong>Shippable:</strong> No<br/>');
+  $description .= $product_role['shippable'] ? t('<strong>Shippable:</strong> Yes<br />') : t('<strong>Shippable:</strong> No<br />');
   $description .= $product_role['by_quantity'] ? t('<strong>Multiply by quantity:</strong> Yes') : t('<strong>Multiply by quantity:</strong> No');
 
   $data = array(

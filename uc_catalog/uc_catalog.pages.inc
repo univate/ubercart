@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_catalog.pages.inc,v 1.1.2.12 2009-07-21 14:37:21 islandusurper Exp $
+// $Id: uc_catalog.pages.inc,v 1.1.2.13 2010-03-18 03:09:41 tr Exp $
 
 /**
  * @file
@@ -71,7 +71,7 @@ function theme_uc_catalog_browse($tid = 0) {
     if ($child->nodes) {
       $cell_link = $image .'<strong>'. l($child->name, uc_catalog_path($child)) .'</strong>';
       if (variable_get('uc_catalog_show_subcategories', TRUE)) {
-        $cell_link .= "<br/><span>". implode(', ', $grandchildren) ."</span>\n";
+        $cell_link .= "<br /><span>". implode(', ', $grandchildren) ."</span>\n";
       }
       $child_list[] = $cell_link;
     }
