@@ -389,18 +389,11 @@ function uc_product_features($node) {
   if (arg(4)) {
     // First check to see if we're trying to remove a feature.
     if (intval(arg(5)) > 0 && arg(6) == 'delete') {
-      $result = db_query("SELECT * FROM {uc_product_features} WHERE pfid = %d AND fid = '%s'", intval(arg(5)), arg(4));
-      if ($feature = db_fetch_array($result)) {
+      $feature = uc_product_feature_load(intval(arg(5)), arg(4));
+      if (isset($feature)) {
         // If the user confirmed the delete, process it!
         if ($_POST['pf_delete']) {
-          // Call the delete function for this product feature if it exists.
-          $func = uc_product_feature_data($feature['fid'], 'delete');
-          if (function_exists($func)) {
-            $func($feature);
-          }
-
-          // Remove the product feature data from the database.
-          db_query("DELETE FROM {uc_product_features} WHERE pfid = %d", intval(arg(5)));
+          uc_product_feature_delete(intval(arg(5)));
 
           drupal_set_message(t('The product feature has been deleted.'));
           drupal_goto('node/'. arg(1) .'/edit/features');
@@ -425,8 +418,8 @@ function uc_product_features($node) {
         $output = drupal_get_form($func, $node, array());
       }
       elseif (intval(arg(5)) > 0) {
-        $result = db_query("SELECT * FROM {uc_product_features} WHERE pfid = %d AND fid = '%s'", intval(arg(5)), arg(4));
-        if ($feature = db_fetch_array($result)) {
+        $feature = uc_product_feature_load(intval(arg(5)), arg(4));
+        if (isset($feature)) {
           $output = drupal_get_form($func, $node, $feature);
         }
       }
@@ -446,26 +439,27 @@ function uc_product_features($node) {
 
   $header = array(t('Type'), t('Description'), t('Operations'));
 
-  $result = db_query("SELECT * FROM {uc_product_features} WHERE nid = %d ORDER BY pfid ASC", $node->nid);
-  while ($feature = db_fetch_object($result)) {
-    $operations = array(
-      l(t('edit'), 'node/'. $node->nid .'/edit/features/'. $feature->fid .'/'. $feature->pfid),
-      l(t('delete'), 'node/'. $node->nid .'/edit/features/'. $feature->fid .'/'. $feature->pfid .'/delete'),
-    );
-    $rows[] = array(
-      'data' => array(
-        array('data' => uc_product_feature_data($feature->fid, 'title'), 'nowrap' => 'nowrap'),
-        array('data' => $feature->description, 'width' => '100%'),
-        array('data' => implode(' ', $operations), 'nowrap' => 'nowrap'),
-      ),
-      'valign' => 'top',
-    );
-  }
-
-  if (empty($rows)) {
+  $features = uc_product_feature_load_multiple($node->nid);
+  if (empty($features)) {
     $rows[] = array(
       array('data' => t('No features found for this product.'), 'colspan' => 3),
     );
+  }
+  else {
+    foreach ($features as $feature) {
+      $operations = array(
+        l(t('edit'), 'node/'. $node->nid .'/edit/features/'. $feature->fid .'/'. $feature->pfid),
+        l(t('delete'), 'node/'. $node->nid .'/edit/features/'. $feature->fid .'/'. $feature->pfid .'/delete'),
+      );
+      $rows[] = array(
+        'data' => array(
+          array('data' => uc_product_feature_data($feature->fid, 'title'), 'nowrap' => 'nowrap'),
+          array('data' => $feature->description, 'width' => '100%'),
+          array('data' => implode(' ', $operations), 'nowrap' => 'nowrap'),
+        ),
+        'valign' => 'top',
+      );
+    }
   }
 
   $output = theme('table', $header, $rows)

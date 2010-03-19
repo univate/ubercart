@@ -1948,6 +1948,65 @@ function uc_product_feature_save($data) {
 }
 
 /**
+ * Load all product feature for a node.
+ *
+ * @param $nid
+ *   The product node ID.
+ * @returns
+ *   The array of all product features object.
+ */
+function uc_product_feature_load_multiple($nid) {
+  $result = db_query("SELECT * FROM {uc_product_features} WHERE nid = %d ORDER BY pfid ASC", $nid);
+  while ($feature = db_fetch_object($result)) {
+    $features[$feature->pfid] = $feature;
+  }
+  return $features;
+}
+
+/**
+ * Load a product feature object.
+ *
+ * @todo: should return an object instead of array.
+ *
+ * @param $pfid
+ *   The product feature ID.
+ * @param $fid
+ *   Optional. Specify a specific feature id.
+ * @returns
+ *   The product feature object.
+ */
+function uc_product_feature_load($pfid, $fid = NULL) {
+  if (isset($fid)) {
+    $feature = db_fetch_array(db_query("SELECT * FROM {uc_product_features} WHERE pfid = %d AND fid = '%s'", $pfid, $fid)); 
+  }
+  else {
+    $feature = db_fetch_array(db_query("SELECT * FROM {uc_product_features} WHERE pfid = %d", $pfid));
+  }
+  return $feature;
+}
+
+/**
+ * Delete a product feature object.
+ *
+ * @param $pfid
+ *   The product feature ID.
+ * @returns
+ *   The product feature object.
+ */
+function uc_product_feature_delete($pfid) {
+  $feature = uc_product_feature_load($pfid);
+
+  // Call the delete function for this product feature if it exists.
+  $func = uc_product_feature_data($feature['fid'], 'delete');
+  if (function_exists($func)) {
+    $func($feature);
+  }
+  db_query("DELETE FROM {uc_product_features} WHERE pfid = %d", $pfid);
+
+  return SAVED_DELETED;
+}
+
+/**
  * Create a file field with an image field widget, and attach it to products.
  *
  * This field is used by default on the product page, as well as on the cart
