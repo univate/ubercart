@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_reports.module,v 1.11.2.13 2010-03-10 01:22:28 tr Exp $
+// $Id: uc_reports.module,v 1.11.2.14 2010-03-20 03:46:56 tr Exp $
 
 /**
  * @file
@@ -72,7 +72,7 @@ function uc_reports_help($path, $arg) {
 
     // Include the statuses/offset as needed.
     if ($include_offset) {
-      $output .= "<p>". t('All sales reports are <b>GMT !offset</b> (Default site timezone)', array('!offset' => variable_get('date_default_timezone', 0) / 36)) ."</p>";
+      $output .= "<p>". t('All sales reports are <b>GMT !offset</b> (Default site timezone)', array('!offset' => sprintf('%+05d', variable_get('date_default_timezone', 0) / 36))) ."</p>";
     }
     if ($include_statuses) {
       $statuses = array();
